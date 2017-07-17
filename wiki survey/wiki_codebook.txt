@@ -1,0 +1,1002 @@
+The Wiki mega_codebook:
+
+V1: response ID
+
+V10: Finished?
+
+    0: no
+    1: Yes
+
+project:
+
+    Wiki project name
+
+Introductory question
+
+Q1: Have you ever edited wikipedia?
+
+    0: no
+    1: yes
+    2: not sure
+
+Q2: In what year did you start contributing to wikipedia?
+
+    year
+
+Q3: In which country do you live?
+
+    (see country codes)
+
+Q4: what is your primary langage?
+
+    shitload of discrete variable per langage.
+
+Q5: Which langage version of wikipedia do you contribute to?
+
+    shitload of discrete variable per langage.
+
+
+Q6: Which langage version of Wikipedia do you primarily contribute to? Please chose one
+
+    See langages code
+
+Q7: Which langage version do you read?
+
+    shitload of discrete variable per langage.
+
+Q8: Which langage version do you primarily read? please choose one
+
+    See langage codes
+
+----------------------------------------------------------------------
+
+We are interested in finding out more about your recent participation in wikipedia:
+
+Q9_1: I write new articles
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_2: I write content to existing articles
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_3: I fix formating, spelling/grammar, or make other minor edits to articles:
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_4: I do translation work
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_5: I patrol for vandalism, copyright violation, or other problems in articles
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_6: I answer readers questions and complaints
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_7: I resolve disputes among volunteers (e.g. mediation, arbitration)
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_8: I organize or help to organize events, workshops, meet-ups, or the annual Wikimania conferences
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_9: I do public outreach or advocacy outside the Wikipedia community
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_10: I do technical work such as maintaining servers or software
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_11: I participate in chapter work
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_12: I participate in discussions about articles
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+Q9_13: I develop or maintain policies, guidelines and similar community processes
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+-----------------------------------------------------------------------------------
+
+Below are a similar list of activities. Please indicate how often you have participated in the following activity
+
+
+Q10_1: I upload or edit media, images, maps, etc.
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+
+Q10_2: I conduct quality review and assess articles for featured article selection
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+
+Q10_3: I participate in deletion processes such as speedy deletion, proposed deletion and articles for deletion discussion
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+
+Q10_4: I work on the help desk or do other work to welcome new editors
+
+    1: not at all
+    2: seldom
+    3: sometimes
+    4: often
+    5: very often
+
+
+Q10_5: Other, please specify:
+
+    1: selected
+
+Q11_4: On a scale from 0 to 10, how likely is it that you would recommend editing Wikipedia as an activity
+
+    intensity scale of 1 to 10
+
+------------------------------------------------------------------
+
+If you think back to half a year ago:
+
+Q12a_1: Did you witness more or less conflict in the community than today?
+
+    1: more
+    2: less
+    3: same
+
+
+Q12a_2: Did you feel more or less motivated to contribute to Wikipedia than today?
+
+    1: more
+    2: less
+    3: same
+
+
+Q12a_3: Were you more or less active on Wikipedia compared to now?
+
+    1: more
+    2: less
+    3: same
+
+
+        - Why did you become less active on Wikipedia? Please choose all that apply:
+
+        Q12b_1: I don't have time
+            
+            1: selected
+        
+        Q12b_2: I spend more time on other online activities like Facebook, blogging, Twitter etc.
+
+            1: selected
+
+        Q12b_3: I spend more time on other offline activities like reading, spending time with my family and friends etc.
+
+            1: selected
+
+        Q12b_4: It is a waste of my time since my edits will be reverted or deleted.
+
+            1: selected
+
+        Q12b_5: I think I don't have enough expertise to contribute.
+
+            1: selected
+
+        Q12b_6: Other people are doing it, so I don't have to do it.
+
+            1: selected
+
+        Q12b_7: I don't want to edit the work of other editors.
+
+            1: selected
+
+        Q12b_8: I am happy to read, and I don't feel the need to contribute.
+
+            1: selected
+
+        Q12b_9: I choose not to spend my time editing.
+
+            1: selected
+
+        Q12b_10: I don't edit because of conflicts with other editors.
+
+            1: selected
+
+        Q12b_11: The rules and guidelines for editing have become too complicated.
+
+            1: selected
+
+        Q12b_12: There isn't enough interaction or communication with other editors.
+
+            1: selected
+
+        Q12b_13: I keep getting warnings and other kinds of discouraging notifications.
+
+            1: selected
+
+        Q12b_14: I spend more time on school and/or academic work.
+
+            1: selected
+
+        Q12b_15: I don't think it needs more content.
+
+            1: selected
+
+        Q12b_16: Other, please specify
+
+            1: selected
+
+==============================================================================
+
+Section III: Technology use
+
+Which of the following electronic devices do you own?
+
+Q13_1: A desktop PC, laptop computer or netbook
+
+    1: Yes
+
+Q13_3: A tablet device such as an iPad or a Samsung Galaxy Tab
+
+    1: Yes
+
+Q13_4: A mobile phone (cellphone)
+
+    1: Yes
+
+       - Q13b: Do you own a smart phone such as an iPhone, Android, or Blackberry?
+
+            1: Yes
+
+Q13_6: None of the above
+
+    1: Selected
+
+=============================================================================
+
+Section IV: WIKIPEDIA COMMUNITY: These next questions are about your interactions with other Wikipedia...
+
+We are interested in finding out how you would describe fellow editors. Below is a list of words to select from:
+
+Q14_1: Helpful
+
+    1: Selected
+
+Q14_2: Friendly
+
+    1: Selected
+
+Q14_3: Collaborative
+
+    1: Selected
+
+Q14_4: Rude
+
+    1: Selected
+
+Q14_5: Unfriendly
+
+    1: Selected
+
+Q14_6: Intelligent
+
+    1: Selected
+
+Q14_7: Dumb
+
+    1: Selected
+
+Q14_8: Arrogant
+
+    1: Selected
+
+Q15: If you had to choose, which of these would you agree with:
+
+    1: The feedback from other editors through reverts, discussions, etc. has helped me become a better editor.
+    2: The feedback from other editors through reverts, discussions, etc. has been a bad experience for me.
+    3: Neither
+
+------------------------------------------------------------------------------------
+
+Have you asked fellow editors for help on any of the following topics?
+
+Q16a_1: Editorial policy
+
+    1: Yes
+    0: No
+
+Q16a_2: Technical help, including wiki markup, multimedia etc.
+
+    1: Yes
+    0: No
+
+Q16a_3: Asking others to edit an article that you are working on or interested in
+
+    1: Yes
+    0: No
+
+Q16a_4: Reference related questions
+
+    1: Yes
+    0: No
+
+Q16a_5: Content related questions
+
+    1: Yes
+    0: No
+
+Q16b: Thinking about the last time you asked a fellow editor for help, how happy were you with the help you got
+
+    1: Extremely unhappy
+    2: Very unhappy
+    3: Neither happy nor unhappy
+    4: Very happy
+    5: Extremely happy
+
+------------------------------------------------------------------------------------
+
+Below, we list some problems that have been identified with Wikimedia culture: please select all that apply
+
+Q17_1: Too many rules and policies
+
+    1: Selected
+
+Q17_2: Editors who feel like they "own" specific articles and don't want others to contribute to them
+
+    1: Selected
+
+Q17_3: The editing interface is hard to use
+
+    1: Selected
+
+Q17_4: Editors who are not fun to work with
+
+    1: Selected
+
+Q17_5: The software for doing maintenance tasks (such as patrolling and fighting vandalism or spam) is too hard to use
+
+    1: Selected
+
+Q17_6: Lack of support from other editors
+
+    1: Selected
+
+Q17_7: Lack of access to research materials like scholarly articles and books
+
+    1: Selected
+
+Q17_8: Criticism of you and your work, including reverts and deletions
+
+    1: Selected
+
+Q17_9: Warning messages on your talk page
+
+    1: Selected
+
+Q17_10: Harassment by other editors
+
+    1: Selected
+
+_________________________________________________________________________________
+
+Below is a list of levels of impressions editors may get from their experience with Wikipedia: please select all that apply
+
+Q18_1: I understand what is expected from me
+
+    1: Selected
+
+Q18_2: I am provided with the tools and materials I need to work well
+
+    1: Selected
+
+Q18_3: I have the opportunity to do what I do best
+
+    1: Selected
+
+Q18_4: Someone cares about me as a person
+
+    1: Selected
+
+Q18_5: I feel my opinion counts
+
+    1: Selected
+
+Q18_6: The mission of Wikipedia makes me feel that my work is important
+
+    1: Selected
+
+Q18_7: My fellow volunteers are committed to doing quality work
+
+    1: Selected
+
+Q18_8: There is somebody in the Wikipedia community who seems committed to helping me do good work
+
+    1: Selected
+
+Q18_9: The decisions I have made as part of the community feel fair
+
+    1: Selected
+
+Q18_10: I would recommend a friend to get involved in Wikipedia
+
+    1: Selected
+
+Q20_1_TEXT: How much time have you spent contributing to Wikipedia during the last seven days (approximately)? - Hours
+
+    Time in hours
+
+Q20_2_TEXT: How much time have you spent contributing to Wikipedia during the last seven days (approximately)?-Minutes
+
+    Time in minutes
+
+========================================================
+
+Finally, we would like to know what you think about the different participants of the Wikimedia community:
+
+T1_1: the performance of Wikimedia volunteers overall, in contributing to the Wikimedia movement?
+
+    0 to 10 scale
+    99: Don't know
+
+
+T2_1: the performance of the Wikimedia Foundation, in contributing to the Wikimedia movement?
+
+    0 to 10 scale
+    99: Don't know
+
+
+T3_1: the performance of the Wikimedia chapters, in contributing to the Wikimedia movement?
+
+    0 to 10 scale
+    99: Don't know
+
+
+T4_1: your own performance, in contributing to the Wikimedia movement?
+
+    0 to 10 scale
+    99: Don't know
+
+
+=======================================================================
+
+Section V: Wikimedia foundation
+
+FOUNDATION: The Wikimedia Foundation supports a group of sites, including Wikipedia and Wikimedia.
+
+F1: How familiar are you with the Wikimedia Foundation?
+
+    1: This is the first time I've heard about the Wikimedia foundation
+    2: I'm somewhat familiar with the Wikimedia foundation
+    3: I'm quite familiar with the Wikimedia foundation
+    4: I'm quite familiar with the Wikimedia foundation and have regular interactions with the foundation
+
+-----------------------------------------------------------------------
+
+How well do you believe the Foundation supports:
+
+F2_1: English Wikipedia?
+
+    0: I'm not sure
+    1: Very well
+    2: Somewhat well
+    3: Not very well
+    4: Not at all
+
+F2_2: Wikipedia sites in other languages?
+
+    0: I'm not sure
+    1: Very well
+    2: Somewhat well
+    3: Not very well
+    4: Not at all
+
+F2_3: Wikimedia Commons?
+
+    0: I'm not sure
+    1: Very well
+    2: Somewhat well
+    3: Not very well
+    4: Not at all
+
+
+F2_5: Other Wikimedia sites like Wiktionary, Wikiquote, etc.?
+
+    0: I'm not sure
+    1: Very well
+    2: Somewhat well
+    3: Not very well
+    4: Not at all
+
+_________________________________________________________________________________
+
+How much do you agree with the following statements?
+
+F3_1: The Foundation and its staff are part of the Wikimedia community.
+
+    0: I'm not sure/ it's complicated
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly disagree
+
+F3_2: The Foundation does an acceptable job communicating with the Wikimedia community.
+
+    0: I'm not sure/ it's complicated
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly disagree
+
+
+F3_3: The Foundation involves the Wikimedia community in the decision-making process on major initiatives.
+
+    0: I'm not sure/ it's complicated
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly disagree
+
+
+F4: All in all, do you think the Foundation is generally headed in the right direction, or is it off on...
+
+    1: Right direction
+    2: Wrong track
+    0: I don't know
+
+
+========================================================================================
+
+RECENT ACTIVITIES: Below is a list of recent Wikimedia Foundation activities.
+
+Technology Support: The Foundation hosts Wikipedia and its sister sites and implements technological...
+
+R1a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+
+R1b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R1c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+__________________________________________________________________________________
+
+Wikimedia Foundation Grants Program: The Foundation funds grants to chapters, aligned groups and ind...
+
+
+R2a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+R2b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R2c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+--------------------------------------------------------------------------------
+
+Community Advocacy: The Foundation actively looks for and supports activities to make life easier fo...
+
+
+R3a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+
+R3b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R3c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+_________________________________________________________________________________
+
+Legal Protection: The Wikimedia legal team defends the articles and other media on the Wikimedia sit...
+
+R4a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+
+R4b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R4c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+_________________________________________________________________________________
+
+Global Education Programs: These programs encourage students to contribute to Wikimedia sites as par...
+
+
+R5a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+
+R5b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R5c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+_________________________________________________________________________________
+
+Mobile: The Wikimedia Foundation supports the expansion of Wikipedia for mobiles by creating mobile...
+
+
+R6a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+
+R6b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R6c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+_________________________________________________________________________________
+
+Investing in the Global South: The Wikimedia Foundation is working to help communities in high poten...
+
+
+R7a: I knew the Foundation did this.
+
+    1: Yes
+    2: No
+    3: I'm not sure
+
+
+R7b: I believe that the Foundation's involvement in this activity makes sense.
+
+    1: Agree
+    2: Disagree
+    0: I'm not sure
+
+
+R7c: I think the Foundation has done a good job with this activity.
+
+    0: I'm not sure
+    1: Strongly agree
+    2: Somewhat agree
+    3: Somewhat disagree
+    4: Strongly Disagree
+
+===============================================================================
+
+
+PRIORITIES
+
+Below is a list of possible priorities. Please consider how important each of the below should be for the foundation
+
+P1_1: Broadening Wikimedia's editing base by increasing the number of new editors that join
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_2: Keeping our existing editors
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_3: Making editing easier
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_4: Recruiting and supporting female editors
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_5: Supporting the expansion of Wikipedias in languages other than English
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_6: Supporting the expansion of other Wikimedia projects, like Wiktionary, Wikiquote, etc.
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_7: Increasing the number of people around the world who use the Wikimedia sites on a regular basis
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_9: Improving Wikimedia access and editing capabilities for mobile phones and tablets
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_10: Defending content on the Wikimedia sites against legal threats
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_11: Expanding education programs to encourage students to write articles for Wikipedia
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_12: Supporting the growth of local, independent Wikimedia organizations worldwide
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+
+P1_13: Creating and managing a legal defense fund to assist with paying legal bills if administrators are sued
+
+    1: Not important
+    2: Somewhat important
+    3: Very important
+    9: Not an appropriate priority for the foundation
+    0: I don't know
+    
+--------------------------------------------------------------------------------------
+
+We are interested in your opinion on how the Wikimedia Foundation should spend money. If you donated, how much went to that particular issue:
+
+P3_1: Technical operations (more operations staff, new caching servers, performance metrics, uptime)
+
+    amount of money in $
+    
+P3_2: Technical features development for EXPERIENCED editors
+
+    amount of money in $
+    
+P3_3: Technical features development for NEW editors
+
+    amount of money in $
+
+P3_4: Technical features development for READERS
+
+    amount of money in $
+    
+P3_5: Community work aimed at attracting/supporting editors globally
+
+    amount of money in $
+    
+P3_6: Community work aimed at attracting/supporting editors in Global South
+
+    amount of money in $
+    
+P3_7: Community work aimed at attracting/supporting editors in my country
+
+    amount of money in $
+    
+P3_8: Grantmaking to Wikimedians or groups like other non-profits
+
+    amount of money in $
+    
+P3_9: Support for other sister projects, not just Wikipedia
+
+    amount of money in $
+    
+P3_10: Other, please specify:
+
+    amount of money in $
+    
+===================================================================================
+
+Section VI: Demographics
+
+Before we finish, we would like you to answer some questions about yourself...
+
+Q21: How old are you?
+
+    age in years
+    
+Q22: What is the highest level of education you have completed?
+
+    1: Primary education
+    2: Secondary education (high school, A-levels, apprenticeship, etc.)
+    3: Tertiary education undergraduate (diploma, associate degree, bachelor degree)
+    4: Graduate education (master's)
+    5: Graduate education (doctorate)
+    
+Q23: Are you curently in school or university?
+
+    1: Yes
+    0: No
+    
+Q24: Are you employed?
+
+    1: Yes I am working full-time
+    2: Yes I am working part-time
+    3: No, I'm not currently employed
+    
+Q25: Are you married, do you have a partner, or are you single?
+
+    1: I am married
+    2: I have a partner, but I'm not married
+    3: I am single
+
+Q26: Do you have children?
+
+    1: Yes, I have children
+    0: No, I don't have children
+    
+Q27: What is your gender?
+
+    1: Male
+    2: Female
+    3: Transsexual
+    4: Transgender
+    5: Prefer not to say
+
+
+
+
