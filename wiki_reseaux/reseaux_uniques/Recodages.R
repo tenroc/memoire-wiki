@@ -1,4 +1,4 @@
-## Script Test (import, recodage, visualisation): à automatiser (+ modulariser)
+## Script Test (import, recodage): à automatiser (+ modulariser)
 
 #### Import des donnees d'edit, recodages et transformation en edgelist ####
 
@@ -69,49 +69,36 @@ attributes <- attributes[,c(3,1,2)]
 
 # Recodage du status
 
-attributes$status_contrib[attributes$status_anon == 0] <- "anonyme"
-attributes$status_contrib[attributes$status_anon == 1] <- "inscrit"
+attributes$status_contrib[attributes$status_anon == 0] <- "inscrit"
+attributes$status_contrib[attributes$status_anon == 1] <- "anonyme"
 attributes$status_contrib[attributes$contributeurs == "cultwar_page"] <- "page_edits"
 
-#### Visualisation ####
+# Remplacer les " " par des "_" dans les noms de contributeurs (sinon bug XML)
 
-# Basique:
+attributes$contributeurs <- gsub(" ","_",attributes$contributeurs)
 
-plot(cultwar_edit_graphe,
-     main ="Reseau editions Culture_War",
-     layout=layout_nicely(cultwar_edit_graphe),
-     edge.arrow.size=.1,
-     vertex.label= NA,
-     vertex.size = 3,
-     rescale=TRUE)
+# Reccuperer, et ajouter aux attributs des contributeurs (pour les contributeurs inscrits): le nombre total de revisions effectuees, 
+#le statut (admin/?) et la date d'inscription sur le site. (saute les anonymes, et les comptes supprimés)
+# A ajouter: bureaucrats, admin comittee.
+# Recupere pour les anonymes l'annee de la premiere contribution recensee
 
-
-# Meilleure visualisation:
-
-# Couleurs:
-
-colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
-colors_nodes <- c("#f37329","#93d844","#333333")
-
-V(cultwar_edit_graphe)$color <- colors_nodes[as.factor(attributes$status_contrib)]
-V(cultwar_edit_graphe)$size <- 3
-V(cultwar_edit_graphe)$label <- NA
-
-# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
-E(cultwar_edit_graphe)$width <- as.numeric(E(cultwar_edit_graphe)$Wordcount)/40
-# Marche pas, aucune idee de pourquoi:
-# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
-
-plot(cultwar_edit_graphe, layout=layout_nicely(cultwar_edit_graphe), rescale=TRUE,edge.arrow.size=.1,
-     edge.color=colors_edge[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)],
-     main= "Reseau editions Culture_War")
-
-# Légende:
-
-legend(x="topleft", c("Ajout","Suppression","Reverse", "anonyme", "inscrit", "page"), pch=c(24,24,24,21,21,21), col="#777777", 
-       pt.bg= c("#3892e0","#da4d45","#fbd25d","#f37329","#93d844", "#333333"), pt.cex=c(2,2,2,2,2,2), cex=.8, bty="n", ncol=1)
-
-## Stats descriptives générales: ####
-
-# Densité:
-
+for (i in 1:length(attributes$contributeurs)){
+  tryCatch({
+    if(attributes[i,"status_contrib"] != "anonyme"){
+      temp <- userInfo(attributes[i,"contributeurs"],"en")
+      attributes[i,"total_rev_count"] <- paste(temp[[5]][1,"editcount"])
+      attributes[i, "registration_year"] <- substring(temp[[5]][1,"registration"],1,4)
+      if ("sysop" %in% temp[[3]] == T){
+        attributes[i,"status_contrib"] <- "admin"
+      } else {
+        if ("bot" %in% temp[[3]] == T){
+          attributes[i,"status_contrib"] <- "bot"
+        }
+      }
+    } else {
+      temp <- contrib_list(attributes[i,"contributeurs"], domain ="en")
+      attributes[i,"total_rev_count"] <- length(temp[,"V1"])
+      attributes[i,"registration_year"] <- as.character(min(as.numeric(substring(temp$V2,1,4))))
+    }
+  }, error = function(e){cat("ERROR :",conditionMessage(e), "\n")})
+}
