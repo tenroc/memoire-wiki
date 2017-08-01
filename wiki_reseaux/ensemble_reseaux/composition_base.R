@@ -27,6 +27,7 @@ write(featured_sample, file="featured_sample.txt", sep="/n")
 #### Et un sample de 200 pages au hasard ####
 
 page_sample_data <- random_page("en", project="wikipedia", namespaces = 0, limit=100)
+page_sample <- character()
 
 for (i in 1:100){
   page_sample[i] <- paste(page_sample_data[[i]][1])
