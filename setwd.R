@@ -9,6 +9,10 @@ library('WikipediaR')
 library('WikiSocio')
 library('WikipediR')
 
+## setwd pour le wikisurvey
+
+setwd('~/Documents/memoire-wiki/wiki_survey/')
+
 
 #### Windows: #####
 
