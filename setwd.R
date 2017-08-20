@@ -2,7 +2,7 @@
 
 ##### Linux: ####
 
-setwd('~/Documents/EHESS/SocStat-M2/memoire/contro/')
+setwd('~/Documents/EHESS/SocStat-M2/memoire/')
 
 library('igraph')
 library('WikipediaR')
