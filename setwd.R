@@ -13,6 +13,12 @@ library('WikipediR')
 
 setwd('~/Documents/memoire-wiki/wiki_survey/')
 
+library('FactoMineR')
+library('lmtest')
+library('foreign')
+library('R2HTML')
+library('readODS')
+
 
 #### Windows: #####
 

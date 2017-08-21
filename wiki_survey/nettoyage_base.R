@@ -301,8 +301,8 @@ table(wiki_survey_en$Q9_suppression, useNA = "ifany")
 
 # Help or welcome new editors:
 
-table(wiki_survey_en$Q10_3)
-wiki_survey_en$Q9_helpdesk <- factor(wiki_survey_en$Q10_3, labels=Q9_labels)
+table(wiki_survey_en$Q10_4)
+wiki_survey_en$Q9_helpdesk <- factor(wiki_survey_en$Q10_4, labels=Q9_labels)
 table(wiki_survey_en$Q9_helpdesk, useNA = "ifany")
 
 #### How likely are you to recommend editing wikipedia as an activity? (0-10) (note: beaucoup de NA) ####
@@ -406,7 +406,7 @@ table(wiki_survey_en$Q16a_1, useNA = "ifany")
 wiki_survey_en$Q16_editorial <- factor(wiki_survey_en$Q16a_1, labels=c("no","yes"))
 table(wiki_survey_en$Q16_editorial, useNA = "ifany")
 
-# Technical help (xiki markup, etc)
+# Technical help (wiki markup, etc)
 
 table(wiki_survey_en$Q16a_2, useNA = "ifany")
 wiki_survey_en$Q16_technical <- factor(wiki_survey_en$Q16a_2, labels=c("no","yes"))
