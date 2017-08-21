@@ -20,13 +20,6 @@ sd(as.numeric(wikitest$Q5_langsum))
 median(as.numeric(wikitest$Q5_langsum))
 boxplot(as.numeric(wikitest$Q5_langsum), main="nombre de projet wikipédia dans des langues différentes ou les contributeurs interviennent")
 
-#### Stats bivariées ####
-
-
-
-
-#### ACM ####
-
 ## Recodage des supplémentaires:
 
 # Anciennetée:
@@ -51,21 +44,135 @@ table(wiki_survey_en$Q20_tempseditheures, useNA = "ifany")
 # Age:
 
 table(wiki_survey_en$Q21, useNA = "ifany")
-wiki_survey_en$age_tr[wiki_survey_en$Q21 == "_ 18"] <- "less than 18 years old"
-wiki_survey_en$age_tr[as.numeric(wiki_survey_en$Q21) %in% c(18:30)] <- "[18-30]"
-wiki_survey_en$age_tr[as.numeric(wiki_survey_en$Q21) %in% c(31:50)] <- "[30-50]"
-wiki_survey_en$age_tr[as.numeric(wiki_survey_en$Q21) >50 | wiki_survey_en$Q21 == "> 99"] <- "[>50]"
-wiki_survey_en$age_tr[wiki_survey_en$Q21 == "Decline to state"] <- "Decline to state"
+wiki_survey_en$Q21_re <- as.numeric(paste(wiki_survey_en$Q21))
+table(wiki_survey_en$Q21_re, useNA = "ifany")
+
+wiki_survey_en$age_tr[wiki_survey_en$Q21 == "_ 18"] <- "<18"
+wiki_survey_en$age_tr[wiki_survey_en$Q21_re %in% c(18:30)] <- "[18-30]"
+wiki_survey_en$age_tr[wiki_survey_en$Q21_re %in% c(31:50)] <- "[30-50]"
+wiki_survey_en$age_tr[wiki_survey_en$Q21_re >50 | wiki_survey_en$Q21 == "> 99"] <- "[>50]"
+wiki_survey_en$age_tr[wiki_survey_en$Q21 == "Decline to state"] <- "Refuse"
 table(wiki_survey_en$age_tr, useNA = "ifany")
+
+# definition des subsets ACM et ACM2 (sans les NA): on en a besoin pour le recodage
+
+acm <- subset(wiki_survey_en, select=c(Q22_education, Q23_currentlyinschool, Q25_conjugal, Q26_child, Q27_gender, age_tr, Q2_anciennete,
+                                       Q20_tempseditheures, Q24_employement, Q1_everedited,Q9_newarticles,Q9_content,Q9_spellcheck, 
+                                       Q9_translation,Q9_vandalism,Q9_readerscomplaint,
+                                       Q9_mediation,Q9_technical, Q9_discussion, Q9_regulation, Q9_featuredreview, Q9_suppression,
+                                       Q9_helpdesk, Q16_editorial, Q16_technical, Q16_article, Q16_references, Q16_content))
+
+acm <- as.data.frame(lapply(acm, factor))
+
+acm2 <- subset(acm, is.na(Q1_everedited) !=T & is.na(Q9_newarticles) != T & is.na(Q9_content) !=T & is.na(Q9_spellcheck) !=T & is.na(Q9_translation) != T &
+                 is.na(Q9_vandalism) != T & is.na(Q9_readerscomplaint) != T & is.na(Q9_mediation) != T & is.na(Q9_technical) != T &
+                 is.na(Q9_discussion) != T & is.na(Q9_regulation) !=T & is.na(Q9_featuredreview) !=T & is.na(Q9_suppression) !=T &
+                 is.na(Q9_helpdesk) != T & is.na(Q9_helpdesk) != T & is.na(Q16_editorial) !=T & is.na(Q16_technical) !=T &
+                 is.na(Q16_article) !=T & is.na(Q16_references) != T & is.na(Q16_content) !=T)
+
+
+# Recodage des catégories de fréquence pour les Q9 (fréquences de contribution à...)
+
+for (i in 1:ncol(wiki_survey)){
+  wiki_survey_en[,i] <- as.character(wiki_survey_en[,i])
+}
+
+for (i in c("Q9_newarticles","Q9_content","Q9_spellcheck", "Q9_translation","Q9_vandalism","Q9_readerscomplaint",
+            "Q9_mediation","Q9_technical", "Q9_discussion", "Q9_regulation", "Q9_featuredreview", "Q9_suppression",
+            "Q9_helpdesk", "Q16_editorial", "Q16_technical", "Q16_article", "Q16_references", "Q16_content")){
+  wiki_survey_en[acm2[,i] == "often" | acm2[,i] == "very often",paste(i,"_re",sep="")] <- "regularly"
+  wiki_survey_en[acm2[,i] == "seldom" | acm2[,i] == "sometimes",paste(i,"_re",sep="")] <- "occasionally"
+}
+
+wiki_survey_en[acm2[,"Q9_content"] == "often" | acm2[,"Q9_content"] == "very often" ,"Q9_content"]
+
+table(wiki_survey_en$Q9_newarticles_re)
+
+
+#### Stats bivariées ####
+
+## temps de contribution sur la semaine dernière / rien n'est significatif
+
+# accueil des nouveaux contributeurs
+
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_helpdesk_re))
+
+# participation aux PAS
+
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_suppression_re))
+
+# Participation au développement et maintiens de recommendations, règles, etc.
+
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_regulation_re))
+
+# Participations aux discussion
+
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_discussion_re))
+
+# Participation aux travaux techniques (admin)
+
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_technical_re))
+
+# Résolution de disputes utilisateurs
+
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_mediation_re))
+
+## ancienneté/ rien n'est significatif
+
+# accueil des nouveaux contributeurs
+
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_helpdesk_re))
+
+# participation aux PAS
+
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_suppression_re))
+
+# Participation au développement et maintiens de recommendations, règles, etc.
+
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_regulation_re))
+
+# Participations aux discussion
+
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_discussion_re))
+
+# Participation aux travaux techniques (admin)
+
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_technical_re))
+
+# Résolution de disputes utilisateurs
+
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation_re))
+
+#### ACM ####
 
 ## ACM sur les premières Questions pour y voir un peu plus clair: (! beaucoup de NA, on les supprime, mais quand même...)
 
-acm <- subset(wiki_survey_en, select=c(Q1_everedited,Q9_newarticles,Q9_content,Q9_spellcheck,Q9_translation,Q9_vandalism,Q9_readerscomplaint,
-                                       Q9_mediation,Q9_technical, Q9_discussion, Q9_regulation, Q9_featuredreview, Q9_suppression,
-                                       Q9_helpdesk, Q16_editorial, Q16_technical, Q16_article, Q16_references, Q16_content))
-acm <- as.data.frame(lapply(acm, factor))
 
-res.acm <- MCA(acm, quali.sup=1:8, graph=T, level.ventil=0.005)
+res.acm <- MCA(acm, quali.sup=1:9, graph=T, level.ventil=0.005)
 
 # Axes retenus (3 axes)
 
@@ -99,28 +206,28 @@ plot.MCA(res.acm, invisible=c("ind","quali.sup"),
 
 # Beaucoup trop de NA: déforment l'ACM. Plus que 4354 observations
 
-acm2 <- subset(acm, is.na(Q1_everedited) !=T & is.na(Q9_newarticles) != T & is.na(Q9_content) !=T & is.na(Q9_spellcheck) !=T & is.na(Q9_translation) != T &
-                 is.na(Q9_vandalism) != T & is.na(Q9_readerscomplaint) != T & is.na(Q9_mediation) != T & is.na(Q9_technical) != T &
-                 is.na(Q9_discussion) != T & is.na(Q9_regulation) !=T & is.na(Q9_featuredreview) !=T & is.na(Q9_suppression) !=T &
-                  is.na(Q9_helpdesk) != T & is.na(Q9_helpdesk) != T & is.na(Q16_editorial) !=T & is.na(Q16_technical) !=T &
-                 is.na(Q16_article) !=T & is.na(Q16_references) != T & is.na(Q16_content) !=T)
-
 ## Recodages pour regrouper les modalités extrêmes:
 
-for (i in colnames(acm2)){
+for (i in c("Q9_newarticles","Q9_content","Q9_spellcheck", "Q9_translation","Q9_vandalism","Q9_readerscomplaint",
+            "Q9_mediation","Q9_technical", "Q9_discussion", "Q9_regulation", "Q9_featuredreview", "Q9_suppression",
+            "Q9_helpdesk", "Q16_editorial", "Q16_technical", "Q16_article", "Q16_references", "Q16_content")){
   acm2[,i] <- as.character(acm2[,i])
 }
 
-for (i in colnames(acm2)){
+for (i in c("Q9_newarticles","Q9_content","Q9_spellcheck", "Q9_translation","Q9_vandalism","Q9_readerscomplaint",
+            "Q9_mediation","Q9_technical", "Q9_discussion", "Q9_regulation", "Q9_featuredreview", "Q9_suppression",
+            "Q9_helpdesk", "Q16_editorial", "Q16_technical", "Q16_article", "Q16_references", "Q16_content")){
   acm2[acm2[,i] == "often" | acm2[,i] == "very often",i] <- "regularly"
   acm2[acm2[,i] == "seldom" | acm2[,i] == "sometimes",i] <- "occasionally"
 }
 
+
 acm2 <- as.data.frame(lapply(acm2, factor))
+
 
 # 2eme ACM:
 
-res.acm <- MCA(acm2, quali.sup=1:8, graph=T, level.ventil=0.005)
+res.acm <- MCA(acm2, quali.sup=1:9, graph=T, level.ventil=0.005)
 
 # Axes retenus
 
@@ -215,7 +322,7 @@ abline(h=0, v=0, col="grey", lty=3, lwd=1)
 # Representer les points et les etiquettes des modalites actives
 points(res.acm$var$coord[modatot, 2:3],
        col="#da4d45",
-       pch=c(15, 16, 17, 15, 16, 15, 16, 15, 16, 15, 16, 15, 16))
+       pch=c(16))
 
 etiquettes <- rownames(res.acm$var$coord)
 
