@@ -97,37 +97,43 @@ table(wiki_survey_en$Q9_newarticles_re)
 
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_helpdesk_re))
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_helpdesk_re) !=T],
+                      wiki_survey_en$Q9_helpdesk_re[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_helpdesk_re) !=T]))
 
 # participation aux PAS
 
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_suppression_re))
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_suppression_re) !=T],
+                      wiki_survey_en$Q9_suppression_re[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_suppression_re) !=T]))
 
 # Participation au développement et maintiens de recommendations, règles, etc.
 
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_regulation_re))
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_regulation_re) !=T]
+                      , wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_regulation_re) !=T]))
 
 # Participations aux discussion
 
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_discussion_re))
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_discussion_re) !=T]))
 
 # Participation aux travaux techniques (admin)
 
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_technical_re))
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T]))
 
 # Résolution de disputes utilisateurs
 
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_mediation_re))
+a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q20_tempseditheures) !=T & is.na(wiki_survey_en$Q9_mediation_re) !=T]))
 
 ## ancienneté/ rien n'est significatif
 
@@ -135,37 +141,43 @@ a <- chisq.test(table(wiki_survey_en$Q20_tempseditheures, wiki_survey_en$Q9_medi
 
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_helpdesk_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_helpdesk_re))
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_helpdesk_re) !=T],
+                      wiki_survey_en$Q9_helpdesk_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_helpdesk_re) !=T]))
 
 # participation aux PAS
 
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_suppression_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_suppression_re))
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_suppression_re) !=T],
+                      wiki_survey_en$Q9_suppression_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_suppression_re) !=T]))
 
 # Participation au développement et maintiens de recommendations, règles, etc.
 
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_regulation_re))
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_regulation_re) !=T]))
 
 # Participations aux discussion
 
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_discussion_re))
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_discussion_re) !=T]))
 
 # Participation aux travaux techniques (admin)
 
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_technical_re))
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T]))
 
 # Résolution de disputes utilisateurs
 
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
 round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
-a <- chisq.test(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation_re))
+a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_mediation_re) !=T]))
 
 #### ACM ####
 
@@ -312,8 +324,8 @@ round(res.acm$var$coord[modatot, 2:3], 2)
 png(file='ACM1.png', width = 1024, height = 768, units = "px", pointsize = 14)
 
 plot(res.acm$var$coord[modatot, 2:3]*1.4, type="n", 
-     xlab=paste0("Axe 2 (", round(res.acm$eig[1,2], 1), "%)"),
-     ylab=paste0("Axe 3 (", round(res.acm$eig[2,2], 1), "%)"),
+     xlab=paste0("Axe 2 (", round(res.acm$eig[2,2], 1), "%)"),
+     ylab=paste0("Axe 3 (", round(res.acm$eig[3,2], 1), "%)"),
      main="Troisième plan factoriel",
      cex.main=1, cex.axis=0.8, cex.lab=0.7, font.lab=3, 
      asp=1) ## asp=1 on définis la meme échelle pour les axes x et y
@@ -332,3 +344,13 @@ etiquettes <- rownames(res.acm$var$coord)
 text(res.acm$var$coord[modatot,2:3], labels=etiquettes[modatot],
      col="#da4d45", cex=1, pos=c(3, 4, 3, 3, 3, 2, 4, 4, 1, 2, 
                                4, 2, 3))
+
+# Ajout des modalites supplementaire
+modasup=c("educ_doctorate", "educ_master_degree", "educ_primary_education", "educ_secondary_education", "educ_tertiary_education", "currentlyin_school_no", "currentlyin_school_yes", 
+          "married", "have_partner", "single", "have_child_no", "have_child_yes", "female", "male", "age[>50]", "age[18-30]",
+          "age[30-50]", "age[<18]", "inscription[2001-2004]", "inscription[2005-2009]", "inscription[2009-2012]", "temps_edit[>15 hours]", "temps_edit[1-3 hours]", "temps_edit[4-15 hours]",
+          "employement_no", "employement_yes(part time)", "employement_yes(full time)")
+
+text(res.acm$quali.sup$coord[c(1:3,5:8,10,11,13:15,17,18,21:24,27:29,31:33,35:37), 1:2]*1.4, 
+     labels=modasup,
+     cex=0.8, col="#3892e0", font=3)
