@@ -56,11 +56,15 @@ table(wiki_survey_en$age_tr, useNA = "ifany")
 
 # definition des subsets ACM et ACM2 (sans les NA): on en a besoin pour le recodage
 
-acm <- subset(wiki_survey_en, select=c(Q22_education, Q23_currentlyinschool, Q25_conjugal, Q26_child, Q27_gender, age_tr, Q2_anciennete,
+acm <- subset(wiki_survey_en, select=c(Q17_toomuchrules, Q17_support, Q17_access, Q17_critiscism, Q17_notfun, Q17_ownership,
+                                       Q18_mission, Q18_fellowquality, Q18_opinion, Q14_helpful, Q14_friendly, Q14_collaborative,
+                                       Q14_rude, Q14_unfriendly, Q14_intelligent, Q14_dumb, Q14_arrogant,
+                                       Q22_education, Q23_currentlyinschool, Q25_conjugal, Q26_child, Q27_gender, age_tr, Q2_anciennete,
                                        Q20_tempseditheures, Q24_employement, Q1_everedited,Q9_newarticles,Q9_content,Q9_spellcheck, 
                                        Q9_translation,Q9_vandalism,Q9_readerscomplaint,
                                        Q9_mediation,Q9_technical, Q9_discussion, Q9_regulation, Q9_featuredreview, Q9_suppression,
                                        Q9_helpdesk, Q16_editorial, Q16_technical, Q16_article, Q16_references, Q16_content))
+colnames(acm)
 
 acm <- as.data.frame(lapply(acm, factor))
 
@@ -179,12 +183,353 @@ round(prop.table(table(wiki_survey_en$Q2_anciennete, wiki_survey_en$Q9_mediation
 a <- chisq.test(table(wiki_survey_en$Q2_anciennete[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_mediation_re) !=T],
                       wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q2_anciennete) !=T & is.na(wiki_survey_en$Q9_mediation_re) !=T]))
 
+# stats descriptive (prudence, elles portent sur les questions formulées de manière absolument abominables)
+
+### mediation/too much rules: Non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q9_mediation_re) !=T]))
+
+# mediation: critiscism: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q9_mediation_re) !=T]))
+
+# mediation notfun: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q9_mediation_re) !=T]))
+
+# mediation / mission: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q9_mediation_re) !=T]))
+
+# mediation / fellow_quality: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q9_mediation_re) !=T]))
+
+# mediation /opinion: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_mediation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q9_mediation_re) !=T],
+                      wiki_survey_en$Q9_mediation_re[is.na(wiki_survey_en$Q9_mediation_re) !=T]))
+
+
+### technical /too much rules: Non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+# technical /criticism: Significatif au seuil de 10%
+
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+# technical /notfun: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+# technical access to research materials : non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_access[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+# technical /mission: significatif au seuil de 5%
+
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+# technical / fellow_quality: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+# technical /newarticles : significatif au seuil de 1%
+
+round(prop.table(table(wiki_survey_en$Q9_newarticles_re, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q9_newarticles_re, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+
+# technical /opinion: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+### newarticles /too much rules: Non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+# newarticles /criticism: Significatif au seuil de 10%
+
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+# newarticles /notfun: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+# tnewarticles access to research materials : non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_access[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+# newarticles /mission: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+# newarticles / fellow_quality: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+# newarticles /opinion: non significatif: significatif au seuil de 5%
+
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_newarticles_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q9_newarticles_re) !=T],
+                      wiki_survey_en$Q9_newarticles_re[is.na(wiki_survey_en$Q9_newarticles_re) !=T]))
+
+### discussion /too much rules: Non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+# discussion /criticism: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+# discussion /notfun: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+# discussion access to research materials : non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_access[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+# discussion /mission: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+# discussion / fellow_quality: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+# discussion /newarticles : significatif au seuil de 1%
+
+round(prop.table(table(wiki_survey_en$Q9_discussion_re, wiki_survey_en$Q9_technical_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q9_discussion_re, wiki_survey_en$Q9_technical_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+
+# discussion /opinion: significatif au seuil de 10%
+
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_discussion_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+
+### regulation /too much rules: Non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+# regulation /criticism: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+# regulation /notfun: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+# regulation / access to research materials : non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_access[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+# regulation /mission: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+# regulation / fellow_quality: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+# discussion / regulation : significatif au seuil de 1%
+
+round(prop.table(table(wiki_survey_en$Q9_discussion_re, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q9_discussion_re, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_regulation_re) !=T & is.na(wiki_survey_en$Q9_discussion_re) !=T],
+                      wiki_survey_en$Q9_discussion_re[is.na(wiki_survey_en$Q9_regulation_re) !=T & is.na(wiki_survey_en$Q9_discussion_re) !=T]))
+
+
+# regulation /opinion: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q9_regulation_re) !=T],
+                      wiki_survey_en$Q9_regulation_re[is.na(wiki_survey_en$Q9_regulation_re) !=T]))
+
+
+# technical / regulation : significatif au seuil de 1%
+
+round(prop.table(table(wiki_survey_en$Q9_technical_re, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q9_technical_re, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_regulation_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_regulation_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+### content /too much rules: Non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+# content /criticism: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_critiscism, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+# content /notfun: non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_notfun, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+# content / access to research materials : non significatif
+
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q17_access, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q17_access[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+# content /mission: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_mission, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+# content / fellow_quality: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+# content / regulation : significatif au seuil de 1%
+
+round(prop.table(table(wiki_survey_en$Q9_content_re, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q9_content_re, wiki_survey_en$Q9_regulation_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_regulation_re) !=T & is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_regulation_re) !=T & is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+
+# content /opinion: non significatif
+
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q18_opinion, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q9_content_re) !=T],
+                      wiki_survey_en$Q9_content_re[is.na(wiki_survey_en$Q9_content_re) !=T]))
+
+
+# technical / content : significatif au seuil de 1%
+
+round(prop.table(table(wiki_survey_en$Q9_technical_re, wiki_survey_en$Q9_content_re, useNA = "ifany"),1)*100,3)
+round(prop.table(table(wiki_survey_en$Q9_technical_re, wiki_survey_en$Q9_content_re, useNA = "ifany"),2)*100,3)
+a <- chisq.test(table(wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_content_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T],
+                      wiki_survey_en$Q9_technical_re[is.na(wiki_survey_en$Q9_content_re) !=T & is.na(wiki_survey_en$Q9_technical_re) !=T]))
+
+
+
 #### ACM ####
 
 ## ACM sur les premières Questions pour y voir un peu plus clair: (! beaucoup de NA, on les supprime, mais quand même...)
 
 
-res.acm <- MCA(acm, quali.sup=1:9, graph=T, level.ventil=0.005)
+res.acm <- MCA(acm, quali.sup=1:26, graph=T, level.ventil=0.005)
 
 # Axes retenus (3 axes)
 
@@ -239,7 +584,7 @@ acm2 <- as.data.frame(lapply(acm2, factor))
 
 # 2eme ACM:
 
-res.acm <- MCA(acm2, quali.sup=1:9, graph=T, level.ventil=0.005)
+res.acm <- MCA(acm2, quali.sup=1:26, graph=T, level.ventil=0.005)
 
 # Axes retenus
 
@@ -345,12 +690,22 @@ text(res.acm$var$coord[modatot,2:3], labels=etiquettes[modatot],
      col="#da4d45", cex=1, pos=c(3, 4, 3, 3, 3, 2, 4, 4, 1, 2, 
                                4, 2, 3))
 
-# Ajout des modalites supplementaire
+# Ajout des modalites supplementaire: temps de contrib et sociodemo
 modasup=c("educ_doctorate", "educ_master_degree", "educ_primary_education", "educ_secondary_education", "educ_tertiary_education", "currentlyin_school_no", "currentlyin_school_yes", 
           "married", "have_partner", "single", "have_child_no", "have_child_yes", "female", "male", "age[>50]", "age[18-30]",
           "age[30-50]", "age[<18]", "inscription[2001-2004]", "inscription[2005-2009]", "inscription[2009-2012]", "temps_edit[>15 hours]", "temps_edit[1-3 hours]", "temps_edit[4-15 hours]",
           "employement_no", "employement_yes(part time)", "employement_yes(full time)")
 
-text(res.acm$quali.sup$coord[c(1:3,5:8,10,11,13:15,17,18,21:24,27:29,31:33,35:37), 1:2]*1.4, 
+text(res.acm$quali.sup$coord[c(35:38,39:42,44,45,47:49,51,52,55:58,61:63,65:67,69:71), 1:2]*1.4, 
      labels=modasup,
+     cex=0.8, col="#3892e0", font=3)
+
+# Ajout des supplementaires: ressenti wiki et autres contributeurs
+
+modasup2=c("too_much_rules","support_from_other_editors","lack_access_resarch_material","critiscism_of_work","editors_not_fun",
+           "editors_own_pages","wiki_mission_feel_important","fellow_volunteers_produce_quality","my_opinion_count","helpful",
+           "friendly","collaborative","rude","unfriendly","dumb","arrogrant")
+
+text(res.acm$quali.sup$coord[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34), 1:2]*1.4, 
+     labels=modasup2,
      cex=0.8, col="#3892e0", font=3)
