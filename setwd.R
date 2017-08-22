@@ -19,6 +19,14 @@ library('foreign')
 library('R2HTML')
 library('readODS')
 
+## Pour les réseaux page/edit
+
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/pages/edits/')
+
+## Pour les réseaux page/talk
+
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/pages/talk/')
+
 
 #### Windows: #####
 
@@ -38,3 +46,11 @@ library('lmtest')
 library('foreign')
 library('R2HTML')
 library('readODS')
+
+## Reseau page edit
+
+setwd('C:/Users/tenroc/Documents/networks/pages/edits/')
+
+## Reseau page talk
+
+setwd('C:/Users/tenroc/Documents/networks/pages/talk/')

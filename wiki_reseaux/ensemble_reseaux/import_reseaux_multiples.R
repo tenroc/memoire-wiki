@@ -1,11 +1,5 @@
 #### Automatisation de la réccupération des donées contrib sur l'ensemble des réseaux: ####
 
-setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/pages/edits/')
-
-# Test 1 sur les réseaux d'édition.
-
-list_edits <- lapply(Sys.glob("*.csv"), read.csv2)
-
 # Test 2: toujours featured/edits, mais autre import:
 
 list_edits <- list.files(pattern="*.csv")
@@ -26,18 +20,20 @@ for (i in names(ledits)){
 
 temp <- levels(as.factor(temp))
 
-View(ledits[[4]])
+## retrieve original page name
+
+temp <- gsub( ".csv.*$", "", temp )
+write(temp, file="../temp.txt", sep="/n")
 
 # Récuppérer les réseaux de talk
 
-setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/pages/talk/')
 
 list_talk <- list.files(pattern="*.csv")
 
 ltalks <- list()
 
 for (i in list_talk){
-  ltalk[[paste(i,"talk",sep="_")]] <- read.csv2(i)
+  ltalks[[paste(i,"talk",sep="_")]] <- read.csv2(i)
 }
 
 # Réccupérer tous les contributeurs dans une grande liste? (pas forcément une bonne idée)
@@ -46,6 +42,11 @@ isanon <- character()
 for (i in names(ledits)){
   contributeurs <- append(contributeurs,as.character(ledits[[i]][,"ActiveUser"]))
   isanon <- append(isanon,as.character(ledits[[i]][,"IsAnonymous"]))
+}
+
+for (i in names(ledits)){
+  contributeurs <- append(contributeurs,as.character(ltalks[[i]][,"ActiveUser"]))
+  isanon <- append(isanon,as.character(ltalks[[i]][,"IsAnonymous"]))
 }
 
 attributes <- data.frame(contributeurs,isanon)
@@ -68,7 +69,7 @@ for (i in 1:length(attributes$contributeurs)){
       temp <- userInfo(attributes[i,"contributeurs"],"en")
       attributes[i,"total_rev_count"] <- paste(temp[[5]][1,"editcount"])
       attributes[i, "registration_year"] <- substring(temp[[5]][1,"registration"],1,4)
-      if ("sysop" %in% temp[[3]] == T){
+      if ("sysop" %in% temp[[3]] == T | as.character(attributes[i,"contributeurs"]) %in% admin_list_definitive){
         attributes[i,"status_contrib"] <- "admin"
       } else {
         if ("bot" %in% temp[[3]] == T){
@@ -82,6 +83,9 @@ for (i in 1:length(attributes$contributeurs)){
     }
   }, error = function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
+
+
+write.csv2(attributes, file="attributes.csv", fileEncoding = "UTF8")
 
 #### Pour chaque élément de la liste des réseaux, obtenir un graphe ####
 
@@ -101,7 +105,6 @@ for (i in names(ledits)){
                                                   ,"InteractionType_num"] <- 3
 }
 
-View(ledits_edgelists[[16]])
 
 # Puis les objets graphe
 
@@ -112,5 +115,3 @@ for (i in names(ledits_edgelists)){
   ledits_edgelists[[i]][ledits_edgelists[[i]][,"V2"] == "" | is.na(ledits_edgelists[[i]][,"V2"]) == T,"V2"] <- "page"
   ledits_graphe[[i]] <- graph.data.frame(ledits_edgelists[[i]], directed = T)
 }
-
-plot(ledits_graphe[[1]])
