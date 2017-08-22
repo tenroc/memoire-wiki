@@ -16,7 +16,17 @@ for (i in list_edits){
   ledits[[paste(i,"edits",sep="_")]] <- read.csv2(i)
 }
 
-View(ledits[[1]])
+temp <- character()
+for (i in names(ledits)){
+  if (is.na(ledits[[i]][1,1]) == T){
+    temp[i] <- paste(i,"edits",sep="_")
+    ledits[[i]] <- NULL
+  }
+}
+
+temp <- levels(as.factor(temp))
+
+View(ledits[[4]])
 
 # Récuppérer les réseaux de talk
 
@@ -72,3 +82,35 @@ for (i in 1:length(attributes$contributeurs)){
     }
   }, error = function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
+
+#### Pour chaque élément de la liste des réseaux, obtenir un graphe ####
+
+# Creer les edgelists
+
+ledits_edgelists <- list()
+
+for (i in names(ledits)){
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]] <- subset(ledits[[i]], select= c(ActiveUser, TargetAuthor, InteractionType, WordCount))
+  colnames(ledits_edgelists[[paste(i,"_edgelist",sep="")]]) <- c("V1","V2", "InteractionType","Wordcount")
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType_num"] <- as.character(ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"])
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "ADDED"
+                                                    ,"InteractionType_num"] <- 1
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "DELETED"
+                                                  ,"InteractionType_num"] <- 2
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "RESTORED"
+                                                  ,"InteractionType_num"] <- 3
+}
+
+View(ledits_edgelists[[16]])
+
+# Puis les objets graphe
+
+ledits_graphe <- list()
+
+for (i in names(ledits_edgelists)){
+  ledits_edgelists[[i]][,"V2"] <- as.character(ledits_edgelists[[i]][,"V2"])
+  ledits_edgelists[[i]][ledits_edgelists[[i]][,"V2"] == "" | is.na(ledits_edgelists[[i]][,"V2"]) == T,"V2"] <- "page"
+  ledits_graphe[[i]] <- graph.data.frame(ledits_edgelists[[i]], directed = T)
+}
+
+plot(ledits_graphe[[1]])
