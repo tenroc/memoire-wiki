@@ -4,6 +4,8 @@ controversy <- page_links('Wikipedia:List_of_controversial_issues',"en")
 controversy_data <- as.character(controversy[[1]])
 controversy_data <- gsub(" ","_",controversy_data)
 
+write(controversy_data, file="controversy_list.txt", sep="/n")
+
 # sample de 200: 
 
 controversy_sample <- sample(controversy_data, 100)
@@ -17,6 +19,8 @@ write(controversy_sample, file="controversy_sample.txt", sep="/n")
 featured <- page_links('Wikipedia:Featured_articles',"en")
 featured_data <- as.character(featured[[1]])
 featured_data <- gsub(" ","_",featured_data)
+
+write(featured_data, file="featured_list.txt", sep="/n")
 
 # sample de 200:
 
@@ -52,11 +56,3 @@ admin_list_definitive <- levels(as.factor(append(temp, c(as.character(admin_list
                                        as.character(admin_list_former$V1), as.character(admin_list_inactive$V1)))))
 
 write(admin_list_definitive, file="admin_list_definitive.txt", sep="/n")
-
-# Linux
-
-admin_list_definitive <- read.table("~/Documents/memoire-wiki/wiki_reseaux/admin_list_definitive.txt")
-
-# windows
-
-admin_list_definitive <- read.table("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/admin_list_definitive.txt")

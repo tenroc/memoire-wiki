@@ -68,65 +68,89 @@ for (i in names(ltalks)){
   contributeurs_talk <- append(contributeurs_talk,as.character(ltalks[[i]][,"ActiveUser"]))
 }
 
-isanon_talk <- ifelse(grepl("[0-9+]\\.[0-9+].*", contributeurs_talk) ==T, 1, 0)
+isanon_talk <- ifelse(grepl("[0-9+]\\.[0-9+].*", contributeurs_talk) ==T | grepl("[0-9+]\\:[0-9+].*", contributeurs_talk) == T, 1, 0)
 
 contributeurs <- append(contributeurs, contributeurs_talk)
 isanon <- append(isanon, isanon_talk)
 
-attributes <- data.frame(contributeurs,isanon)
-attributes <- unique(attributes)
+attributes_page <- data.frame(contributeurs,isanon)
+attributes_page <- unique(attributes_page)
 
 # Recodages anonymes
 
-attributes$status_contrib[attributes$isanon == 0] <- "inscrit"
-attributes$status_contrib[attributes$isanon == 1] <- "anonyme"
+attributes_page$status_contrib[attributes_page$isanon == 0] <- "inscrit"
+attributes_page$status_contrib[attributes_page$isanon == 1] <- "anonyme"
 
 # Remplacer les " " par des "_" dans les noms de contributeurs (sinon bug XML)
 
-attributes$contributeurs <- gsub(" ","_",attributes$contributeurs)
+attributes_page$contributeurs <- gsub(" ","_",attributes_page$contributeurs)
 
 # Récuppérer les attributs de la meta_contributor list
 
-for (i in 1:length(attributes$contributeurs)){
+for (i in 1:length(attributes_page$contributeurs)){
   tryCatch({
-    if(attributes[i,"status_contrib"] != "anonyme"){
-      temp <- userInfo(attributes[i,"contributeurs"],"en")
-      attributes[i,"total_rev_count"] <- paste(temp[[5]][1,"editcount"])
-      attributes[i, "registration_year"] <- substring(temp[[5]][1,"registration"],1,4)
-      if ("sysop" %in% temp[[3]] == T | as.character(attributes[i,"contributeurs"]) %in% admin_list_definitive){
-        attributes[i,"status_contrib"] <- "admin"
+    if(attributes_page[i,"status_contrib"] != "anonyme"){
+      temp <- userInfo(attributes_page[i,"contributeurs"],"en")
+      attributes_page[i,"total_rev_count"] <- paste(temp[[5]][1,"editcount"])
+      attributes_page[i, "registration_year"] <- substring(temp[[5]][1,"registration"],1,4)
+      if ("sysop" %in% temp[[3]] == T | as.character(attributes_page[i,"contributeurs"]) %in% admin_list_definitive){
+        attributes_page[i,"status_contrib"] <- "admin"
       } else {
         if ("bot" %in% temp[[3]] == T){
-          attributes[i,"status_contrib"] <- "bot"
+          attributes_page[i,"status_contrib"] <- "bot"
         }
       }
     } else {
-      temp <- contrib_list(attributes[i,"contributeurs"], domain ="en")
-      attributes[i,"total_rev_count"] <- length(temp[,"V1"])
-      attributes[i,"registration_year"] <- as.character(min(as.numeric(substring(temp$V2,1,4))))
+      temp <- contrib_list(attributes_page[i,"contributeurs"], domain ="en")
+      attributes_page[i,"total_rev_count"] <- length(temp[,"V1"])
+      attributes_page[i,"registration_year"] <- as.character(min(as.numeric(substring(temp$V2,1,4))))
     }
   }, error = function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
 
 
-write.csv2(attributes, file="nodes_attributes_page_network.csv", fileEncoding = "UTF8")
+write.csv2(attributes_page, file="nodes_attributes_page_network.csv", fileEncoding = "UTF8")
 
 ## Rattacher les attributs des noeuds a la base originale:
 
-contributeurs <- unique(contributeurs)
+for(i in names(ledits)){
+  ledits[[i]][,"ActiveUser"] <- gsub(" ","_",ledits[[i]][,"ActiveUser"])
+  ledits[[i]][,"TargetAuthor"] <- gsub(" ","_",ledits[[i]][,"TargetAuthor"])
+  ledits[[i]][,"UndoTarget"] <- gsub(" ","_",ledits[[i]][,"UndoTarget"])
+  ledits[[i]][,"RedoTarget"] <- gsub(" ","_",ledits[[i]][,"RedoTarget"])
+}
 
-attributes$contributeurs <- contributeurs
+View(ledits[[2]])
 
 for(i in names(ledits)){
   for(j in 1:nrow(ledits[[i]])){
-  ledits[[i]][j,"status_contrib"] <-  attributes2[as.character(attributes2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+  ledits[[i]][j,"status_contrib"] <-  attributes_page[as.character(attributes_page$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
                                                   "status_contrib"]
-  ledits[[i]][j,"total_rev_count"] <-  attributes2[as.character(attributes2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+  ledits[[i]][j,"total_rev_count"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
                                                   "total_rev_count"]
-  ledits[[i]][j,"registration_year"] <-  attributes2[as.character(attributes2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+  ledits[[i]][j,"registration_year"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
                                                   "registration_year"]
   }
 }
+
+# Temp: probleme: relance juste la boucle de constitution des attributes....
+
+length(which(attributes_page$contributeurs == "2601:147:C101:67A7:C064:EC01:DF66:3B3F"))
+attributes_page_hue[attributes_page$contributeurs_hue == "2601:147:C101:67A7:C064:EC01:DF66:3B3F",][1,] <- NULL
+attributes_page$status_contrib [attributes_page$contributeurs == "2601:147:C101:67A7:C064:EC01:DF66:3B3F"]
+attributes_page$isanon[,2]
+attributes_page[87,]
+attributes_page[1874,]
+attributes_page_hue <- attributes_page
+
+for (i in attributes_page$contributeurs){
+  if(length(which(attributes_page$contributeurs == i))>1){
+    attributes_page[which(attributes_page$contributeurs == i)[1],]
+  }
+}
+
+attributes_page$isanon <- as.character(attributes_page$isanon)
+attributes_page$status_contrib <- as.character(attributes_page$status_contrib)
 
 #### Pour chaque élément de la liste des réseaux, obtenir un graphe ####
 
@@ -135,8 +159,8 @@ for(i in names(ledits)){
 ledits_edgelists <- list()
 
 for (i in names(ledits)){
-  ledits_edgelists[[paste(i,"_edgelist",sep="")]] <- subset(ledits[[i]], select= c(ActiveUser, TargetAuthor, InteractionType, WordCount, status_contrib, total_rev_count, registration_year))
-  colnames(ledits_edgelists[[paste(i,"_edgelist",sep="")]]) <- c("V1","V2", "InteractionType","Wordcount", "status_contrib", "total_rev_count", "registration_year")
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]] <- subset(ledits[[i]], select= c(ActiveUser, TargetAuthor, InteractionType, WordCount))
+  colnames(ledits_edgelists[[paste(i,"_edgelist",sep="")]]) <- c("V1","V2", "InteractionType","Wordcount")
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType_num"] <- as.character(ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"])
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "ADDED"
                                                     ,"InteractionType_num"] <- 1
@@ -175,7 +199,7 @@ for (i in page_attributes$page){
   a[i] <- edge_density(ledits_graphe[[i]])
   b[i] <- vcount(ledits_graphe[[i]])
   temp <- append(as.character(ledits_edgelists[[i]][,"V1"]),as.character(ledits_edgelists[[i]][,"V2"]))
-  c[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes$contributeurs[attributes$isanon == "1"]])
+  c[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$isanon == "1"]])
   d[i] <- ecount(ledits_graphe[[i]])
   e[i] <- transitivity(ledits_graphe[[i]])
 }
