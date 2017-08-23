@@ -76,25 +76,6 @@ isanon <- append(isanon, isanon_talk)
 attributes <- data.frame(contributeurs,isanon)
 attributes <- unique(attributes)
 
-# temp
-
-attributes <- data.frame(contributeurs_talk,isanon_talk)
-attributes <- unique(attributes)
-colnames(attributes) <- c("contributeurs","isanon")
-
-attributes2 <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/attributes.csv")
-
-attributes <- merge(attributes, attributes2, by="contributeurs", all=T)
-attributes[,2] <- cbind(attributes$isanon.x,attributes$isanon.y)
-attributes <- attributes[,c(1,2,5:7)]
-colnames(attributes) <- c("contributeurs","isanon","status_contrib","total_rev_count","registration_year")
-
-attributes <- attributes[is.na(attributes$status_contrib) == T,]
-
-attributes <- attributes[-1,c(-3,-4,-5)]
-
-attributes$isanon <- attributes$isanon[,-2]
-
 # Recodages anonymes
 
 attributes$status_contrib[attributes$isanon == 0] <- "inscrit"

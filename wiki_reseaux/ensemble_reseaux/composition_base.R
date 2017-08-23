@@ -53,4 +53,10 @@ admin_list_definitive <- levels(as.factor(append(temp, c(as.character(admin_list
 
 write(admin_list_definitive, file="admin_list_definitive.txt", sep="/n")
 
+# Linux
+
 admin_list_definitive <- read.table("~/Documents/memoire-wiki/wiki_reseaux/admin_list_definitive.txt")
+
+# windows
+
+admin_list_definitive <- read.table("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/admin_list_definitive.txt")
