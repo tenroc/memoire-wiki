@@ -62,19 +62,41 @@ for (i in names(ledits)){
   isanon <- append(isanon,as.character(ledits[[i]][,"IsAnonymous"]))
 }
 
+# isanon <- ifelse(grepl("[0-9+]\\.[0-9+]\\.[0-9+].*", contributeurs) ==T | grepl("[0-9+]\\:[0-9+]\\:[0-9+].*", contributeurs) == T, 1, 0)
+
 contributeurs_talk <- character()
 
 for (i in names(ltalks)){
   contributeurs_talk <- append(contributeurs_talk,as.character(ltalks[[i]][,"ActiveUser"]))
 }
 
-isanon_talk <- ifelse(grepl("[0-9+]\\.[0-9+].*", contributeurs_talk) ==T | grepl("[0-9+]\\:[0-9+].*", contributeurs_talk) == T, 1, 0)
+isanon_talk <- ifelse(grepl("^*\\d+\\.\\d+\\.\\d+", contributeurs_talk) ==T | grepl("^*.*\\:.*\\:.*\\:.*\\:", contributeurs_talk) == T, 1, 0)
 
 contributeurs <- append(contributeurs, contributeurs_talk)
 isanon <- append(isanon, isanon_talk)
 
 attributes_page <- data.frame(contributeurs,isanon)
 attributes_page <- unique(attributes_page)
+
+# tests
+
+a <-c("Bugboy52.40", "trala67.89","seim","eiufhuze","168.365.13","222:333:444:5","64.3oulala","2607:F470:6:5002:A1FC:502:7F3D:5655")
+
+grepl("^*\\d+\\.\\d+\\.\\d+", a)
+
+grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
+
+grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
+
+attributes_page[grepl("^*.*\\:.*\\:.*\\:.*\\:",attributes_page$contributeurs) == T & attributes_page$isanon == 0,"contributeurs"]
+
+grepl("*[a-z]",a)
+
+
+attributes_page[as.character(attributes_page$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
+                "contributeurs"]
+
+attributes_page[attributes_page$contributeurs == "Bugboy52.40",]
 
 # Recodages anonymes
 
@@ -109,9 +131,11 @@ for (i in 1:length(attributes_page$contributeurs)){
 }
 
 
-write.csv2(attributes_page, file="nodes_attributes_page_network.csv", fileEncoding = "UTF8")
+write.csv2(attributes_page, file="../nodes_attributes_page_network.csv", fileEncoding = "UTF8")
 
 ## Rattacher les attributs des noeuds a la base originale:
+
+# edits:
 
 for(i in names(ledits)){
   ledits[[i]][,"ActiveUser"] <- gsub(" ","_",ledits[[i]][,"ActiveUser"])
@@ -133,24 +157,28 @@ for(i in names(ledits)){
   }
 }
 
-# Temp: probleme: relance juste la boucle de constitution des attributes....
 
-length(which(attributes_page$contributeurs == "2601:147:C101:67A7:C064:EC01:DF66:3B3F"))
-attributes_page_hue[attributes_page$contributeurs_hue == "2601:147:C101:67A7:C064:EC01:DF66:3B3F",][1,] <- NULL
-attributes_page$status_contrib [attributes_page$contributeurs == "2601:147:C101:67A7:C064:EC01:DF66:3B3F"]
-attributes_page$isanon[,2]
-attributes_page[87,]
-attributes_page[1874,]
-attributes_page_hue <- attributes_page
+# talk:
 
-for (i in attributes_page$contributeurs){
-  if(length(which(attributes_page$contributeurs == i))>1){
-    attributes_page[which(attributes_page$contributeurs == i)[1],]
-  }
+for(i in names(ltalkss)){
+  ltalks[[i]][,"ActiveUser"] <- gsub(" ","_",ltalks[[i]][,"ActiveUser"])
+  ltalks[[i]][,"TargetAuthor"] <- gsub(" ","_",ltalks[[i]][,"TargetAuthor"])
+  ltalks[[i]][,"UndoTarget"] <- gsub(" ","_",ltalks[[i]][,"UndoTarget"])
+  ltalks[[i]][,"RedoTarget"] <- gsub(" ","_",ltalks[[i]][,"RedoTarget"])
 }
 
-attributes_page$isanon <- as.character(attributes_page$isanon)
-attributes_page$status_contrib <- as.character(attributes_page$status_contrib)
+View(ltalks[[2]])
+
+for(i in names(ltalks)){
+  for(j in 1:nrow(ltalks[[i]])){
+    ltalks[[i]][j,"status_contrib"] <-  attributes_page[as.character(attributes_page$contributeurs) %in% as.character(ltalks[[i]][j,"ActiveUser"]),
+                                                        "status_contrib"]
+    ltalks[[i]][j,"total_rev_count"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
+                                                         "total_rev_count"]
+    ltalks[[i]][j,"registration_year"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
+                                                           "registration_year"]
+  }
+}
 
 #### Pour chaque élément de la liste des réseaux, obtenir un graphe ####
 
@@ -181,10 +209,10 @@ for (i in names(ledits_edgelists)){
   ledits_graphe[[i]] <- graph.data.frame(ledits_edgelists[[i]], directed = T)
 }
 
-#### constitution de la base: page_attributes ####
+#### constitution de la base: page_attributes_edit ####
 
 page <- names(ledits_graphe)
-page_attributes <- as.data.frame(page)
+page_attributes_edit <- as.data.frame(page)
 
 a <- character()
 b <- character()
@@ -195,7 +223,7 @@ f <- character()
 g <- character()
 
 
-for (i in page_attributes$page){
+for (i in page_attributes_edit$page){
   a[i] <- edge_density(ledits_graphe[[i]])
   b[i] <- vcount(ledits_graphe[[i]])
   temp <- append(as.character(ledits_edgelists[[i]][,"V1"]),as.character(ledits_edgelists[[i]][,"V2"]))
@@ -204,31 +232,31 @@ for (i in page_attributes$page){
   e[i] <- transitivity(ledits_graphe[[i]])
 }
 
-page_attributes$density <- a
-page_attributes$ncontributors <- b
-page_attributes$nanon <- c
-page_attributes$nedits <- d
-page_attributes$transitivity <- e
+page_attributes_edit$density <- a
+page_attributes_edit$ncontributors <- b
+page_attributes_edit$nanon <- c
+page_attributes_edit$nedits <- d
+page_attributes_edit$transitivity <- e
 
 # Is the page controversial or featured?
 
-temp <- gsub( ".csv.*$", "", page_attributes$page)
+temp <- gsub( ".csv.*$", "", page_attributes_edit$page)
 
-for (i in page_attributes$page){
-  if (as.character(page_attributes$page[i]) %in% controversy_data){
+for (i in page_attributes_edit$page){
+  if (as.character(page_attributes_edit$page[i]) %in% controversy_data){
     f[i] <- 1
   } else {
     f[i] <- 0
   }
 }
 
-for (i in page_attributes$page){
-  if (as.character(page_attributes$page[i]) %in% featured_data){
+for (i in page_attributes_edit$page){
+  if (as.character(page_attributes_edit$page[i]) %in% featured_data){
     g[i] <- 1
   } else {
     g[i] <- 0
   }
 }
 
-page_attributes$iscontroversial <- f
-page_attributes$isfeatured <- g
+page_attributes_edit$iscontroversial <- f
+page_attributes_edit$isfeatured <- g
