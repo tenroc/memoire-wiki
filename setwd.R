@@ -79,6 +79,22 @@ setwd('C:/Users/tenroc/Documents/networks/pages/edits/')
 
 setwd('C:/Users/tenroc/Documents/networks/pages/talk/')
 
+## Reseau contro edit
+
+setwd('C:/Users/tenroc/Documents/networks/contro/edits/')
+
+## Reseau contro talk
+
+setwd('C:/Users/tenroc/Documents/networks/contro/talk/')
+
+## Reseau featured edit
+
+setwd('C:/Users/tenroc/Documents/networks/featured/edits/')
+
+## Reseau featured talk
+
+setwd('C:/Users/tenroc/Documents/networks/featured/talk/')
+
 ## charger les bases:
 
 # list admins

@@ -1,6 +1,6 @@
 #### Automatisation de la réccupération des donées contrib sur l'ensemble des réseaux: ####
 
-# Test 2: toujours featured/edits, mais autre import:
+# Import contro/edits:
 
 list_edits <- list.files(pattern="*.csv")
 
@@ -73,67 +73,47 @@ isanon_talk <- ifelse(grepl("^*\\d+\\.\\d+\\.\\d+", contributeurs_talk) ==T | gr
 contributeurs <- append(contributeurs, contributeurs_talk)
 isanon <- append(isanon, isanon_talk)
 
-attributes_page <- data.frame(contributeurs,isanon)
-attributes_page <- unique(attributes_page)
-
-# tests
-
-a <-c("Bugboy52.40", "trala67.89","seim","eiufhuze","168.365.13","222:333:444:5","64.3oulala","2607:F470:6:5002:A1FC:502:7F3D:5655")
-
-grepl("^*\\d+\\.\\d+\\.\\d+", a)
-
-grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
-
-grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
-
-attributes_page[grepl("^*.*\\:.*\\:.*\\:.*\\:",attributes_page$contributeurs) == T & attributes_page$isanon == 0,"contributeurs"]
-
-grepl("*[a-z]",a)
-
-
-attributes_page[as.character(attributes_page$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
-                "contributeurs"]
-
-attributes_page[attributes_page$contributeurs == "Bugboy52.40",]
+attributes_contro <- data.frame(contributeurs,isanon)
+attributes_contro <- unique(attributes_contro)
 
 # Recodages anonymes
 
-attributes_page$status_contrib[attributes_page$isanon == 0] <- "inscrit"
-attributes_page$status_contrib[attributes_page$isanon == 1] <- "anonyme"
+attributes_contro$status_contrib[attributes_contro$isanon == 0] <- "inscrit"
+attributes_contro$status_contrib[attributes_contro$isanon == 1] <- "anonyme"
 
 # Remplacer les " " par des "_" dans les noms de contributeurs (sinon bug XML)
 
-attributes_page$contributeurs <- gsub(" ","_",attributes_page$contributeurs)
+attributes_contro$contributeurs <- gsub(" ","_",attributes_contro$contributeurs)
 
 # Récuppérer les attributs de la meta_contributor list
 
-for (i in 1:length(attributes_page$contributeurs)){
+for (i in 1:length(attributes_contro$contributeurs)){
   tryCatch({
-    if(attributes_page[i,"status_contrib"] != "anonyme"){
-      temp <- userInfo(attributes_page[i,"contributeurs"],"en")
-      attributes_page[i,"total_rev_count"] <- paste(temp[[5]][1,"editcount"])
-      attributes_page[i, "registration_year"] <- substring(temp[[5]][1,"registration"],1,4)
-      if ("sysop" %in% temp[[3]] == T | as.character(attributes_page[i,"contributeurs"]) %in% admin_list_definitive){
-        attributes_page[i,"status_contrib"] <- "admin"
+    if(attributes_contro[i,"status_contrib"] != "anonyme"){
+      temp <- userInfo(attributes_contro[i,"contributeurs"],"en")
+      attributes_contro[i,"total_rev_count"] <- paste(temp[[5]][1,"editcount"])
+      attributes_contro[i, "registration_year"] <- substring(temp[[5]][1,"registration"],1,4)
+      if ("sysop" %in% temp[[3]] == T | as.character(attributes_contro[i,"contributeurs"]) %in% admin_list_definitive){
+        attributes_contro[i,"status_contrib"] <- "admin"
       } else {
         if ("bot" %in% temp[[3]] == T){
-          attributes_page[i,"status_contrib"] <- "bot"
+          attributes_contro[i,"status_contrib"] <- "bot"
         }
       }
     } else {
-      temp <- contrib_list(attributes_page[i,"contributeurs"], domain ="en")
-      attributes_page[i,"total_rev_count"] <- length(temp[,"V1"])
-      attributes_page[i,"registration_year"] <- as.character(min(as.numeric(substring(temp$V2,1,4))))
+      temp <- contrib_list(attributes_contro[i,"contributeurs"], domain ="en")
+      attributes_contro[i,"total_rev_count"] <- length(temp[,"V1"])
+      attributes_contro[i,"registration_year"] <- as.character(min(as.numeric(substring(temp$V2,1,4))))
     }
   }, error = function(e){cat("ERROR :",conditionMessage(e), "\n")})
 }
 
-attributes_page$contributeurs <- as.character(attributes_page$contributeurs)
-attributes_page$status_contrib <- as.character(attributes_page$status_contrib)
-attributes_page[attributes_page$contributeurs == "", "status_contrib"] <- "page"
-attributes_page[attributes_page$contributeurs == "", "contributeurs"] <- "page"
+attributes_contro$contributeurs <- as.character(attributes_contro$contributeurs)
+attributes_contro$status_contrib <- as.character(attributes_contro$status_contrib)
+attributes_contro[attributes_contro$contributeurs == "", "status_contrib"] <- "page"
+attributes_contro[attributes_contro$contributeurs == "", "contributeurs"] <- "page"
 
-write.csv2(attributes_page, file="../nodes_attributes_page_network.csv", fileEncoding = "UTF8")
+write.csv2(attributes_contro, file="../nodes_attributes_contro_network.csv", fileEncoding = "UTF8")
 
 ## Rattacher les attributs des noeuds a la base originale:
 
@@ -148,12 +128,12 @@ for(i in names(ledits)){
 
 for(i in names(ledits)){
   for(j in 1:nrow(ledits[[i]])){
-  ledits[[i]][j,"status_contrib"] <-  attributes_page[as.character(attributes_page$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
-                                                  "status_contrib"]
-  ledits[[i]][j,"total_rev_count"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
-                                                  "total_rev_count"]
-  ledits[[i]][j,"registration_year"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
-                                                  "registration_year"]
+    ledits[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
+                                                        "status_contrib"]
+    ledits[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+                                                         "total_rev_count"]
+    ledits[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+                                                           "registration_year"]
   }
 }
 
@@ -169,11 +149,11 @@ for(i in names(ltalkss)){
 
 for(i in names(ltalks)){
   for(j in 1:nrow(ltalks[[i]])){
-    ltalks[[i]][j,"status_contrib"] <-  attributes_page[as.character(attributes_page$contributeurs) %in% as.character(ltalks[[i]][j,"ActiveUser"]),
+    ltalks[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ltalks[[i]][j,"ActiveUser"]),
                                                         "status_contrib"]
-    ltalks[[i]][j,"total_rev_count"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
+    ltalks[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
                                                          "total_rev_count"]
-    ltalks[[i]][j,"registration_year"] <-  attributes_page[as.character(attributes_page$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
+    ltalks[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
                                                            "registration_year"]
   }
 }
@@ -193,7 +173,7 @@ for (i in names(ledits)){
                                                                  "registration_year")
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType_num"] <- as.character(ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"])
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "ADDED"
-                                                    ,"InteractionType_num"] <- 1
+                                                  ,"InteractionType_num"] <- 1
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "DELETED"
                                                   ,"InteractionType_num"] <- 2
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "RESTORED"
@@ -245,12 +225,12 @@ for (i in names(ltalks_edgelists)){
   ltalks_graphe[[i]] <- graph.data.frame(ltalks_edgelists[[i]], directed = T)
 }
 
-#### constitution de la base: page_attributes ####
+#### constitution de la base: contro_attributes ####
 
 ## Edits
 
 page <- names(ledits_graphe)
-page_attributes_edits <- as.data.frame(page)
+contro_attributes_edits <- as.data.frame(page)
 
 a <- character()
 b <- character()
@@ -272,71 +252,71 @@ t <- character()
 u <- character()
 
 
-for (i in page_attributes_edits$page){
+for (i in contro_attributes_edits$page){
   a[i] <- edge_density(ledits_graphe[[i]])
   b[i] <- vcount(ledits_graphe[[i]])
   temp <- append(as.character(ledits_edgelists[[i]][,"V1"]),as.character(ledits_edgelists[[i]][,"V2"]))
-  c[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$isanon == "1"]])
+  c[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$isanon == "1"]])
   d[i] <- ecount(ledits_graphe[[i]])
   e[i] <- transitivity(ledits_graphe[[i]])
-  h[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
-  l[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "bot"]])
+  h[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  l[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "bot"]])
   m[i] <- centralization.degree(ledits_graphe[[i]])[[2]]
-  n[i] <- mean(betweenness(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
-  o[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
+  n[i] <- mean(betweenness(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  o[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
   p[i] <- mean(betweenness(ledits_graphe[[i]])[labels(degree(ledits_graphe[[i]])) != "page"])
   q[i] <- mean(degree(ledits_graphe[[i]])[labels(degree(ledits_graphe[[i]])) != "page"])
   r[i] <- sd(betweenness(ledits_graphe[[i]])[labels(degree(ledits_graphe[[i]])) != "page"])
   s[i] <- sd(degree(ledits_graphe[[i]])[labels(degree(ledits_graphe[[i]])) != "page"])
-  t[i] <- sd(betweenness(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
-  u[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
+  t[i] <- sd(betweenness(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  u[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
 }
 
-page_attributes_edits$density <- a
-page_attributes_edits$ncontributors <- b
-page_attributes_edits$nanon <- c
-page_attributes_edits$nedits <- d
-page_attributes_edits$transitivity <- e
-page_attributes_edits$nadmins <- h
-page_attributes_edits$nbots <- l
-page_attributes_edits$centralization <- m
-page_attributes_edits$mean_betweenness_admin <- n
-page_attributes_edits$mean_degree_centrality_admins <- o
-page_attributes_edits$mean_betweenness <- p
-page_attributes_edits$mean_degree_centrality <- q
-page_attributes_edits$sd_betweenness <- r
-page_attributes_edits$sd_degree_centrality <- s
-page_attributes_edits$sd_betweenness_admin <- t
-page_attributes_edits$sd_degree_centrality_admins <- u
+contro_attributes_edits$density <- a
+contro_attributes_edits$ncontributors <- b
+contro_attributes_edits$nanon <- c
+contro_attributes_edits$nedits <- d
+contro_attributes_edits$transitivity <- e
+contro_attributes_edits$nadmins <- h
+contro_attributes_edits$nbots <- l
+contro_attributes_edits$centralization <- m
+contro_attributes_edits$mean_betweenness_admin <- n
+contro_attributes_edits$mean_degree_centrality_admins <- o
+contro_attributes_edits$mean_betweenness <- p
+contro_attributes_edits$mean_degree_centrality <- q
+contro_attributes_edits$sd_betweenness <- r
+contro_attributes_edits$sd_degree_centrality <- s
+contro_attributes_edits$sd_betweenness_admin <- t
+contro_attributes_edits$sd_degree_centrality_admins <- u
 
 # page controversial ou featured?
 
-page_attributes_edits$page <- as.character(page_attributes_edits$page)
-page_attributes_edits$page <- gsub( "\\.csv.*$", "", page_attributes_edits$page)
+contro_attributes_edits$page <- as.character(contro_attributes_edits$page)
+contro_attributes_edits$page <- gsub( "\\.csv.*$", "", contro_attributes_edits$page)
 
-for (i in page_attributes_edits$page){
-  if (as.character(page_attributes_edits$page[i]) %in% controversy_data){
+for (i in contro_attributes_edits$page){
+  if (as.character(contro_attributes_edits$page[i]) %in% controversy_data){
     f[i] <- 1
   } else {
     f[i] <- 0
   }
 }
 
-for (i in page_attributes_edits$page){
-  if (as.character(page_attributes_edits$page[i]) %in% featured_data){
+for (i in contro_attributes_edits$page){
+  if (as.character(contro_attributes_edits$page[i]) %in% featured_data){
     g[i] <- 1
   } else {
     g[i] <- 0
   }
 }
 
-page_attributes_edits$iscontroversial <- f
-page_attributes_edits$isfeatured <- g
+contro_attributes_edits$iscontroversial <- f
+contro_attributes_edits$isfeatured <- g
 
 ## Talk
 
 page <- names(ltalks_graphe)
-page_attributes_talks <- as.data.frame(page)
+contro_attributes_talks <- as.data.frame(page)
 
 a <- character()
 b <- character()
@@ -365,80 +345,80 @@ z <- character()
 grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F
 
 
-for (i in page_attributes_talks$page){
+for (i in contro_attributes_talks$page){
   a[i] <- edge_density(ltalks_graphe[[i]])
   b[i] <- vcount(ltalks_graphe[[i]])
   temp <- append(as.character(ltalks_edgelists[[i]][,"V1"]),as.character(ltalks_edgelists[[i]][,"V2"]))
-  c[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$isanon == "1"]])
+  c[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$isanon == "1"]])
   d[i] <- ecount(ltalks_graphe[[i]])
   e[i] <- transitivity(ltalks_graphe[[i]])
-  h[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
-  l[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "bot"]])
+  h[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  l[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "bot"]])
   m[i] <- centralization.degree(ltalks_graphe[[i]])[[2]]
-  n[i] <- mean(betweenness(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
-  o[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
+  n[i] <- mean(betweenness(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  o[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
   p[i] <- mean(betweenness(ltalks_graphe[[i]])[grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F])
   q[i] <- mean(degree(ltalks_graphe[[i]])[grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F])
   r[i] <- sd(betweenness(ltalks_graphe[[i]])[grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F])
   s[i] <- sd(degree(ltalks_graphe[[i]])[grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F])
-  t[i] <- sd(betweenness(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
-  u[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
+  t[i] <- sd(betweenness(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  u[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
   v[i] <- max(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
   w[i] <- mean(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
   z[i] <- sd(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
 }
 
-page_attributes_talks$density <- a
-page_attributes_talks$ncontributors <- b
-page_attributes_talks$nanon <- c
-page_attributes_talks$nedits <- d
-page_attributes_talks$transitivity <- e
-page_attributes_talks$nadmins <- h
-page_attributes_talks$nbots <- l
-page_attributes_talks$centralization <- m
-page_attributes_talks$mean_betweenness_admin <- n
-page_attributes_talks$mean_degree_centrality_admins <- o
-page_attributes_talks$mean_betweenness <- p
-page_attributes_talks$mean_degree_centrality <- q
-page_attributes_talks$sd_betweenness <- r
-page_attributes_talks$sd_degree_centrality <- s
-page_attributes_talks$sd_betweenness_admin <- t
-page_attributes_talks$sd_degree_centrality_admins <- u
-page_attributes_talks$max_discussion_depth <- v
-page_attributes_talks$mean_discussion_depth <- w
-page_attributes_talks$sd_discussion_depth <- z
+contro_attributes_talks$density <- a
+contro_attributes_talks$ncontributors <- b
+contro_attributes_talks$nanon <- c
+contro_attributes_talks$nedits <- d
+contro_attributes_talks$transitivity <- e
+contro_attributes_talks$nadmins <- h
+contro_attributes_talks$nbots <- l
+contro_attributes_talks$centralization <- m
+contro_attributes_talks$mean_betweenness_admin <- n
+contro_attributes_talks$mean_degree_centrality_admins <- o
+contro_attributes_talks$mean_betweenness <- p
+contro_attributes_talks$mean_degree_centrality <- q
+contro_attributes_talks$sd_betweenness <- r
+contro_attributes_talks$sd_degree_centrality <- s
+contro_attributes_talks$sd_betweenness_admin <- t
+contro_attributes_talks$sd_degree_centrality_admins <- u
+contro_attributes_talks$max_discussion_depth <- v
+contro_attributes_talks$mean_discussion_depth <- w
+contro_attributes_talks$sd_discussion_depth <- z
 
 # page controversial ou featured?
 
-page_attributes_talks$page <- as.character(page_attributes_talks$page)
-page_attributes_talks$page <- gsub( "\\.csv.*$", "", page_attributes_talks$page)
+contro_attributes_talks$page <- as.character(contro_attributes_talks$page)
+contro_attributes_talks$page <- gsub( "\\.csv.*$", "", contro_attributes_talks$page)
 
-for (i in page_attributes_talks$page){
-  if (as.character(page_attributes_talks$page[i]) %in% controversy_data){
+for (i in contro_attributes_talks$page){
+  if (as.character(contro_attributes_talks$page[i]) %in% controversy_data){
     f[i] <- 1
   } else {
     f[i] <- 0
   }
 }
 
-for (i in page_attributes_talks$page){
-  if (as.character(page_attributes_talks$page[i]) %in% featured_data){
+for (i in contro_attributes_talks$page){
+  if (as.character(contro_attributes_talks$page[i]) %in% featured_data){
     g[i] <- 1
   } else {
     g[i] <- 0
   }
 }
 
-page_attributes_talks$iscontroversial <- f
-page_attributes_talks$isfeatured <- g
+contro_attributes_talks$iscontroversial <- f
+contro_attributes_talks$isfeatured <- g
 
 ## Lier les deux réseaux:
 
-page_attributes_edits$istalk_page[page_attributes_edits$page %in% page_attributes_talks$page] <- 1
-page_attributes_edits$istalk_page[(page_attributes_edits$page %in% page_attributes_talks$page) == F] <- 0
+contro_attributes_edits$istalk_page[contro_attributes_edits$page %in% contro_attributes_talks$page] <- 1
+contro_attributes_edits$istalk_page[(contro_attributes_edits$page %in% contro_attributes_talks$page) == F] <- 0
 
 ## exporter les bases
 
-write.csv2(page_attributes_edits, file="../page_page_attributes_edits.csv", fileEncoding = "UTF8")
-write.csv2(page_attributes_talks, file="../page_page_attributes_talks.csv", fileEncoding = "UTF8")
+write.csv2(contro_attributes_edits, file="../contro_page_attributes_edits.csv", fileEncoding = "UTF8")
+write.csv2(contro_attributes_talks, file="../contro_page_attributes_talks.csv", fileEncoding = "UTF8")
 

@@ -619,9 +619,6 @@ colnames(dim2) <- c("dim2_contrib","dim2_coord","dim2_cos2")
 dim3 <- cbind(res.acm$var$contrib[,3], res.acm$var$coord[,3], res.acm$var$cos2[,3])
 colnames(dim3) <- c("dim3_contrib","dim3_coord","dim3_cos2")
 
-export.acm <- cbind(dim1, dim2, dim3)
-write_ods(as.data.frame(export.acm), "tab-ACM.ods")
-
 plot.MCA(res.acm, invisible=c("ind"), 
          title="Nuage des modalites actives Plan 1-2", axes=c(1,2), 
          autoLab="yes", unselect=1,
@@ -632,13 +629,16 @@ plot.MCA(res.acm, invisible=c("ind"),
          autoLab="yes", unselect=1,
          selectMod=c(moda23))
 
+
+#### Tentative factoshiny ####
+
+res.shiny <- MCAshiny(res.acm)
+
 ## Représentation graphique de l'ACM - axe 1-2
 
 round(res.acm$var$coord[modatot, 1:2], 2)
 
 # cadre
-
-png(file='ACM1.png', width = 1024, height = 768, units = "px", pointsize = 14)
 
 plot(res.acm$var$coord[modatot, 1:2]*1.4, type="n", 
      xlab=paste0("Axe 1 (", round(res.acm$eig[1,2], 1), "%)"),
@@ -653,11 +653,16 @@ points(res.acm$var$coord[modatot, 1:2], ## projection des points
        col="black", ## couleur des points
        pch=c(15))
 
-etiquettes <- rownames(res.acm$var$coord)
+etiquettes <- c("contrib: non","contrib: oui","contrib: pas sur","Nart: non", "Nart:occas","Nart: reg","Contenu: non","Contenu: reg",
+                "Format: non", "Format: reg", "Trad: reg","Vanda: non","Vanda: occas", "Vanda: reg", "Plaintes: non", "Plaintes: occas",
+                "Plaintes: reg", "Médiation: occas", "Médiation: reg", "Tech: occas", "Tech: reg", "Discut: non", "Discut: occas", "Discut: reg",
+                "Regl: occas", "Regl: reg", "RevueBArt: occas", "RevueBArt: reg", "Suppr: non", "Suppr: occas", "Suppr: reg", "Aide: occas", "Aide: reg",
+                "DAEdito: non", "DAEdito: oui", "DATech: non", "DATech: oui", "DAArt: non", "DAArt: oui", "DARef: non", "DARef: oui", "DACont: non",
+                "DAcont: oui")
 
 # projection des etiquettes
 
-text(res.acm$var$coord[modatot,1:2], labels=etiquettes[modatot],
+text(res.acm$var$coord[modatot,1:2], labels=etiquettes,
      col="black", cex=1, pos=c(4))
 
 ## Représentation graphique de l'ACM - axe 2-3
@@ -665,8 +670,6 @@ text(res.acm$var$coord[modatot,1:2], labels=etiquettes[modatot],
 round(res.acm$var$coord[modatot, 2:3], 2)
 
 # cadre
-
-png(file='ACM1.png', width = 1024, height = 768, units = "px", pointsize = 14)
 
 plot(res.acm$var$coord[modatot, 2:3]*1.4, type="n", 
      xlab=paste0("Axe 2 (", round(res.acm$eig[2,2], 1), "%)"),
@@ -681,13 +684,18 @@ points(res.acm$var$coord[modatot, 2:3],
        col="#da4d45",
        pch=c(16))
 
-etiquettes <- rownames(res.acm$var$coord)
+etiquettes <- c("contrib: non","contrib: oui","contrib: pas sur","Nart: non", "Nart:occas","Nart: reg","Contenu: non","Contenu: reg",
+                "Format: non", "Format: reg", "Trad: reg","Vanda: non","Vanda: occas", "Vanda: reg", "Plaintes: non", "Plaintes: occas",
+                "Plaintes: reg", "Médiation: occas", "Médiation: reg", "Tech: occas", "Tech: reg", "Discut: non", "Discut: occas", "Discut: reg",
+                "Regl: occas", "Regl: reg", "RevueBArt: occas", "RevueBArt: reg", "Suppr: non", "Suppr: occas", "Suppr: reg", "Aide: occas", "Aide: reg",
+                "DAEdito: non", "DAEdito: oui", "DATech: non", "DATech: oui", "DAArt: non", "DAArt: oui", "DARef: non", "DARef: oui", "DACont: non",
+                "DAcont: oui")
 
 
 # projection des etiquettes
 
-text(res.acm$var$coord[modatot,2:3], labels=etiquettes[modatot],
-     col="#da4d45", cex=1, pos=c(3, 4, 3, 3, 3, 2, 4, 4, 1, 2, 
+text(res.acm$var$coord[modatot,2:3], labels=etiquettes,
+     col="#da4d45", cex=1, pos=c(4, 2, 4, 3, 3, 2, 4, 4, 1, 2, 
                                4, 2, 3))
 
 # Ajout des modalites supplementaire: temps de contrib et sociodemo
