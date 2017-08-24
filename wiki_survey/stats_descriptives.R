@@ -696,7 +696,7 @@ modasup=c("educ_doctorate", "educ_master_degree", "educ_primary_education", "edu
           "age[30-50]", "age[<18]", "inscription[2001-2004]", "inscription[2005-2009]", "inscription[2009-2012]", "temps_edit[>15 hours]", "temps_edit[1-3 hours]", "temps_edit[4-15 hours]",
           "employement_no", "employement_yes(part time)", "employement_yes(full time)")
 
-text(res.acm$quali.sup$coord[c(35:38,39:42,44,45,47:49,51,52,55:58,61:63,65:67,69:71), 1:2]*1.4, 
+text(res.acm$quali.sup$coord[c(35:38,39:42,44,45,47:49,51,52,55:58,61:63,65:67,69:71), 2:3]*1.4, 
      labels=modasup,
      cex=0.8, col="#3892e0", font=3)
 
