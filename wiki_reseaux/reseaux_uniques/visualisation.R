@@ -36,7 +36,3 @@ plot(cultwar_edit_graphe, layout=layout_nicely(cultwar_edit_graphe), rescale=TRU
 legend(x="topleft", c("Ajout","Suppression","Reverse", "anonyme", "inscrit", "page"), pch=c(24,24,24,21,21,21), col="#777777", 
        pt.bg= c("#3892e0","#da4d45","#fbd25d","#f37329","#93d844", "#333333"), pt.cex=c(2,2,2,2,2,2), cex=.8, bty="n", ncol=1)
 
-## Stats descriptives générales: ####
-
-# Densité:
-
