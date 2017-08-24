@@ -62,8 +62,6 @@ for (i in names(ledits)){
   isanon <- append(isanon,as.character(ledits[[i]][,"IsAnonymous"]))
 }
 
-# isanon <- ifelse(grepl("[0-9+]\\.[0-9+]\\.[0-9+].*", contributeurs) ==T | grepl("[0-9+]\\:[0-9+]\\:[0-9+].*", contributeurs) == T, 1, 0)
-
 contributeurs_talk <- character()
 
 for (i in names(ltalks)){
@@ -358,6 +356,9 @@ r <- character()
 s <- character()
 t <- character()
 u <- character()
+v <- character()
+w <- character()
+z <- character()
 
 
 # temp/test
@@ -382,6 +383,9 @@ for (i in page_attributes_talks$page){
   s[i] <- sd(degree(ltalks_graphe[[i]])[grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F])
   t[i] <- sd(betweenness(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
   u[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_page$contributeurs[attributes_page$status_contrib == "admin"]])
+  v[i] <- max(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
+  w[i] <- mean(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
+  z[i] <- sd(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
 }
 
 page_attributes_talks$density <- a
@@ -400,6 +404,9 @@ page_attributes_talks$sd_betweenness <- r
 page_attributes_talks$sd_degree_centrality <- s
 page_attributes_talks$sd_betweenness_admin <- t
 page_attributes_talks$sd_degree_centrality_admins <- u
+page_attributes_talks$max_discussion_depth <- v
+page_attributes_talks$mean_discussion_depth <- w
+page_attributes_talks$sd_discussion_depth <- z
 
 # page controversial ou featured?
 
