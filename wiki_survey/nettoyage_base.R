@@ -182,6 +182,7 @@ table(wiki_survey_en$Q6_re)
 table(wiki_survey_en$Q1, useNA="ifany")
 wiki_survey_en$Q1_everedited <- factor(wiki_survey_en$Q1, labels=c("Non","Oui","Pas sur"))
 table(wiki_survey_en$Q1_everedited, useNA="ifany")
+round(prop.table(table(wiki_survey_en$Q1_everedited, useNA="ifany"))*100,3)
 
 # In what year did you started editing wikipedia? ouch. 1457 NA....
 
@@ -212,78 +213,134 @@ Q9_labels <- c("not at all", "seldom", "sometimes", "often", "very often")
 table(wiki_survey_en$Q9_1)
 wiki_survey_en$Q9_newarticles <- factor(wiki_survey_en$Q9_1, labels=Q9_labels)
 table(wiki_survey_en$Q9_newarticles, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_newarticles, useNA="ifany"))*100,3)
 
 # Writing content to existing articles:
 
 table(wiki_survey_en$Q9_2)
 wiki_survey_en$Q9_content <- factor(wiki_survey_en$Q9_2, labels=Q9_labels)
 table(wiki_survey_en$Q9_content, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_content, useNA="ifany"))*100,3)
 
 # Fix formating, grammar, etc. (spellcheck):
 
 table(wiki_survey_en$Q9_3)
 wiki_survey_en$Q9_spellcheck <- factor(wiki_survey_en$Q9_3, labels=Q9_labels)
 table(wiki_survey_en$Q9_spellcheck, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_spellcheck, useNA="ifany"))*100,3)
 
 # Translation work:
 
 table(wiki_survey_en$Q9_4)
 wiki_survey_en$Q9_translation <- factor(wiki_survey_en$Q9_4, labels=Q9_labels)
 table(wiki_survey_en$Q9_translation, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_translation, useNA="ifany"))*100,3)
 
 # Patrol for vandalism, mass deletion, copyright violation:
 
 table(wiki_survey_en$Q9_5)
 wiki_survey_en$Q9_vandalism <- factor(wiki_survey_en$Q9_5, labels=Q9_labels)
 table(wiki_survey_en$Q9_vandalism, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_vandalism, useNA="ifany"))*100,3)
 
 # Answer reader questions and complaints:
 
 table(wiki_survey_en$Q9_6)
 wiki_survey_en$Q9_readerscomplaint <- factor(wiki_survey_en$Q9_6, labels=Q9_labels)
 table(wiki_survey_en$Q9_readerscomplaint, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_readerscomplaint, useNA="ifany"))*100,3)
 
 # Resolve dispute among volonteers:
 
 table(wiki_survey_en$Q9_7)
 wiki_survey_en$Q9_mediation <- factor(wiki_survey_en$Q9_7, labels=Q9_labels)
 table(wiki_survey_en$Q9_mediation, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_mediation, useNA="ifany"))*100,3)
 
 # Help to organize meetings, workshop, events:
 
 table(wiki_survey_en$Q9_8)
 wiki_survey_en$Q9_irl <- factor(wiki_survey_en$Q9_8, labels=Q9_labels)
 table(wiki_survey_en$Q9_irl, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_irl, useNA="ifany"))*100,3)
 
 # Public outreach, advocatcy, etc:
 
 table(wiki_survey_en$Q9_9)
 wiki_survey_en$Q9_evangelist <- factor(wiki_survey_en$Q9_9, labels=Q9_labels)
 table(wiki_survey_en$Q9_evangelist, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_evangelist, useNA="ifany"))*100,3)
 
 # Technical work (server administration and technical work):
 
 table(wiki_survey_en$Q9_10)
 wiki_survey_en$Q9_technical <- factor(wiki_survey_en$Q9_10, labels=Q9_labels)
 table(wiki_survey_en$Q9_technical, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_technical, useNA="ifany"))*100,3)
 
 # Participate in chapter work:
 
 table(wiki_survey_en$Q9_11)
 wiki_survey_en$Q9_chapter <- factor(wiki_survey_en$Q9_11, labels=Q9_labels)
 table(wiki_survey_en$Q9_chapter, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_chapter, useNA="ifany"))*100,3)
 
 # Participate in  userdiscussions:
 
 table(wiki_survey_en$Q9_12)
 wiki_survey_en$Q9_discussion <- factor(wiki_survey_en$Q9_12, labels=Q9_labels)
 table(wiki_survey_en$Q9_discussion, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_discussion, useNA="ifany"))*100,3)
 
 # Develop and maintain policies, guidelines and regulations:
 
 table(wiki_survey_en$Q9_13)
 wiki_survey_en$Q9_regulation <- factor(wiki_survey_en$Q9_13, labels=Q9_labels)
 table(wiki_survey_en$Q9_regulation, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_regulation, useNA="ifany"))*100,3)
+
+a <- as.data.frame(rbind(paste(round(prop.table(table(wiki_survey_en$Q9_newarticles, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_content, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_spellcheck, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_translation, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_vandalism, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_readerscomplaint, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_mediation, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_irl, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_evangelist, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_technical, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_chapter, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_discussion, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_regulation, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_featuredreview, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_suppression, useNA="ifany"))*100,3)),
+      paste(round(prop.table(table(wiki_survey_en$Q9_helpdesk, useNA="ifany"))*100,3))))
+
+colnames(a) <- c("Non","Rarement","Parfois","Souvent","Très souvent","Non-réponses")
+rownames(a) <- c("Nouvel article","Nouveau contenu","Corrections Orthographique","Traduction","Vandalisme","Plaintes lecteurs","Médiation",
+                 "Organisation évènements","Evangeliste","Support technique","Organisation Chapitres","Discussions","Régulations","Revue label article de qualité",
+                 "Procédures de suppression", "Aide et accueil des nouveaux")
+
+a_re <- as.data.frame(rbind(paste(round(prop.table(table(wiki_survey_en$Q9_newarticles_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_content_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_spellcheck_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_translation_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_vandalism_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_readerscomplaint_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_mediation_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_technical_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_discussion_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_regulation_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_featuredreview_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_suppression_re, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q9_helpdesk_re, useNA="ifany"))*100,3))))
+
+colnames(a_re) <- c("Non","Occasionellement","régulièrement")
+rownames(a_re) <- c("Nouvel article","Nouveau contenu","Corrections Orthographique","Traduction","Vandalisme","Plaintes lecteurs","Médiation",
+                   "Support technique","Discussions","Régulations","Revue label article de qualité",
+                 "Procédures de suppression", "Aide et accueil des nouveaux")
+
+
 
 #### Frequence of participation in activites: ####
 
@@ -292,18 +349,21 @@ table(wiki_survey_en$Q9_regulation, useNA = "ifany")
 table(wiki_survey_en$Q10_2)
 wiki_survey_en$Q9_featuredreview <- factor(wiki_survey_en$Q10_2, labels=Q9_labels)
 table(wiki_survey_en$Q9_featuredreview, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_featuredreview, useNA="ifany"))*100,3)
 
 # I participate in deletion process (PaS):
 
 table(wiki_survey_en$Q10_3)
 wiki_survey_en$Q9_suppression <- factor(wiki_survey_en$Q10_3, labels=Q9_labels)
 table(wiki_survey_en$Q9_suppression, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_suppression, useNA="ifany"))*100,3)
 
 # Help or welcome new editors:
 
 table(wiki_survey_en$Q10_4)
 wiki_survey_en$Q9_helpdesk <- factor(wiki_survey_en$Q10_4, labels=Q9_labels)
 table(wiki_survey_en$Q9_helpdesk, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q9_helpdesk, useNA="ifany"))*100,3)
 
 #### How likely are you to recommend editing wikipedia as an activity? (0-10) (note: beaucoup de NA) ####
 
@@ -318,18 +378,21 @@ labels_Q12 <- c("more", "less", "same")
 table(wiki_survey_en$Q12a_1, useNA = "ifany")
 wiki_survey_en$Q12a_conflict <-factor(wiki_survey_en$Q12a_1, labels=labels_Q12)
 table(wiki_survey_en$Q12a_conflict, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q12a_conflict, useNA="ifany"))*100,3)
 
 # More or less motivated to contribute?
 
 table(wiki_survey_en$Q12a_2, useNA = "ifany")
 wiki_survey_en$Q12a_motivation <-factor(wiki_survey_en$Q12a_2, labels=labels_Q12)
 table(wiki_survey_en$Q12a_motivation, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q12a_motivation, useNA="ifany"))*100,3)
 
 # Where you more or less active?
 
 table(wiki_survey_en$Q12a_3, useNA = "ifany")
 wiki_survey_en$Q12a_activity <-factor(wiki_survey_en$Q12a_3, labels=labels_Q12)
 table(wiki_survey_en$Q12a_activity, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q12a_activity, useNA="ifany"))*100,3)
 
 ####  Interaction with other wikipedians (how would you describe: words): 0 = unselected, 1= selected ####
 
@@ -339,6 +402,7 @@ table(wiki_survey_en$Q14_1, useNA = "ifany")
 wiki_survey_en$Q14_helpful <- as.character(wiki_survey_en$Q14_1)
 wiki_survey_en$Q14_helpful[is.na(wiki_survey_en$Q14_1) == T] <- "0"
 table(wiki_survey_en$Q14_helpful, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_helpful, useNA="ifany"))*100,3)
 
 # friendly:
 
@@ -346,6 +410,7 @@ table(wiki_survey_en$Q14_2, useNA = "ifany")
 wiki_survey_en$Q14_friendly <- as.character(wiki_survey_en$Q14_2)
 wiki_survey_en$Q14_friendly[is.na(wiki_survey_en$Q14_2) == T] <- "0"
 table(wiki_survey_en$Q14_friendly, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_friendly, useNA="ifany"))*100,3)
 
 # Collaborative:
 
@@ -353,6 +418,7 @@ table(wiki_survey_en$Q14_3, useNA = "ifany")
 wiki_survey_en$Q14_collaborative <- as.character(wiki_survey_en$Q14_3)
 wiki_survey_en$Q14_collaborative[is.na(wiki_survey_en$Q14_3) == T] <- "0"
 table(wiki_survey_en$Q14_collaborative, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_collaborative, useNA="ifany"))*100,3)
 
 # Rude:
 
@@ -360,6 +426,7 @@ table(wiki_survey_en$Q14_4, useNA = "ifany")
 wiki_survey_en$Q14_rude <- as.character(wiki_survey_en$Q14_4)
 wiki_survey_en$Q14_rude[is.na(wiki_survey_en$Q14_4) == T] <- "0"
 table(wiki_survey_en$Q14_rude, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_rude, useNA="ifany"))*100,3)
 
 # Unfriendly:
 
@@ -367,6 +434,7 @@ table(wiki_survey_en$Q14_5, useNA = "ifany")
 wiki_survey_en$Q14_unfriendly <- as.character(wiki_survey_en$Q14_5)
 wiki_survey_en$Q14_unfriendly[is.na(wiki_survey_en$Q14_5) == T] <- "0"
 table(wiki_survey_en$Q14_unfriendly, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_unfriendly, useNA="ifany"))*100,3)
 
 # Intelligent:
 
@@ -374,6 +442,7 @@ table(wiki_survey_en$Q14_6, useNA = "ifany")
 wiki_survey_en$Q14_intelligent <- as.character(wiki_survey_en$Q14_6)
 wiki_survey_en$Q14_intelligent[is.na(wiki_survey_en$Q14_6) == T] <- "0"
 table(wiki_survey_en$Q14_intelligent, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_intelligent, useNA="ifany"))*100,3)
 
 # Dumb:
 
@@ -381,6 +450,7 @@ table(wiki_survey_en$Q14_7, useNA = "ifany")
 wiki_survey_en$Q14_dumb <- as.character(wiki_survey_en$Q14_7)
 wiki_survey_en$Q14_dumb[is.na(wiki_survey_en$Q14_7) == T] <- "0"
 table(wiki_survey_en$Q14_dumb, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_dumb, useNA="ifany"))*100,3)
 
 # Arrogant:
 
@@ -388,6 +458,19 @@ table(wiki_survey_en$Q14_8, useNA = "ifany")
 wiki_survey_en$Q14_arrogant <- as.character(wiki_survey_en$Q14_8)
 wiki_survey_en$Q14_arrogant[is.na(wiki_survey_en$Q14_8) == T] <- "0"
 table(wiki_survey_en$Q14_arrogant, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q14_arrogant, useNA="ifany"))*100,3)
+
+b <- as.data.frame(rbind(paste(round(prop.table(table(wiki_survey_en$Q14_helpful, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_friendly, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_collaborative, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_rude, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_unfriendly, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_intelligent, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_dumb, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q14_arrogant, useNA="ifany"))*100,3))))
+
+rownames(b) <- c("serviable","amical","collaboratif","vulgaire","non-amical","intelligent","stupide","arrogant")
+colnames(b) <- c("non selectionné","sélectionné")
 
 #### Wich one of those statement do you agree with? (note: là encore, beaucoup de NA) ####
 # if you had to choose: The feedback from other editors through reverts, discussions, etc. has helped me become a better editor
@@ -397,6 +480,7 @@ table(wiki_survey_en$Q14_arrogant, useNA = "ifany")
 table(wiki_survey_en$Q15, useNA = "ifany")
 wiki_survey_en$Q15_re <- factor(wiki_survey_en$Q15, labels=c("positive", "negative", "neutral"))
 table(wiki_survey_en$Q15_re, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q15_re, useNA="ifany"))*100,3)
 
 #### Have you asked a fellow editor for help in: ####
 
@@ -405,30 +489,35 @@ table(wiki_survey_en$Q15_re, useNA = "ifany")
 table(wiki_survey_en$Q16a_1, useNA = "ifany")
 wiki_survey_en$Q16_editorial <- factor(wiki_survey_en$Q16a_1, labels=c("no","yes"))
 table(wiki_survey_en$Q16_editorial, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q16_editorial, useNA="ifany"))*100,3)
 
 # Technical help (wiki markup, etc)
 
 table(wiki_survey_en$Q16a_2, useNA = "ifany")
 wiki_survey_en$Q16_technical <- factor(wiki_survey_en$Q16a_2, labels=c("no","yes"))
 table(wiki_survey_en$Q16_technical, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q16_technical, useNA="ifany"))*100,3)
 
 # Editing an article
 
 table(wiki_survey_en$Q16a_3, useNA = "ifany")
 wiki_survey_en$Q16_article <- factor(wiki_survey_en$Q16a_3, labels=c("no","yes"))
 table(wiki_survey_en$Q16_article, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q16_article, useNA="ifany"))*100,3)
 
 # Reference related questions:
 
 table(wiki_survey_en$Q16a_4, useNA = "ifany")
 wiki_survey_en$Q16_references <- factor(wiki_survey_en$Q16a_4, labels=c("no","yes"))
 table(wiki_survey_en$Q16_references, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q16_references, useNA="ifany"))*100,3)
 
 # Content related question
 
 table(wiki_survey_en$Q16a_5, useNA = "ifany")
 wiki_survey_en$Q16_content <- factor(wiki_survey_en$Q16a_5, labels=c("no","yes"))
 table(wiki_survey_en$Q16_content, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q16_content, useNA="ifany"))*100,3)
 
 # Q16b: Thinking about the last time you asked a fellow editor for help, how happy were you with the help you got: (laisse tomber, plus de 50% de NA)
 
@@ -436,6 +525,7 @@ table(wiki_survey_en$Q16b, useNA = "ifany")
 wiki_survey_en$Q16_helpsatisfaction <- factor(wiki_survey_en$Q16b, labels=c("extremely unhappy","very unhappy", "neither happy nor unhappy",
                                                                             "very happy", "extremely happy"))
 table(wiki_survey_en$Q16_helpsatisfaction, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q16_helpsatisfaction, useNA="ifany"))*100,3)
 
 #### Identified problems with wikimedia culture: select all that apply ####
 
@@ -445,6 +535,7 @@ table(wiki_survey_en$Q17_1, useNA = "ifany")
 wiki_survey_en$Q17_toomuchrules <- as.character(wiki_survey_en$Q17_1)
 wiki_survey_en$Q17_toomuchrules[is.na(wiki_survey_en$Q17_1) == T] <- "0"
 table(wiki_survey_en$Q17_toomuchrules, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_toomuchrules, useNA="ifany"))*100,3)
 
 # Editors feels like they own articles and don't let other edit:
 
@@ -452,6 +543,7 @@ table(wiki_survey_en$Q17_2, useNA = "ifany")
 wiki_survey_en$Q17_ownership <- as.character(wiki_survey_en$Q17_2)
 wiki_survey_en$Q17_ownership[is.na(wiki_survey_en$Q17_2) == T] <- "0"
 table(wiki_survey_en$Q17_ownership, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_ownership, useNA="ifany"))*100,3)
 
 # The editing interface is hard to use;
 
@@ -459,6 +551,7 @@ table(wiki_survey_en$Q17_3, useNA = "ifany")
 wiki_survey_en$Q17_interface <- as.character(wiki_survey_en$Q17_3)
 wiki_survey_en$Q17_interface[is.na(wiki_survey_en$Q17_3) == T] <- "0"
 table(wiki_survey_en$Q17_interface, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_interface, useNA="ifany"))*100,3)
 
 # Editors who are not fun to work with
 
@@ -466,6 +559,7 @@ table(wiki_survey_en$Q17_4, useNA = "ifany")
 wiki_survey_en$Q17_notfun <- as.character(wiki_survey_en$Q17_4)
 wiki_survey_en$Q17_notfun[is.na(wiki_survey_en$Q17_4) == T] <- "0"
 table(wiki_survey_en$Q17_notfun, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_notfun, useNA="ifany"))*100,3)
 
 # Software for maintenance task is too hard to use:
 
@@ -473,6 +567,7 @@ table(wiki_survey_en$Q17_5, useNA = "ifany")
 wiki_survey_en$Q17_patrolsoftware <- as.character(wiki_survey_en$Q17_5)
 wiki_survey_en$Q17_patrolsoftware[is.na(wiki_survey_en$Q17_5) == T] <- "0"
 table(wiki_survey_en$Q17_patrolsoftware, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_patrolsoftware, useNA="ifany"))*100,3)
 
 # Lack of support from other editors:
 
@@ -480,6 +575,7 @@ table(wiki_survey_en$Q17_6, useNA = "ifany")
 wiki_survey_en$Q17_support <- as.character(wiki_survey_en$Q17_6)
 wiki_survey_en$Q17_support[is.na(wiki_survey_en$Q17_6) == T] <- "0"
 table(wiki_survey_en$Q17_support, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_support, useNA="ifany"))*100,3)
 
 # Lack of access to research material (books, etc.)
 
@@ -487,6 +583,7 @@ table(wiki_survey_en$Q17_7, useNA = "ifany")
 wiki_survey_en$Q17_access <- as.character(wiki_survey_en$Q17_7)
 wiki_survey_en$Q17_access[is.na(wiki_survey_en$Q17_7) == T] <- "0"
 table(wiki_survey_en$Q17_access, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_access, useNA="ifany"))*100,3)
 
 # Critiscism of you and your work
 
@@ -494,6 +591,7 @@ table(wiki_survey_en$Q17_8, useNA = "ifany")
 wiki_survey_en$Q17_critiscism <- as.character(wiki_survey_en$Q17_8)
 wiki_survey_en$Q17_critiscism[is.na(wiki_survey_en$Q17_8) == T] <- "0"
 table(wiki_survey_en$Q17_critiscism, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_critiscism, useNA="ifany"))*100,3)
 
 # Warning message on your talk page
 
@@ -501,6 +599,7 @@ table(wiki_survey_en$Q17_9, useNA = "ifany")
 wiki_survey_en$Q17_warning <- as.character(wiki_survey_en$Q17_9)
 wiki_survey_en$Q17_warning[is.na(wiki_survey_en$Q17_9) == T] <- "0"
 table(wiki_survey_en$Q17_warning, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_warning, useNA="ifany"))*100,3)
 
 # Harassment by other editors
 
@@ -508,6 +607,22 @@ table(wiki_survey_en$Q17_10, useNA = "ifany")
 wiki_survey_en$Q17_harassment <- as.character(wiki_survey_en$Q17_10)
 wiki_survey_en$Q17_harassment[is.na(wiki_survey_en$Q17_10) == T] <- "0"
 table(wiki_survey_en$Q17_harassment, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q17_harassment, useNA="ifany"))*100,3)
+
+c <- as.data.frame(rbind(paste(round(prop.table(table(wiki_survey_en$Q17_toomuchrules, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_ownership, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_interface, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_notfun, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_patrolsoftware, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_support, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_access, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_critiscism, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_warning, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q17_harassment, useNA="ifany"))*100,3))))
+
+rownames(c) <- c("trop de règles","contributeurs propriétaires","interface ardue","contributeurs pas droles","logiciel anti-vandalisme ardu",
+                 "manque de soutien","manque d'accès au matériel de recherche", "critiques travail","avertissements sur page perso","harcèlement")
+colnames(c) <- c("non sélectionné","sélectionné")
 
 #### Below is a list of levels of impressions editors may get from their experience with Wikipedia: please select all that apply: ####
 
@@ -517,6 +632,7 @@ table(wiki_survey_en$Q18_1, useNA = "ifany")
 wiki_survey_en$Q18_expected <- as.character(wiki_survey_en$Q18_1)
 wiki_survey_en$Q18_expected[is.na(wiki_survey_en$Q18_1) == T] <- "0"
 table(wiki_survey_en$Q18_expected, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_expected, useNA="ifany"))*100,3)
 
 # I am provided with the tools and materials I need to work well
 
@@ -524,6 +640,7 @@ table(wiki_survey_en$Q18_2, useNA = "ifany")
 wiki_survey_en$Q18_tools <- as.character(wiki_survey_en$Q18_2)
 wiki_survey_en$Q18_tools[is.na(wiki_survey_en$Q18_2) == T] <- "0"
 table(wiki_survey_en$Q18_tools, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_tools, useNA="ifany"))*100,3)
 
 #  I have the opportunity to do what I do best
 
@@ -531,13 +648,15 @@ table(wiki_survey_en$Q18_3, useNA = "ifany")
 wiki_survey_en$Q18_dobest <- as.character(wiki_survey_en$Q18_3)
 wiki_survey_en$Q18_dobest[is.na(wiki_survey_en$Q18_3) == T] <- "0"
 table(wiki_survey_en$Q18_dobest, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_dobest, useNA="ifany"))*100,3)
 
 # Someone cares about me as a person
 
 table(wiki_survey_en$Q18_4, useNA = "ifany")
-wiki_survey_en$Q18_dobest <- as.character(wiki_survey_en$Q18_4)
-wiki_survey_en$Q18_dobest[is.na(wiki_survey_en$Q18_4) == T] <- "0"
-table(wiki_survey_en$Q18_dobest, useNA = "ifany")
+wiki_survey_en$Q18_cares <- as.character(wiki_survey_en$Q18_4)
+wiki_survey_en$Q18_cares[is.na(wiki_survey_en$Q18_4) == T] <- "0"
+table(wiki_survey_en$Q18_cares, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_cares, useNA="ifany"))*100,3)
 
 # I feel my opinion count
 
@@ -545,6 +664,7 @@ table(wiki_survey_en$Q18_5, useNA = "ifany")
 wiki_survey_en$Q18_opinion <- as.character(wiki_survey_en$Q18_5)
 wiki_survey_en$Q18_opinion[is.na(wiki_survey_en$Q18_5) == T] <- "0"
 table(wiki_survey_en$Q18_opinion, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_opinion, useNA="ifany"))*100,3)
 
 # The mission of wikipedia makes me feel that my work is important:
 
@@ -552,6 +672,7 @@ table(wiki_survey_en$Q18_6, useNA = "ifany")
 wiki_survey_en$Q18_mission <- as.character(wiki_survey_en$Q18_6)
 wiki_survey_en$Q18_mission[is.na(wiki_survey_en$Q18_6) == T] <- "0"
 table(wiki_survey_en$Q18_mission, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_mission, useNA="ifany"))*100,3)
 
 # My fellow volunteers are comitted to doing quality work
 
@@ -559,6 +680,7 @@ table(wiki_survey_en$Q18_7, useNA = "ifany")
 wiki_survey_en$Q18_fellowquality <- as.character(wiki_survey_en$Q18_7)
 wiki_survey_en$Q18_fellowquality[is.na(wiki_survey_en$Q18_7) == T] <- "0"
 table(wiki_survey_en$Q18_fellowquality, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_fellowquality, useNA="ifany"))*100,3)
 
 # There is somebody in the wikipedia community who seems commited to helping me do good work
 
@@ -566,6 +688,7 @@ table(wiki_survey_en$Q18_8, useNA = "ifany")
 wiki_survey_en$Q18_helpgoodwork <- as.character(wiki_survey_en$Q18_8)
 wiki_survey_en$Q18_helpgoodwork[is.na(wiki_survey_en$Q18_8) == T] <- "0"
 table(wiki_survey_en$Q18_helpgoodwork, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_helpgoodwork, useNA="ifany"))*100,3)
 
 # The decisions I have made as part of the community feel fair
 
@@ -573,6 +696,7 @@ table(wiki_survey_en$Q18_9, useNA = "ifany")
 wiki_survey_en$Q18_fairness <- as.character(wiki_survey_en$Q18_9)
 wiki_survey_en$Q18_fairness[is.na(wiki_survey_en$Q18_9) == T] <- "0"
 table(wiki_survey_en$Q18_fairness, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_fairness, useNA="ifany"))*100,3)
 
 # I would recomend a friend to get involved in wikipedia
 
@@ -580,6 +704,22 @@ table(wiki_survey_en$Q18_10, useNA = "ifany")
 wiki_survey_en$Q18_recomendinvolvement <- as.character(wiki_survey_en$Q18_10)
 wiki_survey_en$Q18_recomendinvolvement[is.na(wiki_survey_en$Q18_10) == T] <- "0"
 table(wiki_survey_en$Q18_recomendinvolvement, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q18_recomendinvolvement, useNA="ifany"))*100,3)
+
+d <- as.data.frame(rbind(paste(round(prop.table(table(wiki_survey_en$Q18_expected, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_tools, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_dobest, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_cares, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_opinion, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_mission, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_fellowquality, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_helpgoodwork, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_fairness, useNA="ifany"))*100,3)),
+                         paste(round(prop.table(table(wiki_survey_en$Q18_recomendinvolvement, useNA="ifany"))*100,3))))
+
+rownames(d) <- c("Compréhension attentes","Outils satisfaisants","Possibilité faire de mon mieux","Quelqu'un interet", "Opinion personnelle compte",
+                 "Mission Wikipédia important", "Autres bon travail","Autre m'aide bon travail", "Décisions prises equitables", "Recommande implication amis")
+colnames(d) <- c("sélectionné", "non sélectionné")
 
 #### How much time have you spent contributing to Wikipedia during the last seven days (approximately)? - Hours ####
 
@@ -611,34 +751,40 @@ table(wiki_survey_en$Q21, useNA = "ifany")
 table(wiki_survey_en$Q22, useNA = "ifany")
 wiki_survey_en$Q22_education <- factor(wiki_survey_en$Q22, labels=c("Primary education", "sedondary education", "tertiary education", "master degree", "doctorate"))
 table(wiki_survey_en$Q22_education, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q22, useNA="ifany"))*100,3)
 
 # Curently in school (or university)?:
 
 table(wiki_survey_en$Q23, useNA = "ifany")
 wiki_survey_en$Q23_currentlyinschool <- factor(wiki_survey_en$Q23, labels=c("non","oui"))
 table(wiki_survey_en$Q23_currentlyinschool, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q23_currentlyinschool, useNA="ifany"))*100,3)
 
 # Are you employed?
 
 table(wiki_survey_en$Q24, useNA = "ifany")
 wiki_survey_en$Q24_employement <- factor(wiki_survey_en$Q24, labels=c("Yes, full time", "Yes, part time", "No"))
 table(wiki_survey_en$Q24_employement, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q24_employement, useNA="ifany"))*100,3)
 
 # Are you married / partner
 
 table(wiki_survey_en$Q25, useNA = "ifany")
 wiki_survey_en$Q25_conjugal <- factor(wiki_survey_en$Q25, labels= c("married", "partner", "single"))
 table(wiki_survey_en$Q25_conjugal, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q25_conjugal, useNA="ifany"))*100,3)
 
 # Do you have children
 
 table(wiki_survey_en$Q26, useNA = "ifany")
 wiki_survey_en$Q26_child <- factor(wiki_survey_en$Q26, labels= c("No", "Yes"))
 table(wiki_survey_en$Q26_child, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q26_child, useNA="ifany"))*100,3)
 
 # Gender
 
 table(wiki_survey_en$Q27, useNA = "ifany")
 wiki_survey_en$Q27_gender <- factor(wiki_survey_en$Q27, labels= c("Male", "Female", "refuse to answer"))
 table(wiki_survey_en$Q27_gender, useNA = "ifany")
+round(prop.table(table(wiki_survey_en$Q27_gender, useNA="ifany"))*100,3)
 
