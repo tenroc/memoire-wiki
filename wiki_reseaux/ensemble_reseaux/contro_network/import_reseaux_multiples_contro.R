@@ -68,7 +68,7 @@ for (i in names(ltalks)){
   contributeurs_talk <- append(contributeurs_talk,as.character(ltalks[[i]][,"ActiveUser"]))
 }
 
-isanon_talk <- ifelse(grepl("^*\\d+\\.\\d+\\.\\d+", contributeurs_talk) ==T | grepl("^*.*\\:.*\\:.*\\:.*\\:", contributeurs_talk) == T, 1, 0)
+isanon_talk <- ifelse(grepl("^*\\d+\\.\\d+\\.\\d+\\.\\d+", contributeurs_talk) ==T | grepl("^*.*\\:.*\\:.*\\:.*\\:", contributeurs_talk) == T, 1, 0)
 
 contributeurs <- append(contributeurs, contributeurs_talk)
 isanon <- append(isanon, isanon_talk)
@@ -80,6 +80,47 @@ attributes_contro <- unique(attributes_contro)
 
 attributes_contro$status_contrib[attributes_contro$isanon == 0] <- "inscrit"
 attributes_contro$status_contrib[attributes_contro$isanon == 1] <- "anonyme"
+
+# tests
+
+a <-c("Bugboy52.40", "trala67.89","seim","eiufhuze","168.365.13","222:333:444:5","64.3oulala","2607:F470:6:5002:A1FC:502:7F3D:5655")
+
+grepl("^*\\d+\\.\\d+\\.\\d+", a)
+
+grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
+
+grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
+
+attributes_page[grepl("^*.*\\:.*\\:.*\\:.*\\:",attributes_page$contributeurs) == T & attributes_page$isanon == 0,"contributeurs"]
+
+grepl("*[a-z]",a)
+
+
+attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
+                "contributeurs"]
+
+attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
+                  "isanon"]
+
+
+a <- attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx", ][1,]
+attributes_contro2 <- subset(attributes_contro[attributes_contro$contributeurs != "209.240.222.xxx",])
+attributes_contro2 <- merge(attributes_contro2, a, by ="contributeurs", all = T)
+
+a <- attributes_contro[attributes_contro$contributeurs == "132.235.232.xxx", ][1,]
+attributes_contro2 <- subset(attributes_contro[attributes_contro$contributeurs != "132.235.232.xxx",])
+attributes_contro2 <- merge(attributes_contro2, a, by ="contributeurs", all = T)
+
+
+which(is.na(attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx", contributeurs][2,]) == F)
+      
+attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx",]
+attributes_contro[attributes_contro$contributeurs == "213.253.40.xxx",]
+attributes_contro[attributes_contro$contributeurs == "141.211.45.xxx",]
+attributes_contro[attributes_contro$contributeurs == "213.76.2.xxx",]
+
+
+attributes_contro <- unique(attributes_contro)
 
 # Remplacer les " " par des "_" dans les noms de contributeurs (sinon bug XML)
 
@@ -128,11 +169,11 @@ for(i in names(ledits)){
 
 for(i in names(ledits)){
   for(j in 1:nrow(ledits[[i]])){
-    ledits[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
+    ledits[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro2$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
                                                         "status_contrib"]
-    ledits[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+    ledits[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
                                                          "total_rev_count"]
-    ledits[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+    ledits[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
                                                            "registration_year"]
   }
 }
