@@ -27,6 +27,23 @@ setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/pages/edits/')
 
 setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/pages/talk/')
 
+## Reseau contro edit
+
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/contro/edits/')
+
+## Reseau contro talk
+
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/contro/talk/')
+
+## Reseau featured edit
+
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/featured/edits/')
+
+## Reseau featured talk
+
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/featured/talk/')
+
+
 ## Charger les bases:
 
 # List admin:
@@ -49,6 +66,10 @@ featured_data <- as.character(featured_data)
 # nodes_atttributes_page
 
 attributes_page <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/nodes_attributes_page_network.csv")
+
+# node_attributes_contro
+
+attribute_contro3 <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
 
 
 #### Windows: #####
@@ -112,10 +133,10 @@ controversy_data <- as.character(controversy_data)
 featured_data <- read.table("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/featured_list.txt")
 featured_data <- as.character(featured_data)
 
-# Liste des pages 
-
 # nodes_atttributes_page
 
 attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/nodes_attributes_page_network.csv")
+
+# node_attributes_contro
 
 attribute_contro3 <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")

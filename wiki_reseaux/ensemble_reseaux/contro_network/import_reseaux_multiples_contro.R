@@ -110,14 +110,13 @@ attributes_contro2 <- merge(attributes_contro2, a, by ="contributeurs", all = T)
 a <- attributes_contro[attributes_contro$contributeurs == "132.235.232.xxx", ][1,]
 attributes_contro2 <- subset(attributes_contro[attributes_contro$contributeurs != "132.235.232.xxx",])
 attributes_contro2 <- merge(attributes_contro2, a, by ="contributeurs", all = T)
-
-
-which(is.na(attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx", contributeurs][2,]) == F)
       
 attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx",]
 attributes_contro[attributes_contro$contributeurs == "213.253.40.xxx",]
 attributes_contro[attributes_contro$contributeurs == "141.211.45.xxx",]
 attributes_contro[attributes_contro$contributeurs == "213.76.2.xxx",]
+
+attribute_contro4 <- attributes_contro
 
 
 attributes_contro <- unique(attributes_contro)
