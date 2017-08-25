@@ -84,11 +84,10 @@ for (i in 1:ncol(wiki_survey)){
 for (i in c("Q9_newarticles","Q9_content","Q9_spellcheck", "Q9_translation","Q9_vandalism","Q9_readerscomplaint",
             "Q9_mediation","Q9_technical", "Q9_discussion", "Q9_regulation", "Q9_featuredreview", "Q9_suppression",
             "Q9_helpdesk", "Q16_editorial", "Q16_technical", "Q16_article", "Q16_references", "Q16_content")){
+  wiki_survey_en[acm2[,i] == "not at all",paste(i,"_re",sep="")] <- "no"
   wiki_survey_en[acm2[,i] == "often" | acm2[,i] == "very often",paste(i,"_re",sep="")] <- "regularly"
   wiki_survey_en[acm2[,i] == "seldom" | acm2[,i] == "sometimes",paste(i,"_re",sep="")] <- "occasionally"
 }
-
-wiki_survey_en[acm2[,"Q9_content"] == "often" | acm2[,"Q9_content"] == "very often" ,"Q9_content"]
 
 table(wiki_survey_en$Q9_newarticles_re)
 
