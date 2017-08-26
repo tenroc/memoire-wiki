@@ -139,4 +139,4 @@ attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseau
 
 # node_attributes_contro
 
-attribute_contro3 <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
+attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")

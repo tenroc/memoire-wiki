@@ -27,6 +27,12 @@ temp <- levels(as.factor(temp))
 temp <- gsub( ".csv.*$", "", temp )
 write(temp, file="../temp_edit.txt", sep="/n")
 
+# Supprimer les erreurs d'édition (ActiveUser == "")
+
+for(i in names(ledits)){
+  ledits[[i]] <- ledits[[i]][!ledits[[i]][,"ActiveUser"]=="",]
+}
+
 # Récuppérer les réseaux de talk
 
 
@@ -52,6 +58,13 @@ temp <- levels(as.factor(temp))
 
 temp <- gsub( ".csv.*$", "", temp )
 write(temp, file="../temp_talk.txt", sep="/n")
+
+# Supprimer les erreurs d'édition (ActiveUser == "")
+
+for(i in names(ledits)){
+  ltalks[[i]] <- ltalks[[i]][!ltalks[[i]][,"ActiveUser"]=="",]
+}
+
 
 # Réccupérer tous les contributeurs dans une grande liste? (pas forcément une bonne idée)
 contributeurs <- character()
@@ -80,46 +93,6 @@ attributes_contro <- unique(attributes_contro)
 
 attributes_contro$status_contrib[attributes_contro$isanon == 0] <- "inscrit"
 attributes_contro$status_contrib[attributes_contro$isanon == 1] <- "anonyme"
-
-# tests
-
-a <-c("Bugboy52.40", "trala67.89","seim","eiufhuze","168.365.13","222:333:444:5","64.3oulala","2607:F470:6:5002:A1FC:502:7F3D:5655")
-
-grepl("^*\\d+\\.\\d+\\.\\d+", a)
-
-grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
-
-grepl("^*.*\\:.*\\:.*\\:.*\\:",a)
-
-attributes_page[grepl("^*.*\\:.*\\:.*\\:.*\\:",attributes_page$contributeurs) == T & attributes_page$isanon == 0,"contributeurs"]
-
-grepl("*[a-z]",a)
-
-
-attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
-                "contributeurs"]
-
-attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
-                  "isanon"]
-
-
-a <- attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx", ][1,]
-attributes_contro2 <- subset(attributes_contro[attributes_contro$contributeurs != "209.240.222.xxx",])
-attributes_contro2 <- merge(attributes_contro2, a, by ="contributeurs", all = T)
-
-a <- attributes_contro[attributes_contro$contributeurs == "132.235.232.xxx", ][1,]
-attributes_contro2 <- subset(attributes_contro[attributes_contro$contributeurs != "132.235.232.xxx",])
-attributes_contro2 <- merge(attributes_contro2, a, by ="contributeurs", all = T)
-      
-attributes_contro[attributes_contro$contributeurs == "209.240.222.xxx",]
-attributes_contro[attributes_contro$contributeurs == "213.253.40.xxx",]
-attributes_contro[attributes_contro$contributeurs == "141.211.45.xxx",]
-attributes_contro[attributes_contro$contributeurs == "213.76.2.xxx",]
-
-attribute_contro4 <- attributes_contro
-
-
-attributes_contro <- unique(attributes_contro)
 
 # Remplacer les " " par des "_" dans les noms de contributeurs (sinon bug XML)
 
@@ -166,37 +139,39 @@ for(i in names(ledits)){
   ledits[[i]][,"RedoTarget"] <- gsub(" ","_",ledits[[i]][,"RedoTarget"])
 }
 
-for(i in names(ledits)){
-  for(j in 1:nrow(ledits[[i]])){
-    ledits[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro2$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
-                                                        "status_contrib"]
-    ledits[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
-                                                         "total_rev_count"]
-    ledits[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro2$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
-                                                           "registration_year"]
-  }
-}
+## Pas forcément trés utile, mieux vaut indexer directement sur la base d'attributs
+
+#for(i in names(ledits)){
+#  for(j in 1:nrow(ledits[[i]])){
+#    ledits[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ledits[[i]][j,"ActiveUser"]),
+#                                                        "status_contrib"]
+#    ledits[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+#                                                         "total_rev_count"]
+#    ledits[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ledits[[i]][j,"ActiveUser"]),
+#                                                           "registration_year"]
+#  }
+#}
 
 
 # talk:
 
-for(i in names(ltalkss)){
+for(i in names(ltalks)){
   ltalks[[i]][,"ActiveUser"] <- gsub(" ","_",ltalks[[i]][,"ActiveUser"])
-  ltalks[[i]][,"TargetAuthor"] <- gsub(" ","_",ltalks[[i]][,"TargetAuthor"])
-  ltalks[[i]][,"UndoTarget"] <- gsub(" ","_",ltalks[[i]][,"UndoTarget"])
-  ltalks[[i]][,"RedoTarget"] <- gsub(" ","_",ltalks[[i]][,"RedoTarget"])
+  ltalks[[i]][,"TargetAuthor"] <- gsub(" ","_",ltalks[[i]][,"Target"])
 }
 
-for(i in names(ltalks)){
-  for(j in 1:nrow(ltalks[[i]])){
-    ltalks[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ltalks[[i]][j,"ActiveUser"]),
-                                                        "status_contrib"]
-    ltalks[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
-                                                         "total_rev_count"]
-    ltalks[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
-                                                           "registration_year"]
-  }
-}
+## Pas forcément trés utile, mieux vaut indexer directement sur la base d'attributs
+
+# for(i in names(ltalks)){
+#  for(j in 1:nrow(ltalks[[i]])){
+#    ltalks[[i]][j,"status_contrib"] <-  attributes_contro[as.character(attributes_contro$contributeurs) %in% as.character(ltalks[[i]][j,"ActiveUser"]),
+#                                                        "status_contrib"]
+#    ltalks[[i]][j,"total_rev_count"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
+#                                                         "total_rev_count"]
+#    ltalks[[i]][j,"registration_year"] <-  attributes_contro[as.character(attributes_contro$contributeurs) == as.character(ltalks[[i]][j,"ActiveUser"]),
+#                                                           "registration_year"]
+#  }
+#}
 
 #### Pour chaque élément de la liste des réseaux, obtenir un graphe ####
 
@@ -207,10 +182,8 @@ for(i in names(ltalks)){
 ledits_edgelists <- list()
 
 for (i in names(ledits)){
-  ledits_edgelists[[paste(i,"_edgelist",sep="")]] <- subset(ledits[[i]], select= c(ActiveUser, TargetAuthor, InteractionType, WordCount, status_contrib, total_rev_count,
-                                                                                   registration_year))
-  colnames(ledits_edgelists[[paste(i,"_edgelist",sep="")]]) <- c("V1","V2", "InteractionType","Wordcount", "status_contrib","total_rev_count",
-                                                                 "registration_year")
+  ledits_edgelists[[paste(i,"_edgelist",sep="")]] <- subset(ledits[[i]], select= c(ActiveUser, TargetAuthor, InteractionType, WordCount))
+  colnames(ledits_edgelists[[paste(i,"_edgelist",sep="")]]) <- c("V1","V2", "InteractionType","Wordcount")
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType_num"] <- as.character(ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"])
   ledits_edgelists[[paste(i,"_edgelist",sep="")]][ledits_edgelists[[paste(i,"_edgelist",sep="")]][,"InteractionType"] == "ADDED"
                                                   ,"InteractionType_num"] <- 1
@@ -234,19 +207,14 @@ for (i in names(ledits_edgelists)){
 
 ## talk:
 
-View(ltalks[[2]])
-
 ltalks_edgelists <- list()
 
 for (i in names(ltalks)){
   ltalks_edgelists[[paste(i,"_edgelist",sep="")]] <- subset(ltalks[[i]], select= c(ActiveUser, Target, DiscussionType,
                                                                                    CharacterCount, ThreadHeadline,
-                                                                                   IndexInThread, PreceedingAuthors...,
-                                                                                   status_contrib, total_rev_count,
-                                                                                   registration_year))
+                                                                                   IndexInThread, PreceedingAuthors...))
   colnames(ltalks_edgelists[[paste(i,"_edgelist",sep="")]]) <- c("V1","V2", "DiscussionType","CharacterCount", "ThreadHeadline",
-                                                                 "IndexInThread","PreceedingAuthors","status_contrib","total_rev_count",
-                                                                 "registration_year")
+                                                                 "IndexInThread","PreceedingAuthors")
   ltalks_edgelists[[paste(i,"_edgelist",sep="")]][,"DiscussionType_num"] <- as.character(ltalks_edgelists[[paste(i,"_edgelist",sep="")]][,"DiscussionType"])
   ltalks_edgelists[[paste(i,"_edgelist",sep="")]][ltalks_edgelists[[paste(i,"_edgelist",sep="")]][,"DiscussionType"] == "replied_to"
                                                   ,"DiscussionType_num"] <- 1
@@ -379,10 +347,6 @@ u <- character()
 v <- character()
 w <- character()
 z <- character()
-
-
-# temp/test
-grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F
 
 
 for (i in contro_attributes_talks$page){
