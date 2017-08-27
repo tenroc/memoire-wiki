@@ -47,5 +47,5 @@ plot(calonendrum_capense_graphe, layout=layout_nicely(calonendrum_capense_graphe
 
 # Légende:
 
-legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page"), pch=c(24,24,24,21,21,21,21,21), col="#777777", 
-       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333"), pt.cex=c(2,2,2,2,2,2,2,2), cex=.8, bty="n", ncol=1)
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","ancienneté -", "ancienneté +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)

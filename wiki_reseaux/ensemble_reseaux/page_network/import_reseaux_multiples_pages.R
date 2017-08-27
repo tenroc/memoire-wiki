@@ -427,6 +427,8 @@ page_attribute_cross <- data.frame(page_attributes_edits$page[page_attributes_ed
 colnames(page_attribute_cross) <- "page"
 
 for (i in page_attributes_edits$page[page_attributes_edits$istalk_page == 1]){
+  page_attribute_cross[page_attribute_cross$page == i,"nedits_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"nedits"]
+  page_attribute_cross[page_attribute_cross$page == i, "nedits_talk"] <- page_attributes_talks[page_attributes_talks$page == i, "nedits"]
   page_attribute_cross[page_attribute_cross$page == i,"density_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"density"]
   page_attribute_cross[page_attribute_cross$page == i, "density_talk"] <- page_attributes_talks[page_attributes_talks$page == i, "density"]
   page_attribute_cross[page_attribute_cross$page == i,"ncontributors_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"ncontributors"]
@@ -435,8 +437,8 @@ for (i in page_attributes_edits$page[page_attributes_edits$istalk_page == 1]){
   page_attribute_cross[page_attribute_cross$page == i, "nadmins_talk"] <- page_attributes_talks[page_attributes_talks$page == i, "nadmins"]
   page_attribute_cross[page_attribute_cross$page == i,"nbots_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"nbots"]
   page_attribute_cross[page_attribute_cross$page == i, "nbots_talk"] <- page_attributes_talks[page_attributes_talks$page == i, "nbots"]
-  page_attribute_cross[page_attribute_cross$page == i,"nanon"] <- page_attributes_edits[page_attributes_edits$page == i,"nanon"]
-  page_attribute_cross[page_attribute_cross$page == i, "nanon"] <- page_attributes_talks[page_attributes_talks$page == i, "nanon"]
+  page_attribute_cross[page_attribute_cross$page == i,"nanon_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"nanon"]
+  page_attribute_cross[page_attribute_cross$page == i, "nanon_talk"] <- page_attributes_talks[page_attributes_talks$page == i, "nanon"]
   page_attribute_cross[page_attribute_cross$page == i,"density_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"density"]
   page_attribute_cross[page_attribute_cross$page == i, "density_talk"] <- page_attributes_talks[page_attributes_talks$page == i, "density"]
   page_attribute_cross[page_attribute_cross$page == i,"transitivity_edit"] <- page_attributes_edits[page_attributes_edits$page == i,"transitivity"]

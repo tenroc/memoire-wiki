@@ -27,6 +27,7 @@ temp <- labels(V(calonendrum_capense_graphe))
 temp <- temp[is.na(temp) == F]
 
 calonendrum_capense_attributes <- calonendrum_capense_attributes[match(temp,calonendrum_capense_attributes$contributeurs),]
+calonendrum_capense_attributes$status_contrib <- as.character(calonendrum_capense_attributes$status_contrib)
 calonendrum_capense_attributes[is.na(calonendrum_capense_attributes$total_rev_count),"total_rev_count"] <- 1
 calonendrum_capense_attributes[is.na(calonendrum_capense_attributes$registration_year),"registration_year"] <- 2018
 calonendrum_capense_attributes[is.na(calonendrum_capense_attributes$status_contrib),"status_contrib"] <- "page_structure"
@@ -53,5 +54,5 @@ plot(calonendrum_capense_graphe, layout=layout_nicely(calonendrum_capense_graphe
 
 # Légende:
 
-legend(x="topleft", c("Réponse","Nouveau fil de discussion","admin","anonyme","bot", "inscrit", "page_structure"), pch=c(24,24,21,21,21,21,21), col="#777777", 
-       pt.bg= c("#3892e0","#da4d45","#8a4ebf","white","#f37329","#93d844", "#333333"), pt.cex=c(2,2,2,2,2,2,2), cex=.8, bty="n", ncol=1)
+legend(x="topleft", c("Réponse","Nouveau fil de discussion","admin","anonyme","bot", "inscrit", "page_structure","ancienneté -", "ancienneté +"), pch=c(24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#8a4ebf","white","#f37329","#93d844", "#333333","white", "white"), pt.cex=c(2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
