@@ -67,6 +67,12 @@ featured_data <- as.character(featured_data)
 
 attributes_page <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/nodes_attributes_page_network.csv")
 
+# Et page_attributes
+
+page_attributes_edits <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_edits.csv")
+page_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_talks.csv")
+
+
 # node_attributes_contro
 
 attribute_contro3 <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")

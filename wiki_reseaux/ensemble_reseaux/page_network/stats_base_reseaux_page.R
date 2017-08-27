@@ -138,7 +138,7 @@ sd(as.numeric(page_attributes_talks$contributors))
 
 #### Régressions: ####
 
-reg_sub <- subset(page_attributes_talks[,c(1,2:5,7,8,12:15,20)])
+reg_sub <- subset(page_attributes_talks[,c(1,2:6,8,9,13:16,20)])
 for(i in 2:ncol(reg_sub)){
   reg_sub[,i] <- as.numeric(reg_sub[,i])
 }
