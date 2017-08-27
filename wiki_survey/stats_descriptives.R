@@ -618,6 +618,9 @@ colnames(dim2) <- c("dim2_contrib","dim2_coord","dim2_cos2")
 dim3 <- cbind(res.acm$var$contrib[,3], res.acm$var$coord[,3], res.acm$var$cos2[,3])
 colnames(dim3) <- c("dim3_contrib","dim3_coord","dim3_cos2")
 
+dim4 <- cbind(res.acm$var$contrib[,3], res.acm$var$coord[,4], res.acm$var$cos2[,4])
+colnames(dim4) <- c("dim4_contrib","dim4_coord","dim4_cos2")
+
 plot.MCA(res.acm, invisible=c("ind"), 
          title="Nuage des modalites actives Plan 1-2", axes=c(1,2), 
          autoLab="yes", unselect=1,
@@ -628,10 +631,11 @@ plot.MCA(res.acm, invisible=c("ind"),
          autoLab="yes", unselect=1,
          selectMod=c(moda23))
 
+plot.MCA(res.acm, invisible=c("ind"), 
+         title="Nuage des modalites actives Plan 1-3", axes=c(1,3), 
+         autoLab="yes", unselect=1,
+         selectMod=c(moda23))
 
-#### Tentative factoshiny ####
-
-res.shiny <- MCAshiny(res.acm)
 
 ## Représentation graphique de l'ACM - axe 1-2
 
@@ -664,22 +668,26 @@ etiquettes <- c("contrib: non","contrib: oui","contrib: pas sur","Nart: non", "N
 text(res.acm$var$coord[modatot,1:2], labels=etiquettes,
      col="black", cex=1, pos=c(4))
 
-## Représentation graphique de l'ACM - axe 2-3
+## Représentation graphique de l'ACM - axe 1-3
 
-round(res.acm$var$coord[modatot, 2:3], 2)
+round(res.acm$var$coord[modatot, 1:3], 2)
+
+
 
 # cadre
 
-plot(res.acm$var$coord[modatot, 2:3]*1.4, type="n", 
-     xlab=paste0("Axe 2 (", round(res.acm$eig[2,2], 1), "%)"),
+png(file='c:/Users/tenroc/Desktop/ACM2.png', width = 1000, height = 728, units = "px", pointsize = 14)
+
+plot(res.acm$var$coord[modatot, c(1,3)]*1.4, type="n", 
+     xlab=paste0("Axe 1 (", round(res.acm$eig[1,2], 1), "%)"),
      ylab=paste0("Axe 3 (", round(res.acm$eig[3,2], 1), "%)"),
-     main="Troisième plan factoriel",
+     main="Axes 1-3",
      cex.main=1, cex.axis=0.8, cex.lab=0.7, font.lab=3, 
      asp=1) ## asp=1 on définis la meme échelle pour les axes x et y
 abline(h=0, v=0, col="grey", lty=3, lwd=1)
 
 # Representer les points et les etiquettes des modalites actives
-points(res.acm$var$coord[modatot, 2:3],
+points(res.acm$var$coord[modatot, c(1,3)],
        col="#da4d45",
        pch=c(16))
 
@@ -691,28 +699,48 @@ etiquettes <- c("contrib: non","contrib: oui","contrib: pas sur","Nart: non", "N
                 "DAcont: oui")
 
 
+
 # projection des etiquettes
 
-text(res.acm$var$coord[modatot,2:3], labels=etiquettes,
-     col="#da4d45", cex=1, pos=c(4, 2, 4, 3, 3, 2, 4, 4, 1, 2, 
-                               4, 2, 3))
+text(res.acm$var$coord[modatot,c(1,3)], labels=etiquettes,
+     col="#da4d45", cex=1, pos=c(4,3,4,2,3,4,3,3,2,1,4,4,2,3,4,2,4,4,4,2,4,3,3,3,3,4,3,1,3,1,4,1,1,2,4,4,4,3,2,1,4,3,3))
+
 
 # Ajout des modalites supplementaire: temps de contrib et sociodemo
-modasup=c("educ_doctorate", "educ_master_degree", "educ_primary_education", "educ_secondary_education", "educ_tertiary_education", "currentlyin_school_no", "currentlyin_school_yes", 
-          "married", "have_partner", "single", "have_child_no", "have_child_yes", "female", "male", "age[>50]", "age[18-30]",
-          "age[30-50]", "age[<18]", "inscription[2001-2004]", "inscription[2005-2009]", "inscription[2009-2012]", "temps_edit[>15 hours]", "temps_edit[1-3 hours]", "temps_edit[4-15 hours]",
-          "employement_no", "employement_yes(part time)", "employement_yes(full time)")
 
-text(res.acm$quali.sup$coord[c(35:38,39:42,44,45,47:49,51,52,55:58,61:63,65:67,69:71), 2:3]*1.4, 
-     labels=modasup,
-     cex=0.8, col="#3892e0", font=3)
+modasup2 <- c("Doctorat","Collège","Edit:Oui","Conjoint","Femme","Age >50","Age [18-30]","Age <18",
+              "Inscr [2005-2009]", "Inscr [2009-2012]", "TContrib >15h", "TContrib [1-3]h", "TContrib [4-15]h")
+
+points(res.acm$quali.sup$coord[abs(res.acm$quali.sup$coord[,1])>
+                                 mean(abs(res.acm$quali.sup$coord[,1])) |
+                                 abs(res.acm$quali.sup$coord[,3])> mean(abs(res.acm$quali.sup$coord[,1]))
+                               , c(1,3)][c(12,13,15,17,20,22,23,24,27,28,30,31,32),]*1.4, col="#3892e0", pch=c(15))
+
+text(res.acm$quali.sup$coord[abs(res.acm$quali.sup$coord[,1])>
+                               mean(abs(res.acm$quali.sup$coord[,1])) |
+                               abs(res.acm$quali.sup$coord[,3])> mean(abs(res.acm$quali.sup$coord[,1]))
+                             , c(1,3)][c(12,13,15,17,20,22,23,24,27,28,30,31,32),]*1.4, labels=modasup2,
+     cex=1, col="#3892e0", font=1, pos=c(1,3,3,4,1,2,3,3,2,2,1,2,3))
+
 
 # Ajout des supplementaires: ressenti wiki et autres contributeurs
 
-modasup2=c("too_much_rules","support_from_other_editors","lack_access_resarch_material","critiscism_of_work","editors_not_fun",
-           "editors_own_pages","wiki_mission_feel_important","fellow_volunteers_produce_quality","my_opinion_count","helpful",
-           "friendly","collaborative","rude","unfriendly","dumb","arrogrant")
+modasup2 <- c("support","critiques","pas drôle","propriétaire","mission","collaborateur qualité","opinion","vulgaire")
 
-text(res.acm$quali.sup$coord[c(2,4,6,8,10,12,14,16,18,20,22,24,26,28,30,32,34), 1:2]*1.4, 
-     labels=modasup2,
-     cex=0.8, col="#3892e0", font=3)
+points(res.acm$quali.sup$coord[abs(res.acm$quali.sup$coord[,1])>
+                                 mean(abs(res.acm$quali.sup$coord[,1])) |
+                                 abs(res.acm$quali.sup$coord[,3])> mean(abs(res.acm$quali.sup$coord[,1]))
+                               , c(1,3)][c(1:4,6,8,10:11),]*1.4, col="#8a4ebf", pch=c(17))
+
+text(res.acm$quali.sup$coord[abs(res.acm$quali.sup$coord[,1])>
+                               mean(abs(res.acm$quali.sup$coord[,1])) |
+                               abs(res.acm$quali.sup$coord[,3])> mean(abs(res.acm$quali.sup$coord[,1]))
+                             , c(1,3)][c(1:4,6,8,10:11),]*1.4, labels=modasup2, cex=1, col="#8a4ebf",
+     font=1, pos=c(4,3,1,4,2,1,2,2))
+
+legend(x=-1.3, y=1.4, legend=c("Modalités actives", "Modalités supplémentaires: socio-démographiques",
+                               "modalités supplémentaire: ressenti"), pch= c(21,22,24), bty="y",
+       box.lty=3, bg="white", box.col="grey",
+       pt.bg=c("#da4d45","#3892e0","#8a4ebf"), text.col=c("#da4d45","#3892e0","#8a4ebf"))
+
+dev.off()
