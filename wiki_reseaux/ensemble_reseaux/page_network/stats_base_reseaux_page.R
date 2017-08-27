@@ -68,10 +68,10 @@ for(i in 2:ncol(reg_sub)){
   reg_sub[,i] <- as.numeric(reg_sub[,i])
 }
 
-reg1 <- lm(mean_degree_centrality ~ nanon + nadmins + nedits + ncontributors + nbots ,data =reg_sub)
+reg1 <- lm(mean_degree_centrality ~ nanon + nadmins + nedits + ncontributors + nbots + istalk_page ,data =reg_sub)
 summary(reg1)
 
-reg2 <- lm(mean_betweenness ~ nanon + nadmins + nedits + ncontributors + nbots ,data =reg_sub)
+reg2 <- lm(mean_betweenness ~ nanon + nadmins + nedits + ncontributors + nbots + istalk_page ,data =reg_sub)
 summary(reg2)
 
 

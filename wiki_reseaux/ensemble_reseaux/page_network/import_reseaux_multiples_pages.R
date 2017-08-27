@@ -154,7 +154,7 @@ for(i in names(ledits)){
 
 # talk:
 
-for(i in names(ltalkss)){
+for(i in names(ltalks)){
   ltalks[[i]][,"ActiveUser"] <- gsub(" ","_",ltalks[[i]][,"ActiveUser"])
   ltalks[[i]][,"TargetAuthor"] <- gsub(" ","_",ltalks[[i]][,"Target"])
 }
@@ -350,9 +350,6 @@ w <- character()
 z <- character()
 
 
-# temp/test
-grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F
-
 
 for (i in page_attributes_talks$page){
   a[i] <- edge_density(ltalks_graphe[[i]])
@@ -425,6 +422,8 @@ page_attributes_talks$isfeatured <- g
 
 page_attributes_edits$istalk_page[page_attributes_edits$page %in% page_attributes_talks$page] <- 1
 page_attributes_edits$istalk_page[(page_attributes_edits$page %in% page_attributes_talks$page) == F] <- 0
+
+
 
 ## exporter les bases
 
