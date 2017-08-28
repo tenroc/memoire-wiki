@@ -116,7 +116,7 @@ setwd('C:/Users/tenroc/Documents/networks/contro/talk/')
 
 ## Reseau featured edit
 
-setwd('C:/Users/tenroc/Documents/networks/featured/edits/')
+setwd('C:/Users/tenroc/Documents/networks/featured/edit/')
 
 ## Reseau featured talk
 
