@@ -146,3 +146,8 @@ attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseau
 # node_attributes_contro
 
 attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
+
+# node_attributes_featured
+
+attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/nodes_attributes_featured_network.csv")
+
