@@ -256,30 +256,147 @@ for (i in oil_spill_attributes$contributeurs){
   oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$contributeurs == i] <- length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 == i & oil_spill_edgelist$InteractionType == "RESTORED"])
 }
 
-# Nombre de contributions en fontion du statut
-
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "admin"]])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "inscrit"]])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "anonyme"]])
-
-# Nombre de contributions en fonction du revcount
-
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 1]])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 2]])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 3]])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 4]])
-
-# Moyenne par contrib en fonction du statut
-
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "admin"]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "admin"])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "inscrit"]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "inscrit"])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "anonyme"]])/length(oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "anonyme"])
-
-# En fonction du rev_count
-
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 1]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 1])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 2]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 2])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 3]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 3])
-length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 4]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 4])
-
 boxplot(oil_spill_attributes$total_rev_count_local)
+
+# Nombre de contributions en fontion du statut + moyenne et sd
+
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+mean(oil_spill_attributes$total_rev_count_local)
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+# Nombre d'ajouts en fontion du statut + moyenne et sd
+
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+mean(oil_spill_attributes$added_rev_count_local)
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+# Nombre de suppressions en fontion du statut + moyenne et sd
+
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+mean(oil_spill_attributes$deleted_rev_count_local)
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+# Nombre de reverse en fontion du statut + moyenne et sd
+
+length(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+length(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+length(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+mean(oil_spill_attributes$reversed_rev_count_local)
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
+
+# Nombre de contributions en fonction du revcount + moyenne et sd
+
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+length(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+
+# Nombre d'ajouts en fonction du revcount + moyenne et sd
+
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+length(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+# Nombre de suppressions en fonction du revcount + moyenne et sd
+
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+length(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+# Nombre de reverse en fonction du revcount + moyenne et sd
+
+length(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+length(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+length(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+length(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+
+
+#### Assortativité
+
+assortativity.degree(oil_spill_graphe)
+
+assortativity(oil_spill_graphe, oil_spill_attributes$status_contrib)
+
+assortativity(oil_spill_graphe, oil_spill_attributes$total_rev_count_discr)

@@ -96,7 +96,6 @@ library('lmtest')
 library('foreign')
 library('R2HTML')
 library('readODS')
-library('Factoshiny')
 
 ## Reseau page edit
 

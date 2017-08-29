@@ -1,6 +1,6 @@
 #### Automatisation de la réccupération des donées contrib sur l'ensemble des réseaux: ####
 
-# Import contro/edits:
+# Import contro/edits: ! charger la base edit
 
 list_edits <- list.files(pattern="*.csv")
 
@@ -33,7 +33,7 @@ for(i in names(ledits)){
   ledits[[i]] <- ledits[[i]][!ledits[[i]][,"ActiveUser"]=="",]
 }
 
-# Récuppérer les réseaux de talk
+# Récuppérer les réseaux de talk: !charger la base talk
 
 
 list_talk <- list.files(pattern="*.csv")
