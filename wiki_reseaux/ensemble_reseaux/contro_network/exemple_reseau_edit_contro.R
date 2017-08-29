@@ -2,50 +2,284 @@
 
 # Basique:
 
-plot(ledits_graphe[["Calodendrum_capense.csv_edits_edgelist"]],
-     main ="Reseau editions Culture_War",
-     layout=layout_nicely(ledits_graphe[["Calodendrum_capense.csv_edits_edgelist"]]),
+plot(ledits_graphe[["Oil_spill.csv_edits_edgelist"]],
+     main ="Reseau editions Oil spill",
+     layout=layout_nicely(ledits_graphe[["Oil_spill.csv_edits_edgelist"]]),
      edge.arrow.size=.1,
      vertex.label= NA,
      vertex.size = 3,
      rescale=TRUE)
 
 
-calonendrum_capense_graphe <- ledits_graphe[["Calodendrum_capense.csv_edits_edgelist"]]
-calonendrum_capense_edgelist <- ledits_edgelists[["Calodendrum_capense.csv_edits_edgelist"]]
-temp <- append(calonendrum_capense_edgelist[,"V1"], calonendrum_capense_edgelist[,"V2"])
-calonendrum_capense_attributes <- attributes_page[attributes_page$contributeurs %in% levels(as.factor(temp)),]
+oil_spill_graphe <- ledits_graphe[["Oil_spill.csv_edits_edgelist"]]
+oil_spill_edgelist <- ledits_edgelists[["Oil_spill.csv_edits_edgelist"]]
+temp <- append(oil_spill_edgelist[,"V1"], oil_spill_edgelist[,"V2"])
+oil_spill_attributes <- attributes_contro[attributes_contro$contributeurs %in% levels(as.factor(temp)),]
 
 # Remettre les attributes dans l'ordre du graphe:
 
-temp <- labels(V(calonendrum_capense_graphe))
+temp <- labels(V(oil_spill_graphe))
 
 temp <- temp[is.na(temp) == F]
 
-calonendrum_capense_attributes <- calonendrum_capense_attributes[match(temp, calonendrum_capense_attributes$contributeurs),]
-calonendrum_capense_attributes[calonendrum_capense_attributes$contributeurs == "page","total_rev_count"] <- 1
-calonendrum_capense_attributes[calonendrum_capense_attributes$contributeurs == "page","registration_year"] <- 2001
-# Meilleure visualisation:
+oil_spill_attributes <- oil_spill_attributes[match(temp, oil_spill_attributes$contributeurs),]
+oil_spill_attributes[oil_spill_attributes$contributeurs == "page","total_rev_count"] <- 1
+oil_spill_attributes[oil_spill_attributes$contributeurs == "page","registration_year"] <- 2001
+oil_spill_attributes[is.na(oil_spill_attributes$total_rev_count) == T,"total_rev_count"] <- 1
+oil_spill_attributes[is.na(oil_spill_attributes$registration_year) == T,"registration_year"] <- 2018
+## Première visualisation:
 
 # Couleurs:
 
 colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
 colors_nodes <- c("#8a4ebf", "white","#f37329","#93d844","#333333")
 
-V(calonendrum_capense_graphe)$color <- colors_nodes[as.factor(calonendrum_capense_attributes$status_contrib)]
-V(calonendrum_capense_graphe)$size <- abs((as.numeric(calonendrum_capense_attributes$registration_year) - 2000) -20)
-V(calonendrum_capense_graphe)$label <- NA
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$status_contrib)]
+V(oil_spill_graphe)$size <- abs((as.numeric(oil_spill_attributes$registration_year) - 2000) -20)/3
+V(oil_spill_graphe)$label <- NA
 
 # Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
-E(calonendrum_capense_graphe)$width <- as.numeric(E(calonendrum_capense_graphe)$Wordcount)/5
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
 # Marche pas, aucune idee de pourquoi:
 # E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
 
-plot(calonendrum_capense_graphe, layout=layout_nicely(calonendrum_capense_graphe), rescale=TRUE,edge.arrow.size=.3,
-     edge.color=colors_edge[as.numeric(E(calonendrum_capense_graphe)$InteractionType_num)],
-     main= "Reseau editions Calodendrum Capense")
+plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
 
 # Légende:
 
 legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","ancienneté -", "ancienneté +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
        pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+## Stats de base:
+
+centralization.degree(oil_spill_graphe)
+transitivity(oil_spill_graphe)
+edge_density(oil_spill_graphe)
+vcount(oil_spill_graphe)
+ecount(oil_spill_graphe)
+table (oil_spill_edgelist$InteractionType)
+
+oil_spill_attributes$degree_centrality <- degree(oil_spill_graphe)
+boxplot(oil_spill_attributes$degree_centrality[oil_spill_attributes$contributeurs != "page"])
+
+oil_spill_attributes$betweenness_centrality <- betweenness(oil_spill_graphe)
+boxplot(oil_spill_attributes$betweenness_centrality[oil_spill_attributes$contributeurs != "page"])
+
+oil_spill_attributes$in_degree <- degree(oil_spill_graphe, mode = "in")
+boxplot(oil_spill_attributes$in_degree[oil_spill_attributes$contributeurs != "page"])
+
+oil_spill_attributes$out_degree <- degree(oil_spill_graphe, mode = "out")
+boxplot(oil_spill_attributes$out_degree[oil_spill_attributes$contributeurs != "page"])
+
+mean(oil_spill_attributes$total_rev_count)
+sd(oil_spill_attributes$total_rev_count)
+boxplot(oil_spill_attributes$total_rev_count)
+quint <- quantile(oil_spill_attributes$total_rev_count, seq(0,1,0.10))
+oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count > as.numeric(quint[10])] <- 1
+oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count > as.numeric(quint[8]) & oil_spill_attributes$total_rev_count <= as.numeric(quint[10])] <- 2
+oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count > as.numeric(quint[6]) & oil_spill_attributes$total_rev_count <= as.numeric(quint[8])] <- 3
+oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count <= as.numeric(quint[6])] <- 4
+oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$contributeurs == "page"] <- "page"
+table(oil_spill_attributes$total_rev_count_discr)
+
+#### Deuxième représentation graphique: 
+
+#### Size = Degree centrality
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- c("#8a4ebf", "white","#f37329","#93d844","#333333")
+
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$status_contrib)]
+V(oil_spill_graphe)$size <- log(oil_spill_attributes$degree_centrality)*3
+V(oil_spill_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
+#### Size = Indegree
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- c("#8a4ebf", "white","#f37329","#93d844","#333333")
+
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$status_contrib)]
+V(oil_spill_graphe)$size <- log(oil_spill_attributes$in_degree)*3
+V(oil_spill_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","degrés entrant -", "degrés entrant +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
+#### Size = Out degree
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- c("#8a4ebf", "white","#f37329","#93d844","#333333")
+
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$status_contrib)]
+V(oil_spill_graphe)$size <- log(oil_spill_attributes$degree_centrality)*3
+V(oil_spill_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(oil_spill_graphe, layout=layout.fruchterman.reingold, rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","degrés sortant -", "degrès sortant +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
+#### Size = Indegree, col = total_rev_count
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- heat.colors(n = 4)
+colors_nodes[5] <- "#333333"
+
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_discr)]
+V(oil_spill_graphe)$size <- log(oil_spill_attributes$in_degree) *3
+V(oil_spill_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","Nombre total d'édition -","Nombre total d'éditions +", "page","degrés entrant -", "degrés entrant +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d", colors_nodes[4], colors_nodes[1], "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
+#### Size = Out degree col= total rev count
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- heat.colors(n = 4)
+colors_nodes[5] <- "#333333"
+
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_discr)]
+V(oil_spill_graphe)$size <- oil_spill_attributes$out_degree/10
+V(oil_spill_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","degrés sortant -", "degrès sortant +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
+#### Size = degree_centrality col= total rev count
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- heat.colors(n = 4)
+colors_nodes[5] <- "#333333"
+
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_discr)]
+V(oil_spill_graphe)$size <- log(oil_spill_attributes$degree_centrality)
+V(oil_spill_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(oil_spill_graphe, layout=layout.fruchterman.reingold, rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
+     main= "Reseau editions Oil spill")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","degrés", "degrès"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
+## Représentations bivariées
+
+# Degrés par rapport au décompte total d'edits.
+
+plot(oil_spill_attributes$degree_centrality, oil_spill_attributes$total_rev_count)
+
+plot(oil_spill_attributes$in_degree, oil_spill_attributes$total_rev_count)
+
+plot(oil_spill_attributes$out_degree, oil_spill_attributes$total_rev_count)
+
+# Tableau croisement total rev count / status_contrib
+
+table(oil_spill_attributes$status_contrib, oil_spill_attributes$total_rev_count_discr)[c(1:4),c(1:4)]
+
+# Rattacher le nombre total d'édition efféctuées au sein de ce réseau par éditeur
+
+for (i in oil_spill_attributes$contributeurs){
+  oil_spill_attributes$total_rev_count_local[oil_spill_attributes$contributeurs == i] <- length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 == i])
+  oil_spill_attributes$added_rev_count_local[oil_spill_attributes$contributeurs == i] <- length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 == i & oil_spill_edgelist$InteractionType == "ADDED"])
+  oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$contributeurs == i] <- length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 == i & oil_spill_edgelist$InteractionType == "DELETED"])
+  oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$contributeurs == i] <- length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 == i & oil_spill_edgelist$InteractionType == "RESTORED"])
+}
+
+# Nombre de contributions en fontion du statut
+
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "admin"]])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "inscrit"]])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "anonyme"]])
+
+# Nombre de contributions en fonction du revcount
+
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 1]])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 2]])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 3]])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 4]])
+
+# Moyenne par contrib en fonction du statut
+
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "admin"]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "admin"])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "inscrit"]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "inscrit"])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "anonyme"]])/length(oil_spill_attributes$contributeurs[oil_spill_attributes$status_contrib == "anonyme"])
+
+# En fonction du rev_count
+
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 1]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 1])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 2]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 2])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 3]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 3])
+length(oil_spill_edgelist$V1[oil_spill_edgelist$V1 %in% oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 4]])/ length(oil_spill_attributes$contributeurs[oil_spill_attributes$total_rev_count_discr == 4])
+
+boxplot(oil_spill_attributes$total_rev_count_local)

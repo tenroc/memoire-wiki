@@ -421,8 +421,54 @@ contro_attributes_talks$isfeatured <- g
 contro_attributes_edits$istalk_page[contro_attributes_edits$page %in% contro_attributes_talks$page] <- 1
 contro_attributes_edits$istalk_page[(contro_attributes_edits$page %in% contro_attributes_talks$page) == F] <- 0
 
+contro_attributes_cross <- data.frame(contro_attributes_edits$page[contro_attributes_edits$istalk_page == 1])
+colnames(contro_attributes_cross) <- "page"
+
+for (i in contro_attributes_edits$page[contro_attributes_edits$istalk_page == 1]){
+  contro_attributes_cross[contro_attributes_cross$page == i,"nedits_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"nedits"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nedits_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nedits"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"density_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"density"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "density_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "density"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"ncontributors_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"ncontributors"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "ncontributors_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "ncontributors"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"nadmins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"nadmins"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nadmins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nadmins"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"nbots_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"nbots"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nbots_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nbots"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"nanon_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"nanon"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nanon_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nanon"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"density_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"density"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "density_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "density"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"transitivity_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"transitivity"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "transitivity_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "transitivity"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"centralization_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"centralization"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "centralization_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "centralization"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"mean_betweenness_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_betweenness"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "mean_betweenness_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_betweenness"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"mean_betweenness_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_betweenness_admin"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "mean_betweenness_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_betweenness_admin"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"mean_degree_centrality_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_degree_centrality"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "mean_degree_centrality_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_degree_centrality"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"mean_degree_centrality_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_degree_centrality_admins"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "mean_degree_centrality_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_degree_centrality_admins"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"sd_betweenness_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_betweenness"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "sd_betweenness_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_betweenness"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"sd_betweenness_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_betweenness_admin"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "sd_betweenness_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_betweenness_admin"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"sd_degree_centrality_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_degree_centrality"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "sd_degree_centrality_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_degree_centrality"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"sd_degree_centrality_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_degree_centrality_admins"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "sd_degree_centrality_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_degree_centrality_admins"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "max_discussion_depth"] <- contro_attributes_talks[contro_attributes_edits$page == i, "max_discussion_depth"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "mean_discussion_depth"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_discussion_depth"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "sd_discussion_depth"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_discussion_depth"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "iscontroversial"] <- contro_attributes_talks[contro_attributes_talks$page == i, "iscontroversial"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "isfeatured"] <- contro_attributes_talks[contro_attributes_talks$page == i, "isfeatured"]
+}
+
 ## exporter les bases
 
-write.csv2(contro_attributes_edits, file="../contro_page_attributes_edits.csv", fileEncoding = "UTF8")
-write.csv2(contro_attributes_talks, file="../contro_page_attributes_talks.csv", fileEncoding = "UTF8")
+write.csv2(contro_attributes_edits, file="../contro_contro_attributes_edits.csv", fileEncoding = "UTF8")
+write.csv2(contro_attributes_talks, file="../contro_contro_attributes_talks.csv", fileEncoding = "UTF8")
+write.csv2(contro_attributes_cross, file ="../contro_contro_attribute_cross.csv", fileEncoding = "UTF8")
 

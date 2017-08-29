@@ -75,7 +75,7 @@ page_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemb
 
 # node_attributes_contro
 
-attribute_contro3 <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
+attributes_contro <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
 
 
 #### Windows: #####

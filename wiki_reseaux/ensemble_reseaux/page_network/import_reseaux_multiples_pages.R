@@ -472,4 +472,5 @@ for (i in page_attributes_edits$page[page_attributes_edits$istalk_page == 1]){
 
 write.csv2(page_attributes_edits, file="../page_page_attributes_edits.csv", fileEncoding = "UTF8")
 write.csv2(page_attributes_talks, file="../page_page_attributes_talks.csv", fileEncoding = "UTF8")
+write.csv2(page_attribute_cross, file ="../page_page_attribute_cross.csv", fileEncoding = "UTF8")
 
