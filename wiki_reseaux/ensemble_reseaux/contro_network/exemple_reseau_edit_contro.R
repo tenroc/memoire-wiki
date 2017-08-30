@@ -14,7 +14,13 @@ plot(ledits_graphe[["Oil_spill.csv_edits_edgelist"]],
 oil_spill_graphe <- ledits_graphe[["Oil_spill.csv_edits_edgelist"]]
 oil_spill_edgelist <- ledits_edgelists[["Oil_spill.csv_edits_edgelist"]]
 temp <- append(oil_spill_edgelist[,"V1"], oil_spill_edgelist[,"V2"])
+a <- "page"
+a <- data.frame(a,a)
+a[3:7] <- NA
+a <- subset(a[,c(3,4,1,5,2,6,7)])
+colnames(a) <- colnames(oil_spill_attributes)
 oil_spill_attributes <- attributes_contro[attributes_contro$contributeurs %in% levels(as.factor(temp)),]
+oil_spill_attributes <- rbind(oil_spill_attributes, a)
 
 # Remettre les attributes dans l'ordre du graphe:
 
@@ -22,9 +28,9 @@ temp <- labels(V(oil_spill_graphe))
 
 temp <- temp[is.na(temp) == F]
 
-oil_spill_attributes <- oil_spill_attributes[match(temp, oil_spill_attributes$contributeurs),]
+oil_spill_attributes <- oil_spill_attributes[match(as.character(oil_spill_attributes$contributeurs),temp),]
 oil_spill_attributes[oil_spill_attributes$contributeurs == "page","total_rev_count"] <- 1
-oil_spill_attributes[oil_spill_attributes$contributeurs == "page","registration_year"] <- 2001
+oil_spill_attributes[oil_spill_attributes$contributeurs == "page","registration_year"] <- 2018
 oil_spill_attributes[is.na(oil_spill_attributes$total_rev_count) == T,"total_rev_count"] <- 1
 oil_spill_attributes[is.na(oil_spill_attributes$registration_year) == T,"registration_year"] <- 2018
 ## Première visualisation:
@@ -53,6 +59,11 @@ legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "
        pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 ## Stats de base:
+
+contro_attributes_edits$nadmins[contro_attributes_edits$page == "Oil_spill"]
+contro_attributes_edits$nanon[contro_attributes_edits$page == "Oil_spill"]
+contro_attributes_edits$nbots[contro_attributes_edits$page == "Oil_spill"]
+
 
 centralization.degree(oil_spill_graphe)
 transitivity(oil_spill_graphe)
