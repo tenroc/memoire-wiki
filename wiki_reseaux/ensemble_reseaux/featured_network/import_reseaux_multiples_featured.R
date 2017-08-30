@@ -154,7 +154,7 @@ for(i in names(ledits)){
 
 # talk:
 
-for(i in names(ltalkss)){
+for(i in names(ltalks)){
   ltalks[[i]][,"ActiveUser"] <- gsub(" ","_",ltalks[[i]][,"ActiveUser"])
   ltalks[[i]][,"TargetAuthor"] <- gsub(" ","_",ltalks[[i]][,"Target"])
 }
@@ -351,7 +351,6 @@ z <- character()
 
 
 # temp/test
-grepl("^==.*==", labels(degree(ltalks_graphe[[i]]))) == F
 
 
 for (i in featured_attributes_talks$page){
@@ -425,6 +424,52 @@ featured_attributes_talks$isfeatured <- g
 
 featured_attributes_edits$istalk_page[featured_attributes_edits$page %in% featured_attributes_talks$page] <- 1
 featured_attributes_edits$istalk_page[(featured_attributes_edits$page %in% featured_attributes_talks$page) == F] <- 0
+
+
+featured_attributes_cross <- data.frame(featured_attributes_edits$page[featured_attributes_edits$istalk_page == 1])
+colnames(featured_attributes_cross) <- "page"
+
+for (i in featured_attributes_edits$page[featured_attributes_edits$istalk_page == 1]){
+  featured_attributes_cross[featured_attributes_cross$page == i,"nedits_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"nedits"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "nedits_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "nedits"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"density_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"density"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "density_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "density"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"ncontributors_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"ncontributors"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "ncontributors_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "ncontributors"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"nadmins_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"nadmins"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "nadmins_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "nadmins"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"nbots_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"nbots"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "nbots_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "nbots"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"nanon_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"nanon"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "nanon_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "nanon"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"density_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"density"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "density_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "density"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"transitivity_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"transitivity"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "transitivity_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "transitivity"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"centralization_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"centralization"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "centralization_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "centralization"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"mean_betweenness_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"mean_betweenness"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "mean_betweenness_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "mean_betweenness"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"mean_betweenness_admins_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"mean_betweenness_admin"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "mean_betweenness_admins_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "mean_betweenness_admin"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"mean_degree_centrality_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"mean_degree_centrality"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "mean_degree_centrality_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "mean_degree_centrality"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"mean_degree_centrality_admins_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"mean_degree_centrality_admins"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "mean_degree_centrality_admins_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "mean_degree_centrality_admins"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"sd_betweenness_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"sd_betweenness"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "sd_betweenness_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "sd_betweenness"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"sd_betweenness_admins_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"sd_betweenness_admin"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "sd_betweenness_admins_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "sd_betweenness_admin"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"sd_degree_centrality_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"sd_degree_centrality"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "sd_degree_centrality_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "sd_degree_centrality"]
+  featured_attributes_cross[featured_attributes_cross$page == i,"sd_degree_centrality_admins_edit"] <- featured_attributes_edits[featured_attributes_edits$page == i,"sd_degree_centrality_admins"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "sd_degree_centrality_admins_talk"] <- featured_attributes_talks[featured_attributes_talks$page == i, "sd_degree_centrality_admins"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "max_discussion_depth"] <- featured_attributes_talks[featured_attributes_edits$page == i, "max_discussion_depth"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "mean_discussion_depth"] <- featured_attributes_talks[featured_attributes_talks$page == i, "mean_discussion_depth"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "sd_discussion_depth"] <- featured_attributes_talks[featured_attributes_talks$page == i, "sd_discussion_depth"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "iscontroversial"] <- featured_attributes_talks[featured_attributes_talks$page == i, "iscontroversial"]
+  featured_attributes_cross[featured_attributes_cross$page == i, "isfeatured"] <- featured_attributes_talks[featured_attributes_talks$page == i, "isfeatured"]
+}
 
 ## exporter les bases
 
