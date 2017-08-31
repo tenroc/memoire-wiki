@@ -73,15 +73,22 @@ table (oil_spill_edgelist_talk$DiscussionType)
 
 oil_spill_attributes_talk$degree_centrality <- degree(oil_spill_graphe_talk)
 boxplot(oil_spill_attributes_talk$degree_centrality[grepl("^==" ,oil_spill_attributes_talk$contributeurs) == F])
+mean(oil_spill_attributes_talk$degree_centrality)
+sd(oil_spill_attributes_talk$degree_centrality)
 
 oil_spill_attributes_talk$betweenness_centrality <- betweenness(oil_spill_graphe_talk)
 boxplot(oil_spill_attributes_talk$betweenness_centrality[grepl("^==" ,oil_spill_attributes_talk$contributeurs) == F])
 
+
 oil_spill_attributes_talk$in_degree <- degree(oil_spill_graphe_talk, mode = "in")
 boxplot(oil_spill_attributes_talk$in_degree[grepl("^==" ,oil_spill_attributes_talk$contributeurs) == F])
+mean(oil_spill_attributes_talk$in_degree)
+sd(oil_spill_attributes_talk$in_degree)
 
 oil_spill_attributes_talk$out_degree <- degree(oil_spill_graphe_talk, mode = "out")
 boxplot(oil_spill_attributes_talk$out_degree[grepl("^==" ,oil_spill_attributes_talk$contributeurs) == F])
+mean(oil_spill_attributes_talk$out_degree)
+sd(oil_spill_attributes_talk$out_degree)
 
 mean(oil_spill_attributes_talk$total_rev_count)
 sd(oil_spill_attributes_talk$total_rev_count)
