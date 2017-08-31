@@ -14,8 +14,9 @@ plot(ledits_graphe[["Oil_spill.csv_edits_edgelist"]],
 oil_spill_graphe <- ledits_graphe[["Oil_spill.csv_edits_edgelist"]]
 oil_spill_edgelist <- ledits_edgelists[["Oil_spill.csv_edits_edgelist"]]
 temp <- append(oil_spill_edgelist[,"V1"], oil_spill_edgelist[,"V2"])
-oil_spill_attributes <- attributes_contro[attributes_contro$contributeurs %in% levels(as.factor(temp)),]
-
+oil_spill_attributes <- attributes_contro[as.character(attributes_contro$contributeurs) %in% levels(as.factor(temp)),]
+oil_spill_attributes$contributeurs <- as.character(oil_spill_attributes$contributeurs)
+oil_spill_attributes[length(oil_spill_attributes$contributeurs)+1,] <- c(NA,NA,"Hannes_R0",0,"inscrit",1,2018)
 
 # Remettre les attributes dans l'ordre du graphe:
 
@@ -85,16 +86,20 @@ boxplot(oil_spill_attributes$out_degree[oil_spill_attributes$contributeurs != "p
 mean(oil_spill_attributes$out_degree[oil_spill_attributes$out_degree != "page"], na.rm = T)
 sd(oil_spill_attributes$out_degree[oil_spill_attributes$out_degree !="page"], na.rm = T)
 
-mean(oil_spill_attributes$total_rev_count)
-sd(oil_spill_attributes$total_rev_count)
+
+oil_spill_attributes$total_rev_count <- as.numeric(oil_spill_attributes$total_rev_count)
+mean(as.numeric(oil_spill_attributes$total_rev_count))
+sd(as.numeric(oil_spill_attributes$total_rev_count))
 boxplot(oil_spill_attributes$total_rev_count)
 quint <- quantile(oil_spill_attributes$total_rev_count, seq(0,1,0.10))
-oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count > as.numeric(quint[10])] <- 1
-oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count > as.numeric(quint[8]) & oil_spill_attributes$total_rev_count <= as.numeric(quint[10])] <- 2
-oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count > as.numeric(quint[6]) & oil_spill_attributes$total_rev_count <= as.numeric(quint[8])] <- 3
-oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$total_rev_count <= as.numeric(quint[6])] <- 4
-oil_spill_attributes$total_rev_count_discr[oil_spill_attributes$contributeurs == "page"] <- 0
-table(oil_spill_attributes$total_rev_count_discr)
+quint2 <- quantile(oil_spill_attributes$total_rev_count, seq(0,1,0.25))
+
+oil_spill_attributes$total_rev_count_quar[oil_spill_attributes$total_rev_count < as.numeric(quint2[2])] <- 1
+oil_spill_attributes$total_rev_count_quar[oil_spill_attributes$total_rev_count >= as.numeric(quint2[2]) & oil_spill_attributes$total_rev_count < as.numeric(quint2[3])] <- 2
+oil_spill_attributes$total_rev_count_quar[oil_spill_attributes$total_rev_count >= as.numeric(quint2[3]) & oil_spill_attributes$total_rev_count < as.numeric(quint2[4])] <- 3
+oil_spill_attributes$total_rev_count_quar[oil_spill_attributes$total_rev_count >= as.numeric(quint2[4])] <- 4
+
+table(oil_spill_attributes$total_rev_count_quar)
 
 #### Deuxième représentation graphique: 
 
@@ -176,7 +181,7 @@ colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_discr)]
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_quar)]
 V(oil_spill_graphe)$size <- log(oil_spill_attributes$in_degree) *3
 V(oil_spill_graphe)$label <- NA
 
@@ -201,7 +206,7 @@ colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_discr)]
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_quar)]
 V(oil_spill_graphe)$size <- oil_spill_attributes$out_degree/10
 V(oil_spill_graphe)$label <- NA
 
@@ -226,7 +231,7 @@ colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_discr)]
+V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_quar)]
 V(oil_spill_graphe)$size <- log(oil_spill_attributes$degree_centrality)
 V(oil_spill_graphe)$label <- NA
 
@@ -257,7 +262,7 @@ plot(oil_spill_attributes$out_degree, oil_spill_attributes$total_rev_count)
 
 # Tableau croisement total rev count / status_contrib
 
-table(oil_spill_attributes$status_contrib, oil_spill_attributes$total_rev_count_discr)[c(1:4),c(1:4)]
+table(oil_spill_attributes$status_contrib, oil_spill_attributes$total_rev_count_quar)[c(1:4),c(1:4)]
 
 # Rattacher le nombre total d'édition efféctuées au sein de ce réseau par éditeur
 
@@ -274,7 +279,7 @@ boxplot(oil_spill_attributes$total_rev_count_local)
 
 sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
 sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "inscrit"])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "ano71nyme"])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "anonyme"])
 
 mean(oil_spill_attributes$total_rev_count_local)
 mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$status_contrib == "admin"])
@@ -363,78 +368,97 @@ sd(oil_spill_attributes$out_degree[oil_spill_attributes$status_contrib == "anony
 
 # Nombre de contributions en fonction du revcount + moyenne et sd
 
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sum(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$total_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
 
 # Nombre d'ajouts en fonction du revcount + moyenne et sd
 
-sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sum(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$added_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
 # Nombre de suppressions en fonction du revcount + moyenne et sd
 
-sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sum(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$deleted_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
 # Nombre de reverse en fonction du revcount + moyenne et sd
 
-sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sum(oil_spill_attributes$reverse_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 1])
-sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 2])
-sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 3])
-sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_discr == 4])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
 
+## Regressions
+
+reg1 <- glm(added_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg1)
+
+reg2 <- glm(deleted_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg2)
+
+reg3 <- glm(reversed_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg3)
+
+reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg4)
+
+reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg5)
+
+reg6 <- glm(degree_centrality ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg6)
 
 #### Assortativité
 
@@ -442,4 +466,4 @@ assortativity.degree(oil_spill_graphe)
 
 assortativity(oil_spill_graphe, oil_spill_attributes$status_contrib)
 
-assortativity(oil_spill_graphe, oil_spill_attributes$total_rev_count_discr)
+assortativity(oil_spill_graphe, oil_spill_attributes$total_rev_count_quar)

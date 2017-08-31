@@ -376,6 +376,8 @@ sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
 
+## Regression contrib_type = status_contrib + total_rev_count
+
 
 #### Assortativité
 
