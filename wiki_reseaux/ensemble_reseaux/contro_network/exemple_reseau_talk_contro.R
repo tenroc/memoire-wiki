@@ -70,6 +70,7 @@ edge_density(oil_spill_graphe_talk)
 vcount(oil_spill_graphe_talk)
 ecount(oil_spill_graphe_talk)
 table (oil_spill_edgelist_talk$DiscussionType)
+table(oil_spill_attributes_talk$status_contrib)
 
 oil_spill_attributes_talk$degree_centrality <- degree(oil_spill_graphe_talk)
 boxplot(oil_spill_attributes_talk$degree_centrality[grepl("^==" ,oil_spill_attributes_talk$contributeurs) == F])
@@ -93,13 +94,14 @@ sd(oil_spill_attributes_talk$out_degree)
 mean(oil_spill_attributes_talk$total_rev_count)
 sd(oil_spill_attributes_talk$total_rev_count)
 boxplot(oil_spill_attributes_talk$total_rev_count)
-quint <- quantile(oil_spill_attributes_talk$total_rev_count, seq(0,1,0.10))
-oil_spill_attributes_talk$total_rev_count_discr[oil_spill_attributes_talk$total_rev_count > as.numeric(quint[10])] <- 1
-oil_spill_attributes_talk$total_rev_count_discr[oil_spill_attributes_talk$total_rev_count > as.numeric(quint[8]) & oil_spill_attributes_talk$total_rev_count <= as.numeric(quint[10])] <- 2
-oil_spill_attributes_talk$total_rev_count_discr[oil_spill_attributes_talk$total_rev_count > as.numeric(quint[6]) & oil_spill_attributes_talk$total_rev_count <= as.numeric(quint[8])] <- 3
-oil_spill_attributes_talk$total_rev_count_discr[oil_spill_attributes_talk$total_rev_count <= as.numeric(quint[6])] <- 4
-oil_spill_attributes_talk$total_rev_count_discr[grepl("^==" ,oil_spill_attributes_talk$contributeurs) == T] <- 0
-table(oil_spill_attributes_talk$total_rev_count_discr)
+quint <- quantile(oil_spill_attributes_talk$total_rev_count, seq(0,1,0.25))
+
+oil_spill_attributes_talk$total_rev_count_quar[oil_spill_attributes_talk$total_rev_count <= as.numeric(quint[2])] <- 1
+oil_spill_attributes_talk$total_rev_count_quar[oil_spill_attributes_talk$total_rev_count > as.numeric(quint[2]) & oil_spill_attributes_talk$total_rev_count < as.numeric(quint[3])] <- 2
+oil_spill_attributes_talk$total_rev_count_quar[oil_spill_attributes_talk$total_rev_count >= as.numeric(quint[3]) & oil_spill_attributes_talk$total_rev_count < as.numeric(quint[4])] <- 3
+oil_spill_attributes_talk$total_rev_count_quar[oil_spill_attributes_talk$total_rev_count >= as.numeric(quint[4])] <- 4
+
+table(oil_spill_attributes_talk$total_rev_count_quar)
 
 #### Deuxième représentation graphique: 
 
@@ -276,9 +278,9 @@ boxplot(oil_spill_attributes_talk$total_rev_count_local)
 
 # Nombre de contributions en fontion du statut + moyenne et sd
 
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
+sum(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
+sum(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
+sum(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
 
 mean(oil_spill_attributes_talk$total_rev_count_local)
 mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
@@ -291,11 +293,10 @@ sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$sta
 
 # Nombre d'initialisation en fontion du statut + moyenne et sd
 
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
+sum(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
+sum(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
+sum(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
 
-mean(oil_spill_attributes_talk$initialized_rev_count_local)
 mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
 mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
 mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
@@ -306,14 +307,13 @@ sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_ta
 
 # Nombre de réponses en fontion du statut + moyenne et sd
 
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
+sum(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
+sum(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
+sum(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
 
-mean(oil_spill_attributes_talk$responded_rev_count_local)
 mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
 mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
-mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
+mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
 
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "admin"])
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
@@ -377,6 +377,28 @@ sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
 
 ## Regression contrib_type = status_contrib + total_rev_count
+
+reg1 <- glm(initialized_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
+summary(reg1)
+
+reg2 <- glm(responded_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
+summary(reg2)
+
+reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
+summary(reg4)
+
+reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
+summary(reg5)
+
+reg6 <- glm(degree_centrality ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
+summary(reg6)
+
+## chaîne maximale de conversation
+
+max(oil_spill_edgelist_talk$IndexInThread)
+mean(oil_spill_edgelist_talk$IndexInThread)
+sd(oil_spill_edgelist_talk$IndexInThread)
+boxplot(oil_spill_edgelist_talk$IndexInThread)
 
 
 #### Assortativité

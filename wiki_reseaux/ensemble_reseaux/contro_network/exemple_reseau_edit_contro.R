@@ -204,6 +204,7 @@ legend(x="topleft", c("Ajout","Suppression","Reverse","Nombre total d'édition -
 
 colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
 colors_nodes <- heat.colors(n = 4)
+colors_nodes <- colors_nodes[c(4,3,2,1)]
 colors_nodes[5] <- "#333333"
 
 V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_quar)]
@@ -229,6 +230,7 @@ legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "
 
 colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
 colors_nodes <- heat.colors(n = 4)
+colors_nodes <- colors_nodes[c(4,3,2,1)]
 colors_nodes[5] <- "#333333"
 
 V(oil_spill_graphe)$color <- colors_nodes[as.factor(oil_spill_attributes$total_rev_count_quar)]
@@ -240,14 +242,14 @@ E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
 # Marche pas, aucune idee de pourquoi:
 # E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
 
-plot(oil_spill_graphe, layout=layout.fruchterman.reingold, rescale=TRUE,edge.arrow.size=.3,
+plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
      main= "Reseau editions Oil spill")
 
 # Légende:
 
-legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","degrés", "degrès"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
-       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+legend(x="topleft", c("Ajout","Suppression","Reverse","total edits -","totals edits +", "page","degrés", "degrès"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#FFFF80FF","#FF0000FF", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 
 ## Représentations bivariées
@@ -453,6 +455,9 @@ summary(reg3)
 
 reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg4)
+
+reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
+summary(reg5)
 
 reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg5)
