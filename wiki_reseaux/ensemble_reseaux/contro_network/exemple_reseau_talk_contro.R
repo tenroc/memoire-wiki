@@ -125,7 +125,7 @@ plot(oil_spill_graphe_talk, layout=layout_nicely(oil_spill_graphe_talk), rescale
 
 # Légende:
 
-legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,21,21,21,21,21,21,21,21), col="#777777", 
        pt.bg= c("#3892e0","#da4d45","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 
@@ -183,7 +183,7 @@ colors_edge <- c("#3892e0","#da4d45")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(oil_spill_graphe_talk)$color <- colors_nodes[as.factor(oil_spill_attributes_talk$total_rev_count_discr)]
+V(oil_spill_graphe_talk)$color <- colors_nodes[as.factor(oil_spill_attributes_talk$total_rev_count_quar)]
 V(oil_spill_graphe_talk)$size <- log(oil_spill_attributes_talk$in_degree) *3
 V(oil_spill_graphe_talk)$label <- NA
 
@@ -208,7 +208,7 @@ colors_edge <- c("#3892e0","#da4d45")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(oil_spill_graphe_talk)$color <- colors_nodes[as.factor(oil_spill_attributes_talk$total_rev_count_discr)]
+V(oil_spill_graphe_talk)$color <- colors_nodes[as.factor(oil_spill_attributes_talk$total_rev_count_quar)]
 V(oil_spill_graphe_talk)$size <- oil_spill_attributes_talk$out_degree/10
 V(oil_spill_graphe_talk)$label <- NA
 
@@ -233,7 +233,7 @@ colors_edge <- c("#3892e0","#da4d45")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(oil_spill_graphe_talk)$color <- colors_nodes[as.factor(oil_spill_attributes_talk$total_rev_count_discr)]
+V(oil_spill_graphe_talk)$color <- colors_nodes[as.factor(oil_spill_attributes_talk$total_rev_count_quar)]
 V(oil_spill_graphe_talk)$size <- log(oil_spill_attributes_talk$degree_centrality)
 V(oil_spill_graphe_talk)$label <- NA
 
@@ -264,7 +264,7 @@ plot(oil_spill_attributes_talk$out_degree, oil_spill_attributes_talk$total_rev_c
 
 # Tableau croisement total rev count / status_contrib
 
-table(oil_spill_attributes_talk$status_contrib, oil_spill_attributes_talk$total_rev_count_discr)[c(1:4),c(1:4)]
+table(oil_spill_attributes_talk$status_contrib, oil_spill_attributes_talk$total_rev_count_quar)[c(1:4),c(1:4)]
 
 # Rattacher le nombre total d'édition efféctuées au sein de ce réseau par éditeur
 
@@ -321,77 +321,99 @@ sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk
 
 # Nombre de contributions en fonction du revcount + moyenne et sd
 
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+mean(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+sd(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
 
 # Nombre d'initialisation en fonction du revcount + moyenne et sd
 
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+length(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+mean(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+sd(oil_spill_attributes_talk$initialized_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
 # Nombre de réponses en fonction du revcount + moyenne et sd
 
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+length(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+mean(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
-sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 1])
-sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 2])
-sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 3])
-sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_discr == 4])
+sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
+sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 2])
+sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
+sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
 ## Regression contrib_type = status_contrib + total_rev_count
+
+oil_spill_attributes_talk$status_contrib <- relevel(as.factor(oil_spill_attributes_talk$status_contrib), ref="anonyme")
 
 reg1 <- glm(initialized_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg1)
 
+# pseudo R2:
+
+1 - (reg1$deviance / reg1$null.deviance)
+
 reg2 <- glm(responded_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg2)
+
+# Pseudo R2
+
+1 - (reg2$deviance / reg2$null.deviance)
 
 reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg4)
 
+# Pseudo R2
+
+1 - (reg4$deviance / reg4$null.deviance)
+
 reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg5)
 
+# Pseudo R2
+
+1 - (reg5$deviance / reg5$null.deviance)
+
 reg6 <- glm(degree_centrality ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg6)
+
+# Pseudo R2
+
+1 - (reg6$deviance / reg6$null.deviance)
 
 ## chaîne maximale de conversation
 
@@ -407,4 +429,4 @@ assortativity.degree(oil_spill_graphe_talk)
 
 assortativity(oil_spill_graphe_talk, as.factor(oil_spill_attributes_talk$status_contrib))
 
-assortativity(oil_spill_graphe_talk, oil_spill_attributes_talk$total_rev_count_discr)
+assortativity(oil_spill_graphe_talk, as.factor(oil_spill_attributes_talk$total_rev_count_quar))
