@@ -446,24 +446,27 @@ sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_
 
 reg1 <- glm(added_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg1)
+1 - (reg1$deviance / reg1$null.deviance)
 
 reg2 <- glm(deleted_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg2)
+1 - (reg2$deviance / reg2$null.deviance)
 
 reg3 <- glm(reversed_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg3)
+1 - (reg3$deviance / reg3$null.deviance)
 
 reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg4)
+1 - (reg4$deviance / reg4$null.deviance)
 
 reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg5)
-
-reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
-summary(reg5)
+1 - (reg5$deviance / reg5$null.deviance)
 
 reg6 <- glm(degree_centrality ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes)
 summary(reg6)
+1 - (reg6$deviance / reg6$null.deviance)
 
 #### Assortativité
 

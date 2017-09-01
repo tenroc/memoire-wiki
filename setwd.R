@@ -37,7 +37,7 @@ setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/contro/talk/')
 
 ## Reseau featured edit
 
-setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/featured/edits/')
+setwd('~/Documents/EHESS/SocStat-M2/memoire/networks/featured/edit/')
 
 ## Reseau featured talk
 
@@ -76,6 +76,11 @@ page_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemb
 # node_attributes_contro
 
 attributes_contro <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
+
+# node_attributes_featured
+
+attributes_featured <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/nodes_attributes_featured_network.csv")
+
 
 
 #### Windows: #####
