@@ -152,14 +152,14 @@ attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseau
 # node_attributes_contro
 
 attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
-attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_edits.csv")
-attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_talks.csv")
-attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_cross.csv")
+contro_attributes_edits <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_edits.csv")
+contro_attributes_talks <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_talks.csv")
+contro_attributes_cross <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attribute_cross.csv")
 
 # node_attributes_featured
 
 attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/nodes_attributes_featured_network.csv")
-attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_edits.csv")
-attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_talks.csv")
-attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_cross.csv")
+featured_attributes_edits <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_edits.csv")
+featured_attributes_talks <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_talks.csv")
+featured_attributes_cross <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attribute_cross.csv")
 
