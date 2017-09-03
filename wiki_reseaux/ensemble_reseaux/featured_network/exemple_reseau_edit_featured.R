@@ -175,6 +175,31 @@ legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "
        pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 
+
+#### Size = total rev count
+
+colors_edge <- c("#3892e0","#da4d45", "#fbd25d")
+colors_nodes <- c("#8a4ebf", "white","#f37329","#93d844","#333333")
+
+V(death_valley_graphe)$color <- colors_nodes[as.factor(death_valley_attributes$status_contrib)]
+V(death_valley_graphe)$size <- as.numeric(death_valley_attributes$total_rev_count_quar)*2
+V(death_valley_graphe)$label <- NA
+
+# Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
+E(death_valley_graphe)$width <- as.numeric(E(death_valley_graphe)$Wordcount)/40
+# Marche pas, aucune idee de pourquoi:
+# E(cultwar_edit_graphe)$edge.color <- colorsQ[as.numeric(E(cultwar_edit_graphe)$InteractionType_num)]
+
+plot(death_valley_graphe, layout=layout.fruchterman.reingold, rescale=TRUE,edge.arrow.size=.3,
+     edge.color=colors_edge[as.numeric(E(death_valley_graphe)$InteractionType_num)],
+     main= "Reseau editions Death valley national park")
+
+# Légende:
+
+legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","quartile -", "quartile +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+
+
 #### Size = Indegree, col = total_rev_count
 
 colors_edge <- c("#3892e0","#da4d45", "#fbd25d")

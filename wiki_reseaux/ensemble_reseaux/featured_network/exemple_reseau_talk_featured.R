@@ -1,4 +1,4 @@
-#### Visualisation contro_talk network ####
+#### Visualisation contro_edit network ####
 
 # Basique:
 
@@ -8,7 +8,7 @@ plot(ltalks_graphe[["Death_Valley_National_Park.csv_talk_edgelist"]],
      edge.arrow.size=.1,
      vertex.label= NA,
      vertex.size = 3,
-     rescale=TRU)
+     rescale=TRUE)
 
 
 death_valley_graphe_talk <- ltalks_graphe[["Death_Valley_National_Park.csv_talk_edgelist"]]
@@ -18,7 +18,7 @@ death_valley_attributes_talk <- attributes_featured[attributes_featured$contribu
 a <- levels(as.factor(death_valley_edgelist_talk$V2[grepl("^==" ,death_valley_edgelist_talk[,"V2"])]))
 a <- data.frame(a)
 a[,2:6] <- NA
-a <- subset(a[,c(2,1,3,4:6)])
+a <- subset(a[,c(2,1,3:6)])
 colnames(a) <- colnames(death_valley_attributes_talk)
 death_valley_attributes_talk <- rbind(death_valley_attributes_talk, a)
 
@@ -55,7 +55,7 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout_nicely(death_valley_graphe_talk), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
@@ -70,39 +70,48 @@ edge_density(death_valley_graphe_talk)
 vcount(death_valley_graphe_talk)
 ecount(death_valley_graphe_talk)
 table (death_valley_edgelist_talk$DiscussionType)
+table(death_valley_attributes_talk$status_contrib)
 
 death_valley_attributes_talk$degree_centrality <- degree(death_valley_graphe_talk)
 boxplot(death_valley_attributes_talk$degree_centrality[grepl("^==" ,death_valley_attributes_talk$contributeurs) == F])
+mean(death_valley_attributes_talk$degree_centrality)
+sd(death_valley_attributes_talk$degree_centrality)
 
 death_valley_attributes_talk$betweenness_centrality <- betweenness(death_valley_graphe_talk)
 boxplot(death_valley_attributes_talk$betweenness_centrality[grepl("^==" ,death_valley_attributes_talk$contributeurs) == F])
 
+
 death_valley_attributes_talk$in_degree <- degree(death_valley_graphe_talk, mode = "in")
 boxplot(death_valley_attributes_talk$in_degree[grepl("^==" ,death_valley_attributes_talk$contributeurs) == F])
+mean(death_valley_attributes_talk$in_degree)
+sd(death_valley_attributes_talk$in_degree)
 
 death_valley_attributes_talk$out_degree <- degree(death_valley_graphe_talk, mode = "out")
 boxplot(death_valley_attributes_talk$out_degree[grepl("^==" ,death_valley_attributes_talk$contributeurs) == F])
+mean(death_valley_attributes_talk$out_degree)
+sd(death_valley_attributes_talk$out_degree)
 
 mean(death_valley_attributes_talk$total_rev_count)
 sd(death_valley_attributes_talk$total_rev_count)
 boxplot(death_valley_attributes_talk$total_rev_count)
-quint <- quantile(death_valley_attributes_talk$total_rev_count, seq(0,1,0.10))
-death_valley_attributes_talk$total_rev_count_discr[death_valley_attributes_talk$total_rev_count > as.numeric(quint[10])] <- 1
-death_valley_attributes_talk$total_rev_count_discr[death_valley_attributes_talk$total_rev_count > as.numeric(quint[8]) & death_valley_attributes_talk$total_rev_count <= as.numeric(quint[10])] <- 2
-death_valley_attributes_talk$total_rev_count_discr[death_valley_attributes_talk$total_rev_count > as.numeric(quint[6]) & death_valley_attributes_talk$total_rev_count <= as.numeric(quint[8])] <- 3
-death_valley_attributes_talk$total_rev_count_discr[death_valley_attributes_talk$total_rev_count <= as.numeric(quint[6])] <- 4
-death_valley_attributes_talk$total_rev_count_discr[grepl("^==" ,death_valley_attributes_talk$contributeurs) == T] <- 0
-table(death_valley_attributes_talk$total_rev_count_discr)
+quint <- quantile(death_valley_attributes_talk$total_rev_count[death_valley_attributes_talk$status_contrib != "structure_page"], seq(0,1,0.25))
+
+death_valley_attributes_talk$total_rev_count_quar[death_valley_attributes_talk$total_rev_count <= as.numeric(quint[2])] <- 1
+death_valley_attributes_talk$total_rev_count_quar[death_valley_attributes_talk$total_rev_count > as.numeric(quint[2]) & death_valley_attributes_talk$total_rev_count < as.numeric(quint[3])] <- 2
+death_valley_attributes_talk$total_rev_count_quar[death_valley_attributes_talk$total_rev_count >= as.numeric(quint[3]) & death_valley_attributes_talk$total_rev_count < as.numeric(quint[4])] <- 3
+death_valley_attributes_talk$total_rev_count_quar[death_valley_attributes_talk$total_rev_count >= as.numeric(quint[4])] <- 4
+
+table(death_valley_attributes_talk$total_rev_count_quar)
 
 #### Deuxième représentation graphique: 
 
 #### Size = Degree centrality
 
 colors_edge <- c("#3892e0","#da4d45")
-colors_nodes <- c("#8a4ebf", "white","#f37329","#93d844","#333333")
+colors_nodes <- c("#8a4ebf", "white","#93d844","#333333","#333333")
 
 V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$status_contrib)]
-V(death_valley_graphe_talk)$size <- log(death_valley_attributes_talk$degree_centrality)*3
+V(death_valley_graphe_talk)$size <- log(death_valley_attributes_talk$degree_centrality)*6
 V(death_valley_graphe_talk)$label <- NA
 
 # Attention, grosse variation: peut être vaudrait mieux discrétiser la variable pour la rendre lisible?
@@ -112,11 +121,11 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout_nicely(death_valley_graphe_talk), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
-legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
+legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,21,21,21,21,21,21,21,21), col="#777777", 
        pt.bg= c("#3892e0","#da4d45","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 
@@ -136,7 +145,7 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout_nicely(death_valley_graphe_talk), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
@@ -160,7 +169,7 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout.fruchterman.reingold, rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
@@ -174,7 +183,7 @@ colors_edge <- c("#3892e0","#da4d45")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$total_rev_count_discr)]
+V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$total_rev_count_quar)]
 V(death_valley_graphe_talk)$size <- log(death_valley_attributes_talk$in_degree) *3
 V(death_valley_graphe_talk)$label <- NA
 
@@ -185,7 +194,7 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout_nicely(death_valley_graphe_talk), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
@@ -199,7 +208,7 @@ colors_edge <- c("#3892e0","#da4d45")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$total_rev_count_discr)]
+V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$total_rev_count_quar)]
 V(death_valley_graphe_talk)$size <- death_valley_attributes_talk$out_degree/10
 V(death_valley_graphe_talk)$label <- NA
 
@@ -210,7 +219,7 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout_nicely(death_valley_graphe_talk), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
@@ -224,7 +233,7 @@ colors_edge <- c("#3892e0","#da4d45")
 colors_nodes <- heat.colors(n = 4)
 colors_nodes[5] <- "#333333"
 
-V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$total_rev_count_discr)]
+V(death_valley_graphe_talk)$color <- colors_nodes[as.factor(death_valley_attributes_talk$total_rev_count_quar)]
 V(death_valley_graphe_talk)$size <- log(death_valley_attributes_talk$degree_centrality)
 V(death_valley_graphe_talk)$label <- NA
 
@@ -235,7 +244,7 @@ E(death_valley_graphe_talk)$width <- 1 #as.numeric(E(death_valley_graphe_talk)$C
 
 plot(death_valley_graphe_talk, layout=layout.fruchterman.reingold, rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(death_valley_graphe_talk)$DiscussionType_num)],
-     main= "Reseau discussion Death valley natonal park")
+     main= "Reseau discussion Death valley national park")
 
 # Légende:
 
@@ -255,7 +264,7 @@ plot(death_valley_attributes_talk$out_degree, death_valley_attributes_talk$total
 
 # Tableau croisement total rev count / status_contrib
 
-table(death_valley_attributes_talk$status_contrib, death_valley_attributes_talk$total_rev_count_discr)[c(1:4),c(1:4)]
+table(death_valley_attributes_talk$status_contrib, death_valley_attributes_talk$total_rev_count_quar)[c(1:4),c(1:4)]
 
 # Rattacher le nombre total d'édition efféctuées au sein de ce réseau par éditeur
 
@@ -269,9 +278,9 @@ boxplot(death_valley_attributes_talk$total_rev_count_local)
 
 # Nombre de contributions en fontion du statut + moyenne et sd
 
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
 
 mean(death_valley_attributes_talk$total_rev_count_local)
 mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
@@ -284,11 +293,10 @@ sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_ta
 
 # Nombre d'initialisation en fontion du statut + moyenne et sd
 
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
 
-mean(death_valley_attributes_talk$initialized_rev_count_local)
 mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
 mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
 mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
@@ -299,75 +307,190 @@ sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attribu
 
 # Nombre de réponses en fontion du statut + moyenne et sd
 
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
 
-mean(death_valley_attributes_talk$responded_rev_count_local)
 mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
 mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
-mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
+mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
 
 sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "admin"])
 sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "inscrit"])
 sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$status_contrib == "anonyme"])
 
+# centralité degré en fonction du statut: moyenne et sd
+
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$status_contrib == "admin"])
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$status_contrib == "inscrit"])
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$status_contrib == "anonyme"])
+
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$status_contrib == "admin"])
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$status_contrib == "inscrit"])
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$status_contrib == "anonyme"])
+
+# indegree en fonction du statut: moyenne et sd
+
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$status_contrib == "admin"])
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$status_contrib == "inscrit"])
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$status_contrib == "anonyme"])
+
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$status_contrib == "admin"])
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$status_contrib == "inscrit"])
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$status_contrib == "anonyme"])
+
+# out degree en fonction du statut: moyenne et sd
+
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$status_contrib == "admin"])
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$status_contrib == "inscrit"])
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$status_contrib == "anonyme"])
+
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$status_contrib == "admin"])
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$status_contrib == "inscrit"])
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$status_contrib == "anonyme"])
+
+
 # Nombre de contributions en fonction du revcount + moyenne et sd
 
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+mean(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-length(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sum(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sd(death_valley_attributes_talk$total_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
 
 # Nombre d'initialisation en fonction du revcount + moyenne et sd
 
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-length(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sum(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+mean(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sd(death_valley_attributes_talk$initialized_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
 # Nombre de réponses en fonction du revcount + moyenne et sd
 
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-length(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sum(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+mean(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
 
-sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 1])
-sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 2])
-sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 3])
-sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_discr == 4])
+sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 1])
+sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 2])
+sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 3])
+sd(death_valley_attributes_talk$responded_rev_count_local[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+
+# Centralité de degré en fonction du rev_count : moyenne + sd
+
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 1])
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 2])
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 3])
+mean(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 1])
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 2])
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 3])
+sd(death_valley_attributes_talk$degree_centrality[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+# indegree en fonction du rev_count : moyenne + sd
+
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 1])
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 2])
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 3])
+mean(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 1])
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 2])
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 3])
+sd(death_valley_attributes_talk$in_degree[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+# outdegree en fonction du rev_count : moyenne + sd
+
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 1])
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 2])
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 3])
+mean(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 1])
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 2])
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 3])
+sd(death_valley_attributes_talk$out_degree[death_valley_attributes_talk$total_rev_count_quar == 4])
+
+table(death_valley_attributes_talk$total_rev_count_quar, death_valley_attributes_talk$status_contrib)
+
+## Regression contrib_type = status_contrib + total_rev_count
+
+death_valley_attributes_talk$status_contrib <- relevel(as.factor(death_valley_attributes_talk$status_contrib), ref="anonyme")
+
+reg1 <- glm(initialized_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=death_valley_attributes_talk)
+summary(reg1)
+
+# pseudo R2:
+
+1 - (reg1$deviance / reg1$null.deviance)
+
+reg2 <- glm(responded_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=death_valley_attributes_talk)
+summary(reg2)
+
+# Pseudo R2
+
+1 - (reg2$deviance / reg2$null.deviance)
+
+reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=death_valley_attributes_talk)
+summary(reg4)
+
+# Pseudo R2
+
+1 - (reg4$deviance / reg4$null.deviance)
+
+reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=death_valley_attributes_talk)
+summary(reg5)
+
+# Pseudo R2
+
+1 - (reg5$deviance / reg5$null.deviance)
+
+reg6 <- glm(degree_centrality ~ status_contrib +  as.character(total_rev_count_quar), data=death_valley_attributes_talk)
+summary(reg6)
+
+# Pseudo R2
+
+1 - (reg6$deviance / reg6$null.deviance)
+
+## chaîne maximale de conversation
+
+max(as.numeric(death_valley_edgelist_talk$IndexInThread), na.rm =T)
+mean(death_valley_edgelist_talk$IndexInThread, na.rm =T)
+sd(death_valley_edgelist_talk$IndexInThread, na.rm =T)
+boxplot(death_valley_edgelist_talk$IndexInThread)
 
 
 #### Assortativité
@@ -376,4 +499,4 @@ assortativity.degree(death_valley_graphe_talk)
 
 assortativity(death_valley_graphe_talk, as.factor(death_valley_attributes_talk$status_contrib))
 
-assortativity(death_valley_graphe_talk, death_valley_attributes_talk$total_rev_count_discr)
+assortativity(death_valley_graphe_talk, as.factor(death_valley_attributes_talk$total_rev_count_quar))

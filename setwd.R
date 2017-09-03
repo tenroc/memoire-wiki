@@ -143,15 +143,23 @@ controversy_data <- as.character(controversy_data)
 featured_data <- read.table("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/featured_list.txt")
 featured_data <- as.character(featured_data)
 
-# nodes_atttributes_page
+# nodes_atttributes_page + bases
 
 attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/nodes_attributes_page_network.csv")
+attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_talks.csv")
+attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_edits.csv")
 
 # node_attributes_contro
 
 attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
+attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_edits.csv")
+attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_talks.csv")
+attributes_contro <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_cross.csv")
 
 # node_attributes_featured
 
 attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/nodes_attributes_featured_network.csv")
+attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_edits.csv")
+attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_talks.csv")
+attributes_featured <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_cross.csv")
 

@@ -31,6 +31,9 @@ write(temp, file="../temp_edit.txt", sep="/n")
 
 for(i in names(ledits)){
   ledits[[i]] <- ledits[[i]][!ledits[[i]][,"ActiveUser"]=="",]
+  ledits[[i]] <- ledits[[i]][!ledits[[i]][,"TargetAuthor"]=="",]
+  ledits[[i]] <- ledits[[i]][is.na(ledits[[i]][,"ActiveUser"])==F,]
+  ledits[[i]] <- ledits[[i]][is.na(ledits[[i]][,"TargetAuthor"])==F,]
 }
 
 # Récuppérer les réseaux de talk: !charger la base talk
@@ -61,8 +64,11 @@ write(temp, file="../temp_talk.txt", sep="/n")
 
 # Supprimer les erreurs d'édition (ActiveUser == "")
 
-for(i in names(ledits)){
+for(i in names(ltalks)){
   ltalks[[i]] <- ltalks[[i]][!ltalks[[i]][,"ActiveUser"]=="",]
+  ltalks[[i]] <- ltalks[[i]][!ltalks[[i]][,"Target"]=="",]
+  ltalks[[i]] <- ltalks[[i]][is.na(ltalks[[i]][,"ActiveUser"])==F,]
+  ltalks[[i]] <- ltalks[[i]][is.na(ltalks[[i]][,"Target"])==F,]
 }
 
 
@@ -258,6 +264,67 @@ r <- character()
 s <- character()
 t <- character()
 u <- character()
+v <- character()
+w <- character()
+a2 <- character()
+
+attributes_contro$total_rev_count[is.na(attributes_contro$total_rev_count) == T] <- 1
+quart <- quantile(attributes_contro$total_rev_count[attributes_contro$status_contrib != "page" & attributes_contro$status_contrib != "structure_page"], seq(0,1,0.25))
+
+attributes_contro$rev_count_quar[attributes_contro$total_rev_count <= as.numeric(quart[2])] <- 1
+attributes_contro$rev_count_quar[attributes_contro$total_rev_count > as.numeric(quart[2]) & attributes_contro$total_rev_count <= as.numeric(quart[3])] <- 2
+attributes_contro$rev_count_quar[attributes_contro$total_rev_count > as.numeric(quart[3]) & attributes_contro$total_rev_count <= as.numeric(quart[4])] <- 3
+attributes_contro$rev_count_quar[attributes_contro$total_rev_count > as.numeric(quart[4])] <- 4
+table(attributes_contro$rev_count_quar)
+
+b2 <- character()
+c2 <- character()
+d2 <- character()
+e2 <- character()
+f2 <- character()
+g2 <- character()
+h2 <- character()
+k2 <- character()
+l2 <- character()
+m2 <- character()
+n2 <- character()
+o2 <- character()
+p2 <- character()
+q2 <- character()
+r2 <- character()
+s2 <- character()
+t2 <- character()
+u2 <- character()
+v2 <- character()
+w2 <- character()
+a3 <- character()
+b3 <- character()
+c3 <- character()
+d3 <- character()
+e3 <- character()
+f3 <- character()
+g3 <- character()
+
+f22 <- character()
+g22 <- character()
+h22 <- character()
+k22 <- character()
+l22 <- character()
+m22 <- character()
+n22 <- character()
+o22 <- character()
+p22 <- character()
+q22 <- character()
+r22 <- character()
+s22 <- character()
+t22 <- character()
+u22 <- character()
+v22 <- character()
+w22 <- character()
+a32 <- character()
+b32 <- character()
+c32 <- character()
+d32 <- character()
 
 
 for (i in contro_attributes_edits$page){
@@ -278,7 +345,59 @@ for (i in contro_attributes_edits$page){
   s[i] <- sd(degree(ledits_graphe[[i]])[labels(degree(ledits_graphe[[i]])) != "page"])
   t[i] <- sd(betweenness(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
   u[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  v[i] <- assortativity.degree(ledits_graphe[[i]])
+  #w[i] <- assortativity(ledits_graphe[[i]], as.factor(ledits_graphe[[i]][,"status_contrib"]))
+  #a2[i] <- assortativity(ledits_graphe[[i]], as.factor(ledits_graphe[[i]][,"rev_count_quar"]))
+  b2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  c2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  d2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  e2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  f2[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  g2[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  h2[i] <- mean(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  k2[i] <- mean(degree(ledits_graphe[[i]],mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  l2[i] <- mean(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  m2[i] <- mean(degree(ledits_graphe[[i]],mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  n2[i] <- mean(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  o2[i] <- mean(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  p2[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  q2[i] <- mean(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  r2[i] <- mean(degree(ledits_graphe[[i]],mode= "out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  s2[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  t2[i] <- mean(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  u2[i] <- mean(degree(ledits_graphe[[i]], mode = "out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  v2[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  w2[i] <- mean(degree(ledits_graphe[[i]],mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  a3[i] <- mean(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  b3[i] <- mean(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  c3[i] <- mean(degree(ledits_graphe[[i]], mode = "in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  d3[i] <- mean(degree(ledits_graphe[[i]],mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  e3[i] <- length(ledits_edgelists[[i]][ledits_edgelists[[i]][,"InteractionType"] == "ADDED","V1"])
+  f3[i] <- length(ledits_edgelists[[i]][ledits_edgelists[[i]][,"InteractionType"] == "DELETED","V1"])
+  g3[i] <- length(ledits_edgelists[[i]][ledits_edgelists[[i]][,"InteractionType"] == "RESTORED","V1"])
+  f22[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  g22[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  h22[i] <- sd(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  k22[i] <- sd(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  l22[i] <- sd(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  m22[i] <- sd(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  n22[i] <- sd(degree(ledits_graphe[[i]],mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  o22[i] <- sd(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  p22[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  q22[i] <- sd(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  r22[i] <- sd(degree(ledits_graphe[[i]], mode="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  s22[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  t22[i] <- sd(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  u22[i] <- sd(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  v22[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  w22[i] <- sd(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  a32[i] <- sd(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  b32[i] <- sd(degree(ledits_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  c32[i] <- sd(degree(ledits_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  d32[i] <- sd(degree(ledits_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
 }
+
+
 
 contro_attributes_edits$density <- a
 contro_attributes_edits$ncontributors <- b
@@ -289,13 +408,64 @@ contro_attributes_edits$nadmins <- h
 contro_attributes_edits$nbots <- l
 contro_attributes_edits$centralization <- m
 contro_attributes_edits$mean_betweenness_admin <- n
-contro_attributes_edits$mean_degree_centrality_admins <- o
+contro_attributes_edits$mean_degree_admins <- o
 contro_attributes_edits$mean_betweenness <- p
 contro_attributes_edits$mean_degree_centrality <- q
 contro_attributes_edits$sd_betweenness <- r
 contro_attributes_edits$sd_degree_centrality <- s
 contro_attributes_edits$sd_betweenness_admin <- t
-contro_attributes_edits$sd_degree_centrality_admins <- u
+contro_attributes_edits$sd_degree_admins <- u
+contro_attributes_edits$degree_assortativity <- v
+#contro_attributes_edits$assortativity_status <- w
+#contro_attributes_edits$assortativity_quartiles <- a2
+contro_attributes_edits$nquar1 <- b2
+contro_attributes_edits$nquar2 <- c2
+contro_attributes_edits$nquar3 <- d2
+contro_attributes_edits$nquar4 <- e2
+contro_attributes_edits$mean_degree_anon <- f2
+contro_attributes_edits$mean_degree_inscrit <- g2
+contro_attributes_edits$mean_indegree_admin <- h2
+contro_attributes_edits$mean_outdegree_admin <- k2
+contro_attributes_edits$mean_indegree_anon <- l2
+contro_attributes_edits$mean_outdegree_anon <- m2
+contro_attributes_edits$mean_indegree_inscrit <- n2
+contro_attributes_edits$mean_outdegree_inscrit <- o2
+contro_attributes_edits$mean_degree_quar1 <- p2
+contro_attributes_edits$mean_indegree_quar1 <- q2
+contro_attributes_edits$mean_outdegree_quar1 <- r2
+contro_attributes_edits$mean_degree_quar2 <- s2
+contro_attributes_edits$mean_indegree_quar2 <- t2
+contro_attributes_edits$mean_outdegree_quar2 <- u2
+contro_attributes_edits$mean_degree_quar3 <- v2
+contro_attributes_edits$mean_indegree_quar3 <- w2
+contro_attributes_edits$mean_outdegree_quar3 <- a3
+contro_attributes_edits$mean_degree_quar4 <- b3
+contro_attributes_edits$mean_indegree_quar4 <- c3
+contro_attributes_edits$mean_outdegree_quar4 <- d3
+contro_attributes_edits$nadded <- e3
+contro_attributes_edits$ndeleted <- f3
+contro_attributes_edits$nrestored <- g3
+
+contro_attributes_edits$sd_degree_anon <- f22
+contro_attributes_edits$sd_degree_inscrit <- g22
+contro_attributes_edits$sd_indegree_admin <- h22
+contro_attributes_edits$sd_outdegree_admin <- k22
+contro_attributes_edits$sd_indegree_anon <- l22
+contro_attributes_edits$sd_outdegree_anon <- m22
+contro_attributes_edits$sd_indegree_inscrit <- n22
+contro_attributes_edits$sd_outdegree_inscrit <- o22
+contro_attributes_edits$sd_degree_quar1 <- p22
+contro_attributes_edits$sd_indegree_quar1 <- q22
+contro_attributes_edits$sd_outdegree_quar1 <- r22
+contro_attributes_edits$sd_degree_quar2 <- s22
+contro_attributes_edits$sd_indegree_quar2 <- t22
+contro_attributes_edits$sd_outdegree_quar2 <- u22
+contro_attributes_edits$sd_degree_quar3 <- v22
+contro_attributes_edits$sd_indegree_quar3 <- w22
+contro_attributes_edits$sd_outdegree_quar3 <- a32
+contro_attributes_edits$sd_degree_quar4 <- b32
+contro_attributes_edits$sd_indegree_quar4 <- c32
+contro_attributes_edits$sd_outdegree_quar4 <- d32
 
 # page controversial ou featured?
 
@@ -347,6 +517,59 @@ u <- character()
 v <- character()
 w <- character()
 z <- character()
+v3 <- character()
+w3 <- character()
+a2 <- character()
+
+b2 <- character()
+c2 <- character()
+d2 <- character()
+e2 <- character()
+f2 <- character()
+g2 <- character()
+h2 <- character()
+k2 <- character()
+l2 <- character()
+m2 <- character()
+n2 <- character()
+o2 <- character()
+p2 <- character()
+q2 <- character()
+r2 <- character()
+s2 <- character()
+t2 <- character()
+u2 <- character()
+v2 <- character()
+w2 <- character()
+a3 <- character()
+b3 <- character()
+c3 <- character()
+d3 <- character()
+e3 <- character()
+f3 <- character()
+g3 <- character()
+
+f22 <- character()
+g22 <- character()
+h22 <- character()
+k22 <- character()
+l22 <- character()
+m22 <- character()
+n22 <- character()
+o22 <- character()
+p22 <- character()
+q22 <- character()
+r22 <- character()
+s22 <- character()
+t22 <- character()
+u22 <- character()
+v22 <- character()
+w22 <- character()
+a32 <- character()
+b32 <- character()
+c32 <- character()
+d32 <- character()
+
 
 
 for (i in contro_attributes_talks$page){
@@ -370,7 +593,59 @@ for (i in contro_attributes_talks$page){
   v[i] <- max(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
   w[i] <- mean(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
   z[i] <- sd(as.numeric(ltalks_edgelists[[i]][,"IndexInThread"]))
+  v3[i] <- assortativity.degree(ltalks_graphe[[i]])
+  #w3[i] <- assortativity(ltalks_graphe[[i]], as.factor(ltalks_graphe[[i]][,"status_contrib"]))
+  #a2[i] <- assortativity(ltalks_graphe[[i]], as.factor(ltalks_graphe[[i]][,"rev_count_quar"]))
+  b2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  c2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  d2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  e2[i] <- length(levels(as.factor(temp))[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  f2[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  g2[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  h2[i] <- mean(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  k2[i] <- mean(degree(ltalks_graphe[[i]],mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  l2[i] <- mean(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  m2[i] <- mean(degree(ltalks_graphe[[i]],mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  n2[i] <- mean(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  o2[i] <- mean(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  p2[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  q2[i] <- mean(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  r2[i] <- mean(degree(ltalks_graphe[[i]],mode= "out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  s2[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  t2[i] <- mean(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  u2[i] <- mean(degree(ltalks_graphe[[i]], mode = "out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  v2[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  w2[i] <- mean(degree(ltalks_graphe[[i]],mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  a3[i] <- mean(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  b3[i] <- mean(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  c3[i] <- mean(degree(ltalks_graphe[[i]], mode = "in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  d3[i] <- mean(degree(ltalks_graphe[[i]],mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  e3[i] <- length(ltalks_edgelists[[i]][ltalks_edgelists[[i]][,"DiscussionType"] == "initialized_thread","V1"])
+  f3[i] <- length(ltalks_edgelists[[i]][ltalks_edgelists[[i]][,"DiscussionType"] == "replied_to","V1"])
+  f22[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  g22[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  h22[i] <- sd(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  k22[i] <- sd(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "admin"]])
+  l22[i] <- sd(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  m22[i] <- sd(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "anonyme"]])
+  n22[i] <- sd(degree(ltalks_graphe[[i]],mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  o22[i] <- sd(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$status_contrib == "inscrit"]])
+  p22[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  q22[i] <- sd(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  r22[i] <- sd(degree(ltalks_graphe[[i]], mode="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 1]])
+  s22[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  t22[i] <- sd(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  u22[i] <- sd(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 2]])
+  v22[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  w22[i] <- sd(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  a32[i] <- sd(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 3]])
+  b32[i] <- sd(degree(ltalks_graphe[[i]])[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  c32[i] <- sd(degree(ltalks_graphe[[i]], mode ="in")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  d32[i] <- sd(degree(ltalks_graphe[[i]], mode ="out")[levels(as.factor(temp)) %in% attributes_contro$contributeurs[attributes_contro$rev_count_quar == 4]])
+  
 }
+
+View(ltalks_edgelists[[76]])
 
 contro_attributes_talks$density <- a
 contro_attributes_talks$ncontributors <- b
@@ -391,6 +666,57 @@ contro_attributes_talks$sd_degree_centrality_admins <- u
 contro_attributes_talks$max_discussion_depth <- v
 contro_attributes_talks$mean_discussion_depth <- w
 contro_attributes_talks$sd_discussion_depth <- z
+
+contro_attributes_talks$degree_assortativity <- v3
+#contro_attributes_talks$assortativity_status <- w3
+#contro_attributes_talks$assortativity_quartiles <- a2
+contro_attributes_talks$nquar1 <- b2
+contro_attributes_talks$nquar2 <- c2
+contro_attributes_talks$nquar3 <- d2
+contro_attributes_talks$nquar4 <- e2
+contro_attributes_talks$mean_degree_anon <- f2
+contro_attributes_talks$mean_degree_inscrit <- g2
+contro_attributes_talks$mean_indegree_admin <- h2
+contro_attributes_talks$mean_outdegree_admin <- k2
+contro_attributes_talks$mean_indegree_anon <- l2
+contro_attributes_talks$mean_outdegree_anon <- m2
+contro_attributes_talks$mean_indegree_inscrit <- n2
+contro_attributes_talks$mean_outdegree_inscrit <- o2
+contro_attributes_talks$mean_degree_quar1 <- p2
+contro_attributes_talks$mean_indegree_quar1 <- q2
+contro_attributes_talks$mean_outdegree_quar1 <- r2
+contro_attributes_talks$mean_degree_quar2 <- s2
+contro_attributes_talks$mean_indegree_quar2 <- t2
+contro_attributes_talks$mean_outdegree_quar2 <- u2
+contro_attributes_talks$mean_degree_quar3 <- v2
+contro_attributes_talks$mean_indegree_quar3 <- w2
+contro_attributes_talks$mean_outdegree_quar3 <- a3
+contro_attributes_talks$mean_degree_quar4 <- b3
+contro_attributes_talks$mean_indegree_quar4 <- c3
+contro_attributes_talks$mean_outdegree_quar4 <- d3
+contro_attributes_talks$ninitialized <- e3
+contro_attributes_talks$nresponded <- f3
+
+contro_attributes_talks$sd_degree_anon <- f22
+contro_attributes_talks$sd_degree_inscrit <- g22
+contro_attributes_talks$sd_indegree_admin <- h22
+contro_attributes_talks$sd_outdegree_admin <- k22
+contro_attributes_talks$sd_indegree_anon <- l22
+contro_attributes_talks$sd_outdegree_anon <- m22
+contro_attributes_talks$sd_indegree_inscrit <- n22
+contro_attributes_talks$sd_outdegree_inscrit <- o22
+contro_attributes_talks$sd_degree_quar1 <- p22
+contro_attributes_talks$sd_indegree_quar1 <- q22
+contro_attributes_talks$sd_outdegree_quar1 <- r22
+contro_attributes_talks$sd_degree_quar2 <- s22
+contro_attributes_talks$sd_indegree_quar2 <- t22
+contro_attributes_talks$sd_outdegree_quar2 <- u22
+contro_attributes_talks$sd_degree_quar3 <- v22
+contro_attributes_talks$sd_indegree_quar3 <- w22
+contro_attributes_talks$sd_outdegree_quar3 <- a32
+contro_attributes_talks$sd_degree_quar4 <- b32
+contro_attributes_talks$sd_indegree_quar4 <- c32
+contro_attributes_talks$sd_outdegree_quar4 <- d32
 
 # page controversial ou featured?
 
@@ -449,7 +775,7 @@ for (i in contro_attributes_edits$page[contro_attributes_edits$istalk_page == 1]
   contro_attributes_cross[contro_attributes_cross$page == i, "mean_betweenness_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_betweenness_admin"]
   contro_attributes_cross[contro_attributes_cross$page == i,"mean_degree_centrality_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_degree_centrality"]
   contro_attributes_cross[contro_attributes_cross$page == i, "mean_degree_centrality_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_degree_centrality"]
-  contro_attributes_cross[contro_attributes_cross$page == i,"mean_degree_centrality_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_degree_centrality_admins"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"mean_degree_centrality_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"mean_degree_admins"]
   contro_attributes_cross[contro_attributes_cross$page == i, "mean_degree_centrality_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_degree_centrality_admins"]
   contro_attributes_cross[contro_attributes_cross$page == i,"sd_betweenness_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_betweenness"]
   contro_attributes_cross[contro_attributes_cross$page == i, "sd_betweenness_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_betweenness"]
@@ -457,13 +783,28 @@ for (i in contro_attributes_edits$page[contro_attributes_edits$istalk_page == 1]
   contro_attributes_cross[contro_attributes_cross$page == i, "sd_betweenness_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_betweenness_admin"]
   contro_attributes_cross[contro_attributes_cross$page == i,"sd_degree_centrality_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_degree_centrality"]
   contro_attributes_cross[contro_attributes_cross$page == i, "sd_degree_centrality_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_degree_centrality"]
-  contro_attributes_cross[contro_attributes_cross$page == i,"sd_degree_centrality_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_degree_centrality_admins"]
+  contro_attributes_cross[contro_attributes_cross$page == i,"sd_degree_centrality_admins_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i,"sd_degree_admins"]
   contro_attributes_cross[contro_attributes_cross$page == i, "sd_degree_centrality_admins_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_degree_centrality_admins"]
   contro_attributes_cross[contro_attributes_cross$page == i, "max_discussion_depth"] <- contro_attributes_talks[contro_attributes_edits$page == i, "max_discussion_depth"]
   contro_attributes_cross[contro_attributes_cross$page == i, "mean_discussion_depth"] <- contro_attributes_talks[contro_attributes_talks$page == i, "mean_discussion_depth"]
   contro_attributes_cross[contro_attributes_cross$page == i, "sd_discussion_depth"] <- contro_attributes_talks[contro_attributes_talks$page == i, "sd_discussion_depth"]
   contro_attributes_cross[contro_attributes_cross$page == i, "iscontroversial"] <- contro_attributes_talks[contro_attributes_talks$page == i, "iscontroversial"]
   contro_attributes_cross[contro_attributes_cross$page == i, "isfeatured"] <- contro_attributes_talks[contro_attributes_talks$page == i, "isfeatured"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nadded"] <- contro_attributes_edits[contro_attributes_edits$page == i, "nadded"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "ndeleted"] <- contro_attributes_edits[contro_attributes_edits$page == i, "ndeleted"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nrestored"] <- contro_attributes_edits[contro_attributes_edits$page == i, "nrestored"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "ninitialized"] <- contro_attributes_talks[contro_attributes_talks$page == i, "ninitialized"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nresponded"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nresponded"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "degree_assortativity_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i, "degree_assortativity"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "degree_assortativity_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "degree_assortativity"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar1_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i, "nquar1"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar2_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i, "nquar2"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar3_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i, "nquar3"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar4_edit"] <- contro_attributes_edits[contro_attributes_edits$page == i, "nquar4"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar1_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nquar1"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar2_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nquar2"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar3_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nquar3"]
+  contro_attributes_cross[contro_attributes_cross$page == i, "nquar4_talk"] <- contro_attributes_talks[contro_attributes_talks$page == i, "nquar4"]
 }
 
 ## exporter les bases
