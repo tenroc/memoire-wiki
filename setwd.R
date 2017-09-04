@@ -76,10 +76,17 @@ page_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemb
 # node_attributes_contro
 
 attributes_contro <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/nodes_attributes_contro_network.csv")
+contro_attributes_edits <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_edits.csv")
+contro_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attributes_talks.csv")
+contro_attributes_cross <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/contro_network/contro_contro_attribute_cross.csv")
+
 
 # node_attributes_featured
 
 attributes_featured <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/nodes_attributes_featured_network.csv")
+featured_attributes_edits <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_edits.csv")
+featured_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_talks.csv")
+featured_attributes_cross <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attribute_cross.csv")
 
 
 
@@ -146,8 +153,8 @@ featured_data <- as.character(featured_data)
 # nodes_atttributes_page + bases
 
 attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/nodes_attributes_page_network.csv")
-attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_talks.csv")
-attributes_page <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_edits.csv")
+page_attributes_edits <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_talks.csv")
+page_attributes_talks <- read.csv2("C:/Users/tenroc/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/page_network/page_page_attributes_edits.csv")
 
 # node_attributes_contro
 

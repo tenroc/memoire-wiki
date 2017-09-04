@@ -31,7 +31,6 @@ write(temp, file="../temp_edit.txt", sep="/n")
 
 for(i in names(ledits)){
   ledits[[i]] <- ledits[[i]][!ledits[[i]][,"ActiveUser"]=="",]
-  ledits[[i]] <- ledits[[i]][!ledits[[i]][,"TargetAuthor"]=="",]
   ledits[[i]] <- ledits[[i]][is.na(ledits[[i]][,"ActiveUser"])==F,]
   ledits[[i]] <- ledits[[i]][is.na(ledits[[i]][,"TargetAuthor"])==F,]
 }
