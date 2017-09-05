@@ -370,7 +370,10 @@ for (i in 3:ncol(contro_attributes_cross)){
 
 # Reg 1 : nreverse 
 
-reg1 <- lm(nrestored ~ ninscrit_talk + ninscrit_edit + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + nquar4_talk + nquar4_edit + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+reg1 <- lm(nrestored ~ ninscrit_talk + ninscrit_edit + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg1)
+
+reg1 <- lm(nrestored ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg1)
 
 #Reg2: nedits
@@ -380,12 +383,18 @@ summary(reg2)
 
 #Reg3: nadded
 
-reg3 <- lm(nadded ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + nquar4_talk + nquar4_edit + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+reg3 <- lm(nadded ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg3)
+
+reg3 <- lm(nadded ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg3)
 
 #Reg4: ndeleted
 
-reg4 <- lm(ndeleted ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + nquar4_talk + nquar4_edit + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+reg4 <- lm(ndeleted ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg4)
+
+reg4 <- lm(ndeleted ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg4)
 
 # Reg5: assortativity / max discussion depth / mean discussion depth

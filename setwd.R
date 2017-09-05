@@ -86,7 +86,7 @@ contro_attributes_cross <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ense
 attributes_featured <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/nodes_attributes_featured_network.csv")
 featured_attributes_edits <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_edits.csv")
 featured_attributes_talks <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_talks.csv")
-featured_attributes_cross <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attribute_cross.csv")
+featured_attributes_cross <- read.csv2("~/Documents/memoire-wiki/wiki_reseaux/ensemble_reseaux/featured_network/featured_page_attributes_cross.csv")
 
 
 
