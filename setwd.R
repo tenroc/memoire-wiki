@@ -8,6 +8,10 @@ library('igraph')
 library('WikipediaR')
 library('WikiSocio')
 library('WikipediR')
+library('gvlma')
+library('car')
+library('lmtest')
+library('caret')
 
 ## setwd pour le wikisurvey
 

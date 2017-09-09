@@ -40,16 +40,19 @@ sd(as.numeric(contro_attributes_edits$ncontributors), na.rm = T)
 
 # Reverse
 
+boxplot(as.numeric(contro_attributes_edits$nrestored))
 mean(as.numeric(contro_attributes_edits$nrestored), na.rm = T)
 sd(as.numeric(contro_attributes_edits$nrestored), na.rm = T)
 
 # Added
 
+boxplot(as.numeric(contro_attributes_edits$nadded))
 mean(as.numeric(contro_attributes_edits$nadded), na.rm =T)
 sd(as.numeric(contro_attributes_edits$nadded), na.rm = T)
 
 # Deleted
 
+boxplot(as.numeric(contro_attributes_edits$ndeleted))
 mean(as.numeric(contro_attributes_edits$ndeleted), na.rm = T)
 sd(as.numeric(contro_attributes_edits$ndeleted), na.rm = T)
 
@@ -373,48 +376,156 @@ for (i in 3:ncol(contro_attributes_cross)){
 reg1 <- lm(nrestored ~ ninscrit_talk + ninscrit_edit + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg1)
 
+summary.aov(reg1)
+
+plot(reg1)
+
+gvlma(reg1)
+
+ncvTest(reg1)
+
+bptest(reg1)
+
+spreadLevelPlot(reg1)
+
+durbinWatsonTest(reg1)
+
 reg1 <- lm(nrestored ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg1)
 
-#Reg2: nedits
+gvlma.lm(reg1)
 
-reg2 <- lm(nedits_edit ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + nquar4_talk + nquar4_edit + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
-summary(reg2)
+bptest(reg1)
+
+durbinWatsonTest(reg1)
+
+## Normalisation du restoredcount
+
+contro_attributes_cross$nrestored_re <- contro_attributes_cross$nrestored
+contro_attributes_cross$nrestored_re[contro_attributes_cross$nrestored == 0] <- 1
+distBCMod <- BoxCoxTrans(contro_attributes_cross$nrestored_re, na.rm = T)
+
+contro_attributes_cross <- cbind(contro_attributes_cross, nrestored_box=predict(distBCMod, contro_attributes_cross$nrestored_re))
+
+reg1 <- lm(nrestored_box ~ ninscrit_talk + ninscrit_edit + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg1)
+
+summary.aov(reg1)
+
+plot(reg1)
+
+gvlma(reg1)
+
+ncvTest(reg1)
+
+bptest(reg1)
+
+spreadLevelPlot(reg1)
+
+durbinWatsonTest(reg1)
+
+reg1 <- lm(nrestored_box ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg1)
+
+gvlma.lm(reg1)
+
+bptest(reg1)
+
+durbinWatsonTest(reg1)
 
 #Reg3: nadded
 
 reg3 <- lm(nadded ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg3)
 
+gvlma(reg3)
+
+bptest(reg3)
+
+durbinWatsonTest(reg3)
+
 reg3 <- lm(nadded ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg3)
+
+gvlma(reg3)
+
+bptest(reg3)
+
+durbinWatsonTest(reg3)
+
+## Normalisation nadded
+
+contro_attributes_cross$nadded_re <- contro_attributes_cross$nadded
+contro_attributes_cross$nadded_re[contro_attributes_cross$nadded == 0] <- 1
+distBCMod <- BoxCoxTrans(contro_attributes_cross$nadded_re, na.rm = T)
+
+contro_attributes_cross <- cbind(contro_attributes_cross, nadded_box=predict(distBCMod, contro_attributes_cross$nadded_re))
+
+reg3 <- lm(nadded_box ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg3)
+
+gvlma(reg3)
+
+bptest(reg3)
+
+durbinWatsonTest(reg3)
+
+reg3 <- lm(nadded_box ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg3)
+
+gvlma(reg3)
+
+bptest(reg3)
+
+durbinWatsonTest(reg3)
+
 
 #Reg4: ndeleted
 
 reg4 <- lm(ndeleted ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg4)
 
+gvlma(reg4)
+
+bptest(reg4)
+
+durbinWatsonTest(reg4)
+
 reg4 <- lm(ndeleted ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
 summary(reg4)
 
-# Reg5: assortativity / max discussion depth / mean discussion depth
+gvlma(reg4)
 
-reg5 <- lm ((degree_assortativity_talk*100) ~ nadmins_talk + nanon_talk + nquar4_talk + nresponded + ninitialized + nrestored + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
-summary (reg5)
+bptest(reg4)
 
-# Reg 6: mean_discussion depth
+durbinWatsonTest(reg4)
 
-reg6 <- lm(mean_discussion_depth ~ nrestored + ndeleted + nquar3_edit + nquar4_edit + nquar3_talk + nquar4_talk + nadmins_talk + nadmins_edit + nanon_talk + nanon_edit + ninscrit_talk +ninscrit_edit, data = contro_attributes_cross)
-summary(reg6)
+## Normalisation ndeleted
 
-# Reg 7 responded
+contro_attributes_cross$deleted_re <- contro_attributes_cross$ndeleted
+contro_attributes_cross$deleted_re[contro_attributes_cross$ndeleted == 0] <- 1
+distBCMod <- BoxCoxTrans(contro_attributes_cross$deleted_re, na.rm = T)
 
-reg7 <- lm(nresponded ~ nadmins_talk + ninscrit_talk + nanon_talk + nquar1_talk + nquar2_talk + nquar3_talk + nquar4_talk, data = contro_attributes_cross)
-summary(reg7)
+contro_attributes_cross <- cbind(contro_attributes_cross, ndeleted_box=predict(distBCMod, contro_attributes_cross$deleted_re))
 
-# Reg 8 initialized
+reg4 <- lm(ndeleted_box ~ ninscrit_edit + ninscrit_talk + nadmins_edit + nanon_edit + nadmins_talk + nanon_talk +  ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg4)
 
-reg8 <- lm(ninitialized ~ nadmins_talk + ninscrit_talk + nanon_talk, data = contro_attributes_cross)
-summary(reg8)
+gvlma(reg4)
 
-reg8 <- lm(ninitialized ~ nquar1_talk + nquar2_talk + nquar3_talk + nquar4_talk, data =contro_attributes_cross)
+bptest(reg4)
+
+durbinWatsonTest(reg4)
+
+reg4 <- lm(ndeleted_box ~ nquar1_edit + nquar1_talk + nquar2_edit + nquar2_talk + nquar3_edit + nquar3_talk + nquar4_edit + nquar4_talk + ninitialized + nresponded + mean_discussion_depth + max_discussion_depth, data = contro_attributes_cross)
+summary(reg4)
+
+gvlma(reg4)
+
+bptest(reg4)
+
+durbinWatsonTest(reg4)
+
+## Boxplots distribution normalisees
+
+boxplot(contro_attributes_cross$nrestored_box, )
