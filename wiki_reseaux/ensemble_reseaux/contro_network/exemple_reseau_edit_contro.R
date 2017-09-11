@@ -16,7 +16,7 @@ oil_spill_edgelist <- ledits_edgelists[["Oil_spill.csv_edits_edgelist"]]
 temp <- append(oil_spill_edgelist[,"V1"], oil_spill_edgelist[,"V2"])
 oil_spill_attributes <- attributes_contro[as.character(attributes_contro$contributeurs) %in% levels(as.factor(temp)),]
 oil_spill_attributes$contributeurs <- as.character(oil_spill_attributes$contributeurs)
-oil_spill_attributes[length(oil_spill_attributes$contributeurs)+1,] <- c(NA,NA,"Hannes_R0",0,"inscrit",1,2018)
+# oil_spill_attributes[length(oil_spill_attributes$contributeurs)+1,] <- c(NA,NA,"Hannes_R0",0,"inscrit",1,2018)
 
 # Remettre les attributes dans l'ordre du graphe:
 
@@ -244,12 +244,12 @@ E(oil_spill_graphe)$width <- as.numeric(E(oil_spill_graphe)$Wordcount)/20
 
 plot(oil_spill_graphe, layout=layout_nicely(oil_spill_graphe), rescale=TRUE,edge.arrow.size=.3,
      edge.color=colors_edge[as.numeric(E(oil_spill_graphe)$InteractionType_num)],
-     main= "Reseau editions Oil spill")
+     main= "Reseau edition Oil spill")
 
 # Légende:
 
-legend(x="topleft", c("Ajout","Suppression","Reverse","total edits -","totals edits +", "page","degrés", "degrès"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
-       pt.bg= c("#3892e0","#da4d45","#fbd25d","#FFFF80FF","#FF0000FF", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+legend(x="topleft", c("Ajout","Suppression","Reverse", "nombre mots -", "nombre mots +","total edits -","totals edits +", "page","centralité degrés -", "centralité degrès +"), pch=c(24,24,24,24,24,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","white", "white","#FFFF80FF","#FF0000FF", "#333333", "white", "white"), pt.cex=c(2,2,2,1,3,2,2,2,1,3), cex=.8, bty="n", ncol=1)
 
 
 ## Représentations bivariées
@@ -441,6 +441,42 @@ sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_
 sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 2])
 sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 3])
 sd(oil_spill_attributes$reversed_rev_count_local[oil_spill_attributes$total_rev_count_quar == 4])
+
+# centralité de degré en fonction du revcount + moyenne et sd
+
+mean(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 4])
+
+sd(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$degree_centrality[oil_spill_attributes$total_rev_count_quar == 4])
+
+# demi degré entrant en fonction du revcount + moyenne et sd
+
+mean(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 4])
+
+sd(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$in_degree[oil_spill_attributes$total_rev_count_quar == 4])
+
+# demi degré sortant en fonction du revcount + moyenne et sd
+
+mean(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 1])
+mean(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 2])
+mean(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 3])
+mean(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 4])
+
+sd(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 1])
+sd(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 2])
+sd(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 3])
+sd(oil_spill_attributes$out_degree[oil_spill_attributes$total_rev_count_quar == 4])
 
 ## Regressions
 

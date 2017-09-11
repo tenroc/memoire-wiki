@@ -196,8 +196,8 @@ plot(death_valley_graphe, layout=layout.fruchterman.reingold, rescale=TRUE,edge.
 
 # Légende:
 
-legend(x="topleft", c("Ajout","Suppression","Reverse","admin","anonyme","bot", "inscrit", "page","quartile -", "quartile +"), pch=c(24,24,24,21,21,21,21,21,21,21), col="#777777", 
-       pt.bg= c("#3892e0","#da4d45","#fbd25d","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
+legend(x="topleft", c("Ajout","Suppression","Reverse", "nombre mots -", "nombre mots +","admin","anonyme","bot", "inscrit", "page","quartile -", "quartile +"), pch=c(24,24,24,24,24,21,21,21,21,21,21,21), col="#777777", 
+       pt.bg= c("#3892e0","#da4d45","#fbd25d","white", "white","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,1,3,2,2,2,2,2,1,3), cex=.8, bty="n", ncol=1)
 
 
 #### Size = Indegree, col = total_rev_count

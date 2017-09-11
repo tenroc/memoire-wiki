@@ -125,7 +125,7 @@ plot(oil_spill_graphe_talk, layout=layout_nicely(oil_spill_graphe_talk), rescale
 
 # Légende:
 
-legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,21,21,21,21,21,21,21,21), col="#777777", 
+legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","centralité degrés -", "centralité degrés +"), pch=c(24,24,21,21,21,21,21,21,21,21), col="#777777", 
        pt.bg= c("#3892e0","#da4d45","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 
@@ -319,6 +319,36 @@ sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "inscrit"])
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$status_contrib == "anonyme"])
 
+# centralité degré en fonction du statut: moyenne et sd
+
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$status_contrib == "admin"])
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$status_contrib == "inscrit"])
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$status_contrib == "admin"])
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$status_contrib == "inscrit"])
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$status_contrib == "anonyme"])
+
+# indegree en fonction du statut: moyenne et sd
+
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$status_contrib == "admin"])
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$status_contrib == "inscrit"])
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$status_contrib == "admin"])
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$status_contrib == "inscrit"])
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$status_contrib == "anonyme"])
+
+# out degree en fonction du statut: moyenne et sd
+
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$status_contrib == "admin"])
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$status_contrib == "inscrit"])
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$status_contrib == "anonyme"])
+
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$status_contrib == "admin"])
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$status_contrib == "inscrit"])
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$status_contrib == "anonyme"])
+
 # Nombre de contributions en fonction du revcount + moyenne et sd
 
 length(oil_spill_attributes_talk$total_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 1])
@@ -376,6 +406,42 @@ sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 3])
 sd(oil_spill_attributes_talk$responded_rev_count_local[oil_spill_attributes_talk$total_rev_count_quar == 4])
 
+# Centralité de degré en fonction du rev_count : moyenne + sd
+
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 1])
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 2])
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 3])
+mean(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 4])
+
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 1])
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 2])
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 3])
+sd(oil_spill_attributes_talk$degree_centrality[oil_spill_attributes_talk$total_rev_count_quar == 4])
+
+# indegree en fonction du rev_count : moyenne + sd
+
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 1])
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 2])
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 3])
+mean(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 4])
+
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 1])
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 2])
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 3])
+sd(oil_spill_attributes_talk$in_degree[oil_spill_attributes_talk$total_rev_count_quar == 4])
+
+# outdegree en fonction du rev_count : moyenne + sd
+
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 1])
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 2])
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 3])
+mean(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 4])
+
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 1])
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 2])
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 3])
+sd(oil_spill_attributes_talk$out_degree[oil_spill_attributes_talk$total_rev_count_quar == 4])
+
 ## Regression contrib_type = status_contrib + total_rev_count
 
 oil_spill_attributes_talk$status_contrib <- relevel(as.factor(oil_spill_attributes_talk$status_contrib), ref="anonyme")
@@ -387,6 +453,10 @@ summary(reg1)
 
 1 - (reg1$deviance / reg1$null.deviance)
 
+bptest(reg1)
+
+durbinWatsonTest(reg1)
+
 reg2 <- glm(responded_rev_count_local ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg2)
 
@@ -394,12 +464,20 @@ summary(reg2)
 
 1 - (reg2$deviance / reg2$null.deviance)
 
+bptest(reg2)
+
+durbinWatsonTest(reg2)
+
 reg4 <- glm(in_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg4)
 
 # Pseudo R2
 
 1 - (reg4$deviance / reg4$null.deviance)
+
+bptest(reg4)
+
+durbinWatsonTest(reg4)
 
 reg5 <- glm(out_degree ~ status_contrib +  as.character(total_rev_count_quar), data=oil_spill_attributes_talk)
 summary(reg5)

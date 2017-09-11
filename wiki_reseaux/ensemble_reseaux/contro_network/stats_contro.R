@@ -528,4 +528,4 @@ durbinWatsonTest(reg4)
 
 ## Boxplots distribution normalisees
 
-boxplot(contro_attributes_cross$nrestored_box, )
+boxplot(contro_attributes_cross$nrestored_box, contro_attributes_cross$nadded_box, contro_attributes_cross$ndeleted_box, main = "Distribution des variables dépendantes normalisées", names = c("Annulations", "Ajouts", "Suppressions"))

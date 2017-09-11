@@ -1,6 +1,6 @@
 #### Automatisation de la réccupération des donées contrib sur l'ensemble des réseaux: ####
 
-# Test 2: toujours featured/edits, mais autre import:
+# Test 2: toujours page/edits, mais autre import:
 
 list_edits <- list.files(pattern="*.csv")
 

@@ -125,7 +125,7 @@ plot(death_valley_graphe_talk, layout=layout_nicely(death_valley_graphe_talk), r
 
 # Légende:
 
-legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","degrés -", "degrés +"), pch=c(24,24,21,21,21,21,21,21,21,21), col="#777777", 
+legend(x="topleft", c("Initialisation conversation","Réponse","admin","anonyme","bot", "inscrit", "page","centralité degrés -", "centralité degrés +"), pch=c(24,24,21,21,21,21,21,21,21,21), col="#777777", 
        pt.bg= c("#3892e0","#da4d45","#8a4ebf","white","#f37329","#93d844", "#333333", "white", "white"), pt.cex=c(2,2,2,2,2,2,2,2,1,4), cex=.8, bty="n", ncol=1)
 
 
